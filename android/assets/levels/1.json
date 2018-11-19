@@ -1,0 +1,21 @@
+{
+  "enemies" : [
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2, "time" : 1},
+    {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 3},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 5},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 7},
+    {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 9},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 11},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 13},
+    {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 15},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 17}
+  ],
+
+  "items" : [
+    {"name" : "name1"}
+  ],
+
+  "background" : "bg4.png"
+
+}
+
