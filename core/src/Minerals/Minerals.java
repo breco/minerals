@@ -55,6 +55,15 @@ public class Minerals{
         return temp;
     }
 
+    public int getInitialPP(){
+        int PP = 0;
+        for(Mineral mineral : minerals){
+            PP += mineral.getPP();
+        }
+        return PP;
+    }
+
+
 
     public void input(Vector3 vec, int pointer) {
         //get touched pixies

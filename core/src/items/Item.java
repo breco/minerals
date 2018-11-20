@@ -85,7 +85,7 @@ public abstract class Item extends Sprite {
 
         super.draw(batch);
         if(used){
-            //setPosition(Initial.HEIGHT/7.8f+i* Initial.HEIGHT/3.25f,Initial.WIDTH/24);
+
             batch.draw(cross,Initial.HEIGHT/7.8f+i*Initial.HEIGHT/3.25f,Initial.WIDTH/24,90,90);
             return;
         }

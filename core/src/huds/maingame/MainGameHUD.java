@@ -10,22 +10,28 @@ import Minerals.Minerals;
 import items.Item;
 import items.Items;
 import screens.MainGame;
+import skills.Skills;
 
 public class MainGameHUD {
     Minerals minerals;
     Items items;
+    Skills skills;
     MainGame game;
 
-    private Texture cross,black,itemSlot;
+    private Texture black,gray,purple;
+
+
     //private My_Button pauseButton;
     public MainGameHUD(MainGame game){
         this.game = game;
         this.minerals = game.minerals;
         this.items = game.items;
+        this.skills = game.skills;
 
 
-
-        black = new Texture(Gdx.files.internal("huds/mainGame/black.png"));
+        black = new Texture(Gdx.files.internal("huds/mainGame/black.png")); // Cambiar direccion de archivo black.png a carpeta colors
+        gray = new Texture(Gdx.files.internal("colors/gray.png"));
+        purple = new Texture(Gdx.files.internal("colors/purple.png"));
 
         int i=0;
         /*for(Item item : items.getItems()){
@@ -45,16 +51,19 @@ public class MainGameHUD {
 
         //draw item section
         batch.draw(black,0,0,Initial.HEIGHT,Initial.WIDTH/game.itemSection);
+        batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );
+        batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
 
-        for(int i =0;i<3;i++){
+        skills.draw(batch);
+        /*for(int i =0;i<3;i++){
 
             items.getItems().get(i).draw(batch);
-
+            if(items.getItems().get(i).used) batch.draw(cross,Initial.HEIGHT/10.5f+i*Initial.HEIGHT/3,Initial.WIDTH/24,100,100);
 
         }
         for(Item item : items.getItems()){
             if(item.touched || item.touched2) item.draw(batch);
-        }
+        }*/
         //pauseButton.draw(batch);
     }
     public void input(Vector3 vec){

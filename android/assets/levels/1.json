@@ -8,7 +8,18 @@
     {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 11},
     {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 13},
     {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 15},
-    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 17}
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 17},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 19},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 21},
+    {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 23},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 25},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 27},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 29},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 31},
+    {"clase" : "enemies.TestEnemy", "posx" : 400, "posy" : 2,   "time" : 33},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 35},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 37},
+    {"clase" : "enemies.TestEnemy", "posx" : 500, "posy" : 2,   "time" : 39}
   ],
 
   "items" : [

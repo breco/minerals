@@ -53,6 +53,7 @@ public abstract class Enemy extends Sprite {
         if (CURRENT_HP < 0) {
             CURRENT_HP = 0;
             MainGame.enemies.remove(this);
+            MainGame.chargePP(1);
         }
 
     }

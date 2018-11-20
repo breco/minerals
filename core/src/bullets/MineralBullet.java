@@ -2,8 +2,8 @@ package bullets;
 
 import com.artificialmemories.minerals.Initial;
 
-import enemies.Enemy;
 import Minerals.Mineral;
+import enemies.Enemy;
 import screens.MainGame;
 import utils.Animator;
 
@@ -23,7 +23,6 @@ public class MineralBullet extends Bullet {
             if(enemy.getBoundingRectangle().contains(getBoundingRectangle())){
                 enemy.getDamage(ATK);
                 MainGame.bullets.remove(this);
-                //owner.chargePower(1);
                 return;
             }
         }

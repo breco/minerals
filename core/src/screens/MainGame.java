@@ -26,8 +26,12 @@ import huds.Initial.MainGameHUD;
 import items.Fruit;
 import items.Items;
 import items.SpeedStar;
+import skills.Skills;
 import utils.MyGestures;
 import utils.TimeManager;
+
+//import Minerals.Minerals;
+//import Minerals.TestMineral;
 
 
 public class MainGame implements Screen {
@@ -44,6 +48,7 @@ public class MainGame implements Screen {
     public static Enemies enemies;
     public static Bullets bullets;
     public static Items items;
+    public static Skills skills;
 
     //HUD
 
@@ -57,6 +62,11 @@ public class MainGame implements Screen {
 
     public static TimeManager time;
 
+    //GAME STATS
+
+    public static int CURRENT_PP = 0;
+    public static int MAX_PP = 30;
+    public static float PERCENT_PP;
 
     //TEST
     //int virtualWidth = 1280;
@@ -84,8 +94,9 @@ public class MainGame implements Screen {
 
         // GAME OBJECTS
         minerals = new Minerals();
-        minerals.add( new TestMineral(Initial.HEIGHT/3,400,30,2,30));
-        minerals.add( new TestMineral(Initial.HEIGHT*2/3,400,30,2,30));
+        minerals.add( new TestMineral(Initial.HEIGHT/4,400,30,2,30, 1));
+        minerals.add( new TestMineral(Initial.HEIGHT/2,400,30,2,30, 1));
+        minerals.add( new TestMineral(Initial.HEIGHT*3/4,400,30,2,30, 30));
 
         enemies = new Enemies();
 
@@ -97,6 +108,13 @@ public class MainGame implements Screen {
         items.add(new SpeedStar(new Texture(Gdx.files.internal("items/star.png"))));
         items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
         items.setPosition();
+
+        skills = new Skills(this);
+        skills.setSkills();
+        skills.setPosition();
+
+        setInitialPP();
+
 
         //LOAD LEVEL
         try {
@@ -150,6 +168,26 @@ public class MainGame implements Screen {
         //bg = new Background(new Texture(Gdx.files.internal("backgrounds/"+base.getString("background"))));
     }
 
+    public void setInitialPP(){
+        CURRENT_PP = minerals.getInitialPP();
+        Gdx.app.log("INITIAL PP",CURRENT_PP+"");
+        updatePPbar();
+    }
+
+    public static void chargePP(int amount){
+
+        CURRENT_PP += amount;
+        if(CURRENT_PP > MAX_PP) CURRENT_PP = MAX_PP;
+        updatePPbar();
+    }
+
+    public static void updatePPbar(){
+        PERCENT_PP = CURRENT_PP*100f/MAX_PP;
+        Gdx.app.log("PERCENTPP",PERCENT_PP+"");
+
+    }
+
+
 
     public void input(){
         if(MyGestures.isLongPress()){
@@ -164,7 +202,8 @@ public class MainGame implements Screen {
 
                 if(vec.y < Initial.WIDTH/itemSection){
                     Gdx.app.log("ITEM","SECTION");
-                    items.input(vec,0);
+                    skills.input(vec,0);
+                    //items.input(vec,0);
                     return;
                 }
 
@@ -179,7 +218,8 @@ public class MainGame implements Screen {
                 vec.set(MyGestures.firstTouch2);
                 cam.unproject(vec);
                 if(vec.y < Initial.WIDTH/itemSection){
-                    items.input(vec,1);
+                    //items.input(vec,1);
+                    skills.input(vec,1);
                     return;
                 }
                 minerals.input(vec,1);
@@ -214,7 +254,8 @@ public class MainGame implements Screen {
         minerals.update();
         enemies.update();
         bullets.update();
-        items.update();
+        //items.update();
+        skills.update();
     }
 
     public void draw(){

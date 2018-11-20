@@ -1,17 +1,16 @@
 package items;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+
 public class Items {
     public Array<Item> items;
-    public Rectangle rect;
+
     public Items() {
         items = new Array<Item>();
-        rect = new Rectangle();
-        rect.setSize(90,90);
+
 
 
     }
@@ -42,7 +41,6 @@ public class Items {
         }
     }
     public void input(Vector3 vec, int pointer){
-        //vec.set(vec.x, Initial.HEIGHT - vec.y, 0);
         for(Item item : items){
             item.input(vec, pointer);
         }
@@ -77,4 +75,3 @@ public class Items {
         }
     }
 }
-

@@ -41,7 +41,7 @@ public class Enemies {
     public void remove(Enemy enemy){
         onScreenEnemies.removeValue(enemy, false);
         deadEnemies.add(enemy);
-        Gdx.app.log("DEAD","DEAD!");
+
     }
     public Array<Enemy> getEnemies(){
         return onScreenEnemies;

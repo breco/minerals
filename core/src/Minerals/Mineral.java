@@ -24,7 +24,7 @@ public class Mineral extends Sprite {
     private int HP;
     private int CURRENT_HP;
     private int PP;
-    private int CURRENT_PP;
+    private int EARNED_PP;
 
 
     //
@@ -68,13 +68,11 @@ public class Mineral extends Sprite {
     //variables for hud
 
     public float PERCENT_HP;
-    public float PERCENT_PP;
     public char COLOR_HP;
     public Texture green = new Texture(Gdx.files.internal("colors/green.png"));
     public Texture red = new Texture(Gdx.files.internal("colors/red.png"));
     public Texture yellow = new Texture(Gdx.files.internal("colors/yellow.png"));
     public Texture gray = new Texture(Gdx.files.internal("colors/gray.png"));
-    public Texture purple = new Texture(Gdx.files.internal("colors/purple.png"));
     public Texture curr = green;
 
     public MineralPin pin;
@@ -84,7 +82,7 @@ public class Mineral extends Sprite {
     private boolean blink = false;
     Animator animator;
 
-    public Mineral(Texture texture, float x, float y, int HP, int ATK, int SPD){
+    public Mineral(Texture texture, float x, float y, int HP, int ATK, int SPD, int PP){
         super();
         setPosition(x,y);
         setSize(64,64);
@@ -98,8 +96,8 @@ public class Mineral extends Sprite {
 
         this.HP = HP;
         CURRENT_HP = HP;
-        this.PP = 10;
-        CURRENT_PP = 0;
+        this.PP = PP;
+        EARNED_PP = 0;
         //hud
         PERCENT_HP = 100;
         pin = new MineralPin(this,"green");
@@ -308,9 +306,18 @@ public class Mineral extends Sprite {
         //piumPitch = (int)(1/SPEED_SHOOT);
     }
 
+
+
+
     //GETTERS
 
     public String getStatus(){
         return status;
+    }
+    public int getPP(){
+        return PP;
+    }
+    public int getEARNED_PP(){
+        return EARNED_PP;
     }
 }
