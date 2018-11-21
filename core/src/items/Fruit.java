@@ -21,8 +21,8 @@ public class Fruit extends Item {
     @Override
     public void effect() {
 
-        rect.setPosition(virtualX,virtualY+fixMovY);
-        rect.setSize(getWidth(),getHeight());
+        rect.setPosition(virtualX-fixMovY/2,virtualY+fixMovY);
+        rect.setSize(getWidth()/2,getHeight());
 
         Gdx.app.log("FRUiT RECTANGLE",""+rect);
         for(Mineral mineral: MainGame.minerals.getMinerals()){

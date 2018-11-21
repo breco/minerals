@@ -55,15 +55,8 @@ public class MainGameHUD {
         batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
 
         skills.draw(batch);
-        /*for(int i =0;i<3;i++){
+        items.draw(batch);
 
-            items.getItems().get(i).draw(batch);
-            if(items.getItems().get(i).used) batch.draw(cross,Initial.HEIGHT/10.5f+i*Initial.HEIGHT/3,Initial.WIDTH/24,100,100);
-
-        }
-        for(Item item : items.getItems()){
-            if(item.touched || item.touched2) item.draw(batch);
-        }*/
         //pauseButton.draw(batch);
     }
     public void input(Vector3 vec){

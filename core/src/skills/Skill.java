@@ -42,7 +42,7 @@ public abstract class Skill extends Sprite {
     public Skill(Mineral owner, Texture texture){
         super(texture);
         this.owner = owner;
-        skillSlot = new Texture(Gdx.files.internal("huds/mainGame/itemSlot.png"));
+        skillSlot = new Texture(Gdx.files.internal("huds/mainGame/skillSlot.png"));
         setSize(90,90);
         coolDownTimer = new TimeManager();
 

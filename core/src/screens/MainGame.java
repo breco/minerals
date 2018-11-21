@@ -106,7 +106,7 @@ public class MainGame implements Screen {
         items = new Items();
         items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
         items.add(new SpeedStar(new Texture(Gdx.files.internal("items/star.png"))));
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
+        items.add(new Fruit(new Texture(Gdx.files.internal("items/tuna.png"))));
         items.setPosition();
 
         skills = new Skills(this);
@@ -203,10 +203,9 @@ public class MainGame implements Screen {
                 if(vec.y < Initial.WIDTH/itemSection){
                     Gdx.app.log("ITEM","SECTION");
                     skills.input(vec,0);
-                    //items.input(vec,0);
                     return;
                 }
-
+                items.input(vec,0);
                 minerals.input(vec, 0);
                 //HUD INPUT
                 vec.set(MyGestures.firstTouch);
@@ -218,10 +217,10 @@ public class MainGame implements Screen {
                 vec.set(MyGestures.firstTouch2);
                 cam.unproject(vec);
                 if(vec.y < Initial.WIDTH/itemSection){
-                    //items.input(vec,1);
                     skills.input(vec,1);
                     return;
                 }
+                items.input(vec,1);
                 minerals.input(vec,1);
                 //HUD INPUT
                 vec.set(MyGestures.firstTouch);
@@ -242,6 +241,7 @@ public class MainGame implements Screen {
             minerals.setUntouched(0);
             items.touchUp(0);
             items.setUntouched(0);
+
         }
         if(MyGestures.isTouchUp2()){
             minerals.setUntouched(1);
@@ -254,7 +254,7 @@ public class MainGame implements Screen {
         minerals.update();
         enemies.update();
         bullets.update();
-        //items.update();
+        items.update();
         skills.update();
     }
 

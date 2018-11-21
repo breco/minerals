@@ -24,18 +24,18 @@ public abstract class Item extends Sprite {
 
     public Item(Texture texture, String type){
         super(texture);
-        setSize(90,90);
+        setSize(50,50);
         this.type = type;
         rect = new Rectangle();
-        fixMovY = 90;
+        fixMovY = 50;
         itemSlot = new Texture(Gdx.files.internal("huds/mainGame/itemSlot.png"));
         cross = new Texture(Gdx.files.internal("huds/mainGame/cross.png"));
 
     }
     public void setPosition(int i){
-        Gdx.app.log("i position",i+"");
-        Gdx.app.log(Initial.HEIGHT/7.8f+i* Initial.HEIGHT/3.25f+"",Initial.WIDTH/24+"");
-        setPosition(Initial.HEIGHT/7.8f+i* Initial.HEIGHT/3.25f,Initial.WIDTH/24);
+        //Gdx.app.log("i position",i+"");
+        setPosition(Initial.HEIGHT - getWidth()*2,Initial.WIDTH/2 - ((getWidth()+30)*i));
+        Gdx.app.log("POSITION",getX()+","+getY());
         virtualX = getX();
         virtualY = getY();
         this.i = i;
@@ -46,9 +46,18 @@ public abstract class Item extends Sprite {
 
     public abstract void effect();
 
+    public Rectangle getBoundingRectangle() {
+        Rectangle rect = super.getBoundingRectangle();
+        rect.setSize(100,50);
+        return rect;
+    }
+
     public void input(Vector3 vec, int pointer){
         if(used) return;
+        Gdx.app.log("TOUCH POS",vec+"");
         if(getBoundingRectangle().contains(vec.x,vec.y)){
+            Gdx.app.log("RECT:",getBoundingRectangle()+"");
+
             if(type.equals("auto")){ // Applicable to all pixies
                 effect();
             }
@@ -81,21 +90,18 @@ public abstract class Item extends Sprite {
 
     }
     public void draw(SpriteBatch batch){
-        batch.draw(itemSlot,Initial.HEIGHT/15+i*Initial.HEIGHT/3.25f,Initial.WIDTH/256,180,180);
-
+        batch.draw(itemSlot,getX()-5,getY()-5,60,60);
         super.draw(batch);
         if(used){
-
-            batch.draw(cross,Initial.HEIGHT/7.8f+i*Initial.HEIGHT/3.25f,Initial.WIDTH/24,90,90);
+            batch.draw(cross,getX(),getY(),50,50);
             return;
         }
         if(touched || touched2){
-            batch.draw(getTexture(),virtualX,virtualY+fixMovY,getWidth(),getHeight());
+            batch.draw(getTexture(),virtualX-fixMovY,virtualY+fixMovY,getWidth(),getHeight());
         }
 
     }
     public void resetPosition(){
-        Gdx.app.log("RESET POSITION","MYSTERY");
         virtualX = getX();
         virtualY = getY();
 
