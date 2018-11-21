@@ -1,4 +1,4 @@
-package Minerals;
+package minerals;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import bullets.MineralBullet;
 import huds.maingame.MineralPin;
 import screens.MainGame;
+import skills.Skill;
 import utils.Animator;
 import utils.Counter;
 import utils.MyGestures;
@@ -74,19 +75,21 @@ public class Mineral extends Sprite {
     public Texture yellow = new Texture(Gdx.files.internal("colors/yellow.png"));
     public Texture gray = new Texture(Gdx.files.internal("colors/gray.png"));
     public Texture curr = green;
-
     public MineralPin pin;
 
-    //
-    //animation variables
+
+    //SKILL VARIABLES
+
+    public Skill skill;
+
+    //ANIMATION VARIABLES
     private boolean blink = false;
     Animator animator;
 
-    public Mineral(Texture texture, float x, float y, int HP, int ATK, int SPD, int PP){
+    public Mineral(float x, float y, int HP, int ATK, int SPD, int PP){
         super();
         setPosition(x,y);
         setSize(64,64);
-
 
         touchRect = new Rectangle(getX() - getWidth()/2,getY()-getHeight()*5/2,getWidth()*2,getHeight()*4);
 
@@ -100,7 +103,7 @@ public class Mineral extends Sprite {
         EARNED_PP = 0;
         //hud
         PERCENT_HP = 100;
-        pin = new MineralPin(this,"green");
+
         //animations
         impactCounter = new Counter();
         //shoot
@@ -319,5 +322,8 @@ public class Mineral extends Sprite {
     }
     public int getEARNED_PP(){
         return EARNED_PP;
+    }
+    public Skill getSkill(){
+        return skill;
     }
 }

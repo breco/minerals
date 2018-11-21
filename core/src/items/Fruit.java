@@ -3,7 +3,7 @@ package items;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import screens.MainGame;
 
 public class Fruit extends Item {

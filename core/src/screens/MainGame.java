@@ -16,8 +16,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import Minerals.Minerals;
-import Minerals.TestMineral;
 import backgrounds.Background;
 import bullets.Bullets;
 import enemies.Enemies;
@@ -26,12 +24,16 @@ import huds.Initial.MainGameHUD;
 import items.Fruit;
 import items.Items;
 import items.SpeedStar;
+import minerals.Agni;
+import minerals.Minerals;
+import minerals.Terro;
+import minerals.Aqualis;
 import skills.Skills;
 import utils.MyGestures;
 import utils.TimeManager;
 
 //import Minerals.Minerals;
-//import Minerals.TestMineral;
+//import Minerals.Aqualis;
 
 
 public class MainGame implements Screen {
@@ -92,9 +94,10 @@ public class MainGame implements Screen {
 
         // GAME OBJECTS
         minerals = new Minerals();
-        minerals.add( new TestMineral(Initial.HEIGHT/4,400,30,2,30, 1));
-        minerals.add( new TestMineral(Initial.HEIGHT/2,400,30,2,30, 1));
-        minerals.add( new TestMineral(Initial.HEIGHT*3/4,400,30,2,30, 1));
+
+        minerals.add( new Aqualis(Initial.HEIGHT/4-32,400,30,2,30, 1));
+        minerals.add( new Terro(Initial.HEIGHT/2-32,400,30,2,30, 1));
+        minerals.add( new Agni(Initial.HEIGHT*3/4-32,400,30,2,30, 1));
 
         enemies = new Enemies();
 

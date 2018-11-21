@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-import Minerals.Minerals;
-import items.Item;
+import minerals.Minerals;
 import items.Items;
 import screens.MainGame;
 import skills.Skills;

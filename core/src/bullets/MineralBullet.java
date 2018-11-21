@@ -2,7 +2,7 @@ package bullets;
 
 import com.artificialmemories.minerals.Initial;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import enemies.Enemy;
 import screens.MainGame;
 import utils.Animator;

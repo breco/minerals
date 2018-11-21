@@ -3,7 +3,7 @@ package skills;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import screens.MainGame;
 import utils.TimeManager;
 

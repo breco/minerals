@@ -1,6 +1,6 @@
 package bullets;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import screens.MainGame;
 import utils.Animator;
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import screens.MainGame;
 
 public class Skills {
@@ -57,7 +57,7 @@ public class Skills {
     public void setSkills(){
         int i = 1;
         for (Mineral mineral : game.minerals.getMinerals()){
-            this.add(new TestSkill(mineral, new Texture(Gdx.files.internal("skills/icons/skill"+i+".png"))));
+            this.add(mineral.getSkill());
             i++;
         }
     }

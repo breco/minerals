@@ -4,7 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import Minerals.Mineral;
+import minerals.Mineral;
 import screens.MainGame;
 import utils.Animator;
 import utils.Counter;
