@@ -18,7 +18,8 @@ public class TestEnemy extends Enemy {
     int SPD_X = 3;
     int SPD_Y = 1;
     int SPD_CONT = 75;
-    int SHOT_CONT =  100; //ThreadLocalRandom.current().nextInt(10,61);
+    int SHOT_CONT =  0; //ThreadLocalRandom.current().nextInt(10,61);
+    int SHOT_SPD = 120;
 
 
     // HP ATK
@@ -56,8 +57,8 @@ public class TestEnemy extends Enemy {
     }
     public void shoot(){
         SHOT_CONT--;
-        if(SHOT_CONT == 0){
-            SHOT_CONT = 20;//ThreadLocalRandom.current().nextInt(100,151);
+        if(SHOT_CONT <= 0){
+            SHOT_CONT = SHOT_SPD;//ThreadLocalRandom.current().nextInt(100,151);
             float x = getX()+ getWidth();
             float y = getY();
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import minerals.Mineral;
-import screens.MainGame;
 import utils.TimeManager;
 
 public class TestSkill extends Skill {
@@ -20,7 +19,7 @@ public class TestSkill extends Skill {
         amount = 0.4f;
         EFFECT_DURATION = 10;
         time = new TimeManager();
-        REQUIRED_PP = 5;
+        REQUIRED_PP = 10;
         COOL_DOWN = 10;
     }
 
@@ -37,8 +36,9 @@ public class TestSkill extends Skill {
         finished = false;
         owner.changeSPD(amount);
 
-        MainGame.chargePP(-REQUIRED_PP);
         time.start();
+
+
         startCoolDown();
 
     }

@@ -1,7 +1,5 @@
 package skills;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
@@ -26,6 +24,7 @@ public class Skills {
     public void update(){
         for(Skill skill : skills){
             skill.update();
+            skill.stopCoolDown();
             skill.setAvailability(game.CURRENT_PP);
         }
     }
@@ -55,10 +54,10 @@ public class Skills {
     }
 
     public void setSkills(){
-        int i = 1;
+
         for (Mineral mineral : game.minerals.getMinerals()){
             this.add(mineral.getSkill());
-            i++;
+
         }
     }
 

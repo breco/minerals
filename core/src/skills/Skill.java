@@ -53,20 +53,22 @@ public abstract class Skill extends Sprite {
         //darkSkill.setColor(Color.GRAY);
     }
     public void update(){
-        if(checkCoolDown()){
 
-        }
     }
     public abstract void effect();
     public abstract void revertEffect();
     public abstract void drawEffect(SpriteBatch batch);
 
     public void startCoolDown(){
+        used = true;
+        MainGame.chargePP(-REQUIRED_PP);
         coolDownTimer.start();
     }
 
     public boolean checkCoolDown(){
-        if(((int) coolDownTimer.getTime()) >= COOL_DOWN) return true;
+        if(coolDownTimer.getTime() >= COOL_DOWN){
+            return true;
+        }
         return false;
     }
 
@@ -88,15 +90,19 @@ public abstract class Skill extends Sprite {
         }
     }
 
+    public void stopCoolDown(){
+        if(checkCoolDown()){
+            used = false;
+        }
+    }
     public void setDisabled(){
         if(getColor().equals(Color.GRAY)) return;
         setColor(Color.GRAY);
-        used = true;
+
     }
     public void setEnabled(){
         if(getColor().equals(Color.WHITE)) return;
         setColor(Color.WHITE);
-        used = false;
 
     }
     public void draw(SpriteBatch batch){
@@ -108,20 +114,15 @@ public abstract class Skill extends Sprite {
             float height = coolDownTimer.getTime()/COOL_DOWN;
 
             dif = ((int) (24 * (1 - height)));
-
             if(prev - dif != 0){
-
                 fixedHeight = (int)(darkSkill.getHeight()*height);
             }
             else{
-
             }
             prev = dif;
 
-
-
             region = new TextureRegion(darkSkill.getTexture(),0, ((int) (24 * (1 - height))),24,24);
-            Gdx.app.log("DIF "+dif,"FIXEDHEIGHT "+fixedHeight+"");
+            //Gdx.app.log("DIF "+dif,"HEIGHT"+height+"");
             batch.draw(region,darkSkill.getX(), darkSkill.getY()-darkSkill.getHeight() + fixedHeight + 5 ,darkSkill.getWidth(),darkSkill.getHeight());
         }
 
@@ -132,7 +133,6 @@ public abstract class Skill extends Sprite {
         if(used) return;
         if(MainGame.CURRENT_PP < REQUIRED_PP) return;
         if(getBoundingRectangle().contains(vec.x,vec.y)){
-
             effect();
             setDisabled();
         }

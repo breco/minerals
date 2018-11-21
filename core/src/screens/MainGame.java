@@ -173,6 +173,7 @@ public class MainGame implements Screen {
         CURRENT_PP = minerals.getInitialPP();
         Gdx.app.log("INITIAL PP",CURRENT_PP+"");
         updatePPbar();
+
     }
 
     public static void chargePP(int amount){
@@ -184,7 +185,7 @@ public class MainGame implements Screen {
 
     public static void updatePPbar(){
         PERCENT_PP = CURRENT_PP*100f/MAX_PP;
-        Gdx.app.log("PERCENTPP",PERCENT_PP+"");
+        //Gdx.app.log("PERCENTPP",PERCENT_PP+"");
 
     }
 
