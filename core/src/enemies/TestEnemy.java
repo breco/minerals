@@ -14,11 +14,11 @@ public class TestEnemy extends Enemy {
 
     //movement variables
     char ori;
-    int MAX_SPD = 150;
+    int MAX_SPD = 100;
     int SPD_X = 3;
     int SPD_Y = 1;
     int SPD_CONT = 75;
-    int SHOT_CONT =  80; //ThreadLocalRandom.current().nextInt(10,61);
+    int SHOT_CONT =  100; //ThreadLocalRandom.current().nextInt(10,61);
 
 
     // HP ATK
@@ -32,7 +32,7 @@ public class TestEnemy extends Enemy {
         //pium = Gdx.audio.newSound(Gdx.files.internal("sound effects/04.wav"));
         int[] size = {15,15};
         bulletAnimator = new Animator(new Texture(Gdx.files.internal("bullets/tuzzu bullet.png")),1,2,2,0.8f,size);
-        Gdx.app.log("ADDED","TESTENEMY");
+
 
     }
 

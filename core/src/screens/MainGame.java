@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
@@ -19,6 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import Minerals.Minerals;
 import Minerals.TestMineral;
+import backgrounds.Background;
 import bullets.Bullets;
 import enemies.Enemies;
 import enemies.Enemy;
@@ -55,7 +55,7 @@ public class MainGame implements Screen {
     public huds.Initial.MainGameHUD hud;
     public float itemSection = 6.5f;
     //graphics
-    Sprite bg;
+
 
 
     //HELPERS/UTILS
@@ -69,8 +69,7 @@ public class MainGame implements Screen {
     public static float PERCENT_PP;
 
     //TEST
-    //int virtualWidth = 1280;
-    //int virtualHeight = 720;
+    public Background bg;
 
 
 
@@ -87,16 +86,15 @@ public class MainGame implements Screen {
         vec = new Vector3();
 
         //GRAPHICS
-        bg = new Sprite(new Texture(Gdx.files.internal("space.png")));
-        bg.setSize(Initial.HEIGHT, Initial.WIDTH);
-        bg.setPosition(0,0);
+        bg = new Background(new Texture(Gdx.files.internal("backgrounds/bg3.png")));
+
 
 
         // GAME OBJECTS
         minerals = new Minerals();
         minerals.add( new TestMineral(Initial.HEIGHT/4,400,30,2,30, 1));
         minerals.add( new TestMineral(Initial.HEIGHT/2,400,30,2,30, 1));
-        minerals.add( new TestMineral(Initial.HEIGHT*3/4,400,30,2,30, 30));
+        minerals.add( new TestMineral(Initial.HEIGHT*3/4,400,30,2,30, 1));
 
         enemies = new Enemies();
 
@@ -251,6 +249,7 @@ public class MainGame implements Screen {
     }
 
     public void update(){
+        bg.update();
         minerals.update();
         enemies.update();
         bullets.update();
