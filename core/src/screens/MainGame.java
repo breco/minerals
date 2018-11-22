@@ -150,7 +150,7 @@ public class MainGame implements Screen {
 
         JsonReader reader = new JsonReader();
         Json json = new Json();
-        JsonValue base = reader.parse(Gdx.files.internal("levels/1.json"));
+        JsonValue base = reader.parse(Gdx.files.internal("levels/"+game.prefs.getString("load_level")+".json"));
 
         JsonValue enemigos = base.get("enemies");
         JsonEnemy t;
@@ -166,7 +166,7 @@ public class MainGame implements Screen {
 
 
 
-        //bg = new Background(new Texture(Gdx.files.internal("backgrounds/"+base.getString("background"))));
+        bg = new Background(new Texture(Gdx.files.internal("backgrounds/"+base.getString("background"))));
     }
 
     public void setInitialPP(){

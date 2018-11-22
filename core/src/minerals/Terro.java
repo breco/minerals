@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import huds.maingame.MineralPin;
-import skills.LaunchFireBalls;
+import skills.LaunchRockWheel;
 import utils.Animator;
 
 public class Terro extends Mineral {
@@ -16,7 +16,7 @@ public class Terro extends Mineral {
         int[] size = {15,15};
         bulletAnimator = new Animator(new Texture(Gdx.files.internal("bullets/crystal bullet.png")),1,4,4,0.5f,size);
         pin = new MineralPin(this,"purple");
-        skill = new LaunchFireBalls(this, new Texture(Gdx.files.internal("skills/icons/fireball.png")));
+        skill = new LaunchRockWheel(this, new Texture(Gdx.files.internal("skills/icons/rock wheel.png")));
     }
 
 

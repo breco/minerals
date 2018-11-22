@@ -217,7 +217,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             Gdx.app.log("TOUCH DOWN","POINTER 1");
             firstTouch.set(screenX, screenY, 0);
             firstTouchTest.set(screenX, screenY, 0);
-            MainGame.cam.unproject(firstTouchTest);
+            if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest);
             delta.set(0, 0, 0);
             deltaTest.set(0,0,0);
         }
@@ -225,7 +225,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             Gdx.app.log("TOUCH DOWN","POINTER 2");
             firstTouch2.set(screenX, screenY, 0);
             firstTouchTest2.set(screenX,screenY,0);
-            MainGame.cam.unproject(firstTouchTest2);
+            if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest2);
             delta2.set(0, 0, 0);
             deltaTest2.set(0,0,0);
         }

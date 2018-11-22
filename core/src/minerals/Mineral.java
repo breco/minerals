@@ -309,7 +309,11 @@ public class Mineral extends Sprite {
         //piumPitch = (int)(1/SPEED_SHOOT);
     }
 
-
+    public void changeATK(int amount){
+        ATK_VARIABLE += amount;
+        ATK_TOTAL = ATK_FIXED + ATK_VARIABLE;
+        if(ATK_TOTAL < 0) ATK_TOTAL = 0;
+    }
 
 
     //GETTERS

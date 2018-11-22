@@ -54,7 +54,7 @@ public class MainMenu implements Screen {
         newGameButton.addListener(new ClickListener(){
            @Override
            public void clicked(InputEvent event,float x, float y){
-               game.setScreen(new MainGame(game));
+               game.setScreen(new WorldScreen(game));
            }
         });
         stage.addActor(newGameButton);
