@@ -34,7 +34,7 @@ public abstract class Item extends Sprite {
     }
     public void setPosition(int i){
         //Gdx.app.log("i position",i+"");
-        setPosition(Initial.HEIGHT - getWidth()*2,Initial.WIDTH/2 - ((getWidth()+30)*i));
+        setPosition(Initial.HEIGHT - getWidth()*2 - 10,Initial.WIDTH/2 - ((getWidth()+30)*i));
         Gdx.app.log("POSITION",getX()+","+getY());
         virtualX = getX();
         virtualY = getY();
@@ -90,7 +90,7 @@ public abstract class Item extends Sprite {
 
     }
     public void draw(SpriteBatch batch){
-        batch.draw(itemSlot,getX()-5,getY()-5,60,60);
+        //batch.draw(itemSlot,getX()-5,getY()-5,60,60);
         super.draw(batch);
         if(used){
             batch.draw(cross,getX(),getY(),50,50);

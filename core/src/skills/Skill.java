@@ -73,8 +73,8 @@ public abstract class Skill extends Sprite {
     }
 
     public void setPosition(int i){
-        setPosition(Initial.HEIGHT/7.8f+i* Initial.HEIGHT/3.25f,Initial.WIDTH/24);
-        darkSkill.setPosition(Initial.HEIGHT/7.8f+i* Initial.HEIGHT/3.25f,Initial.WIDTH/24);
+        setPosition(Initial.HEIGHT/7f+i* Initial.HEIGHT/3.375f,Initial.WIDTH/24);
+        darkSkill.setPosition(Initial.HEIGHT/7f+i* Initial.HEIGHT/3.375f,Initial.WIDTH/24);
         virtualX = getX();
         virtualY = getY();
         this.i = i;
@@ -106,7 +106,7 @@ public abstract class Skill extends Sprite {
 
     }
     public void draw(SpriteBatch batch){
-        batch.draw(skillSlot,Initial.HEIGHT/15+i*Initial.HEIGHT/3.25f,Initial.WIDTH/256,180,180);
+        //batch.draw(skillSlot,Initial.HEIGHT/15+i*Initial.HEIGHT/3.25f,Initial.WIDTH/256,180,180);
         super.draw(batch);
 
 

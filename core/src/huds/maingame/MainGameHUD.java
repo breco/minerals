@@ -18,7 +18,7 @@ public class MainGameHUD {
     MainGame game;
 
     private Texture black,gray,purple;
-
+    private Texture skillSlots,itemSlots;
 
     //private My_Button pauseButton;
     public MainGameHUD(MainGame game){
@@ -31,7 +31,8 @@ public class MainGameHUD {
         black = new Texture(Gdx.files.internal("huds/mainGame/black.png")); // Cambiar direccion de archivo black.png a carpeta colors
         gray = new Texture(Gdx.files.internal("colors/gray.png"));
         purple = new Texture(Gdx.files.internal("colors/purple.png"));
-
+        skillSlots = new Texture(Gdx.files.internal(("huds/mainGame/skillSlots.png")));
+        itemSlots = new Texture(Gdx.files.internal(("huds/mainGame/itemSlots.png")));
         int i=0;
         /*for(Item item : items.getItems()){
             item.setPosition(Initial.WIDTH/10.5f+i*Initial.WIDTH/3,Initial.HEIGHT/24);
@@ -50,6 +51,9 @@ public class MainGameHUD {
 
         //draw item section
         batch.draw(black,0,0,Initial.HEIGHT,Initial.WIDTH/game.itemSection);
+        batch.draw(skillSlots,45,0,Initial.HEIGHT*7/8f,Initial.WIDTH/game.itemSection);
+        batch.draw(itemSlots, Initial.HEIGHT - 130,Initial.WIDTH/2 - ((50+10)*3), 90, 250);
+        //batch.draw(itemSlot,getX()-5,getY()-5,60,60);
         batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );
         batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
 
