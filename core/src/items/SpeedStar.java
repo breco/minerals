@@ -1,6 +1,5 @@
 package items;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import minerals.Mineral;
@@ -23,14 +22,12 @@ public class SpeedStar extends Item {
 
     }
     public void effect(){
-        rect.setPosition(virtualX,virtualY+fixMovY);
-        rect.setSize(getWidth(),getHeight());
 
-        Gdx.app.log("FRUiT RECTANGLE",""+rect);
+
+
         for(Mineral mineral: MainGame.minerals.getMinerals()){
-            //Rectangle inter = new Rectangle();
-            //Intersector.intersectRectangles(mineral.getBoundingRectangle(), rect, inter);
-            if(rect.overlaps(mineral.getBoundingRectangle())){
+
+            if(getMovingRectangle().overlaps(mineral.getBoundingRectangle())){
                 mineral.changeSPD(amount);
                 affected = mineral;
                 used = true;

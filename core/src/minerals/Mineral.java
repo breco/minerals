@@ -171,9 +171,9 @@ public class Mineral extends Sprite {
             setX(getWidth());
             touchRect.setX(getWidth()-getWidth()/2);
         }
-        if(getY() < Initial.WIDTH/6.5f){
-            setY(Initial.WIDTH/6.5f);
-            touchRect.setY(Initial.WIDTH/6.5f-getHeight()*5/2);
+        if(getY() < Initial.WIDTH/6.5f + 30){
+            setY(Initial.WIDTH/6.5f + 30);
+            touchRect.setY(Initial.WIDTH/6.5f-getHeight()*5/2 + 30);
         }
         if(getY() > verticalBorder){
             setY(verticalBorder);

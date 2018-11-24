@@ -21,14 +21,10 @@ public class Fruit extends Item {
     @Override
     public void effect() {
 
-        rect.setPosition(virtualX-fixMovY/2,virtualY+fixMovY);
-        rect.setSize(getWidth()/2,getHeight());
-
-        Gdx.app.log("FRUiT RECTANGLE",""+rect);
         for(Mineral mineral: MainGame.minerals.getMinerals()){
             //Rectangle inter = new Rectangle();
             //Intersector.intersectRectangles(mineral.getBoundingRectangle(), rect, inter);
-            if(rect.overlaps(mineral.getBoundingRectangle())){
+            if(getMovingRectangle().overlaps(mineral.getBoundingRectangle())){
                 Gdx.app.log("USING","EFECT");
                 mineral.heal(amount);
                 used = true;

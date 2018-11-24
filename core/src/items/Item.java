@@ -105,5 +105,10 @@ public abstract class Item extends Sprite {
         virtualY = getY();
 
     }
+    public Rectangle getMovingRectangle(){
+        rect.setPosition(virtualX-fixMovY/2,virtualY+fixMovY);
+        rect.setSize(getWidth()/2,getHeight());
+        return rect;
+    }
 }
 
