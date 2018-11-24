@@ -158,7 +158,7 @@ public class MainGame implements Screen {
         while(enemigos.get(i) != null){
             t = json.fromJson(JsonEnemy.class, enemigos.get(i).toString());
             Class<?> clazz = Class.forName(t.clase);
-            Gdx.app.log("t.clase",t.clase);
+            //Gdx.app.log("t.clase",t.clase);
             Constructor<?> ctor = clazz.getConstructor(int.class,int.class,int.class);
             enemies.add((Enemy) ctor.newInstance(t.posx,Initial.WIDTH,t.time));
             i++;
@@ -254,6 +254,7 @@ public class MainGame implements Screen {
 
     public void update(){
         bg.update();
+        hud.update();
         minerals.update();
         enemies.update();
         bullets.update();

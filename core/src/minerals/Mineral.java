@@ -300,7 +300,7 @@ public class Mineral extends Sprite {
             curr = green;
             COLOR_HP = 'G';
         }
-        else if(PERCENT_HP >= 25){
+        else if(PERCENT_HP > 25){
             curr = yellow;
             COLOR_HP = 'Y';
         }

@@ -19,8 +19,11 @@ public abstract class Item extends Sprite {
     public Rectangle rect;
     public int fixMovY;
     public float virtualX,virtualY;
+    public float baseX,baseY;
     public int i;
     public Texture cross;
+    public float initialX = Initial.HEIGHT - getWidth()*2 - 10;
+    public Texture green = new Texture(Gdx.files.internal(("colors/green.png")));
 
     public Item(Texture texture, String type){
         super(texture);
@@ -31,14 +34,18 @@ public abstract class Item extends Sprite {
 
         cross = new Texture(Gdx.files.internal("huds/mainGame/cross.png"));
 
+
     }
     public void setPosition(int i){
 
-        setPosition(Initial.HEIGHT - getWidth()*2 - 10,Initial.WIDTH/2 - ((getWidth()+30)*i));
+        setPosition(initialX,Initial.WIDTH/2 - ((getWidth()+30)*i));
         Gdx.app.log("POSITION",getX()+","+getY());
-        virtualX = getX();
-        virtualY = getY();
+        baseX = getX();
+        baseY = getY();
+        virtualX = baseX;
+        virtualY = baseY;
         this.i = i;
+
     }
     public void update(){
         move();
@@ -96,18 +103,22 @@ public abstract class Item extends Sprite {
             return;
         }
         if(touched || touched2){
-            batch.draw(getTexture(),virtualX-fixMovY,virtualY+fixMovY,getWidth(),getHeight());
+
+
+            batch.draw(green, getMovingRectangle().getX(),getMovingRectangle().getY(),getMovingRectangle().width,getMovingRectangle().height);
+            batch.draw(getTexture(),virtualX-fixMovY*2.5f,virtualY+fixMovY,getWidth(),getHeight());
+            //batch.draw(getTexture(),virtualX-fixMovY,virtualY+fixMovY,getWidth(),getHeight());
         }
 
     }
     public void resetPosition(){
-        virtualX = getX();
-        virtualY = getY();
+        virtualX = baseX;
+        virtualY = baseY;
 
     }
     public Rectangle getMovingRectangle(){
-        rect.setPosition(virtualX-fixMovY/2,virtualY+fixMovY);
-        rect.setSize(getWidth()/2,getHeight());
+        rect.setPosition(virtualX-fixMovY*2.5f,virtualY+fixMovY);
+        rect.setSize(getWidth(),getHeight());
         return rect;
     }
 }

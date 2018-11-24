@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+import items.Item;
 import items.Items;
+import minerals.Mineral;
 import minerals.Minerals;
 import screens.MainGame;
 import skills.Skills;
@@ -25,6 +27,8 @@ public class MainGameHUD {
     public Texture HPContainerCenter = new Texture(Gdx.files.internal("huds/mainGame/bar center.png"));
     public Texture blue = new Texture(Gdx.files.internal("huds/mainGame/pp center blue.png"));
 
+    public int baseItemX = Initial.HEIGHT - 130;
+    public float itemX = baseItemX;
 
 
     //private My_Button pauseButton;
@@ -50,6 +54,20 @@ public class MainGameHUD {
         //pauseButton.setPosition(Initial.WIDTH-pauseButton.getWidth()*1.1f,Initial.HEIGHT-pauseButton.getHeight()*1.1f);
     }
     public void update(){
+        Mineral mineral = minerals.getMostRight();
+        if(mineral.getX() < baseItemX && itemX > baseItemX){
+            itemX = baseItemX;
+        }
+        if(mineral.getX() +  mineral.getWidth()*1.25f >= itemX ){
+            itemX = mineral.getX() +  mineral.getWidth()*1.25f;
+
+        } else if (mineral.getX() +  mineral.getWidth()*1.25f < itemX && mineral.getX() +  mineral.getWidth()*1.25f > baseItemX ) {
+            itemX = mineral.getX() +  mineral.getWidth()*1.25f;
+
+        }
+        for(Item item : items.getItems()){
+            item.setX(itemX + 20);
+        }
 
     }
     public void draw(SpriteBatch batch){
@@ -59,7 +77,7 @@ public class MainGameHUD {
         //draw item section
         batch.draw(black,0,0,Initial.HEIGHT,Initial.WIDTH/game.itemSection);
         batch.draw(skillSlots,45,0,Initial.HEIGHT*7/8f,Initial.WIDTH/game.itemSection);
-        batch.draw(itemSlots, Initial.HEIGHT - 130,Initial.WIDTH/2 - ((50+10)*3), 90, 250);
+        batch.draw(itemSlots, itemX,Initial.WIDTH/2 - ((50+10)*3), 90, 250);
 
 
         //batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );

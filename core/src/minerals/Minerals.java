@@ -55,6 +55,18 @@ public class Minerals{
         return temp;
     }
 
+    public Mineral getMostRight(){
+        float x = -1;
+        Mineral temp = null;
+        for(Mineral mineral : minerals){
+            if(mineral.getX() > x){
+                x = mineral.getX();
+                temp = mineral;
+            }
+        }
+        return temp;
+    }
+
     public int getInitialPP(){
         int PP = 0;
         for(Mineral mineral : minerals){
