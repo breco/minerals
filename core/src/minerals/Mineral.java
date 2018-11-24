@@ -70,16 +70,15 @@ public class Mineral extends Sprite {
 
     public float PERCENT_HP;
     public char COLOR_HP;
-    //public Texture green = new Texture(Gdx.files.internal("colors/green.png"));
-    //public Texture red = new Texture(Gdx.files.internal("colors/red.png"));
-    //public Texture yellow = new Texture(Gdx.files.internal("colors/yellow.png"));
-    //public Texture gray = new Texture(Gdx.files.internal("colors/gray.png"));
-    //public Texture curr = green;
+    public Texture green = new Texture(Gdx.files.internal("huds/mainGame/hp center green.png"));
+    public Texture red = new Texture(Gdx.files.internal("huds/mainGame/hp center red.png"));
+    public Texture yellow = new Texture(Gdx.files.internal("huds/mainGame/hp center yellow.png"));
+    public Texture curr = green;
     public MineralPin pin;
     public Texture HPContainerLeft = new Texture(Gdx.files.internal("huds/mainGame/bar left.png"));
     public Texture HPContainerRight = new Texture(Gdx.files.internal("huds/mainGame/bar right.png"));
     public Texture HPContainerCenter = new Texture(Gdx.files.internal("huds/mainGame/bar center.png"));
-    public Texture HPBar = new Texture(Gdx.files.internal("huds/mainGame/hp center.png"));
+
 
     //SKILL VARIABLES
 
@@ -118,7 +117,7 @@ public class Mineral extends Sprite {
         ATK_TOTAL = ATK_FIXED + ATK_VARIABLE;
 
         //
-        
+
     }
 
 
@@ -235,16 +234,15 @@ public class Mineral extends Sprite {
 
     public void drawHUD(SpriteBatch batch){
         if(status.equals("dead")) return;
-        //batch.draw(gray,getX() - getWidth()/5,getY()-getHeight()/3, Initial.WIDTH*0.07f , Initial.HEIGHT*0.006f);
+
         batch.draw(HPContainerLeft,getX() - getWidth()/4, getY() - getHeight()/2);
         batch.draw(HPContainerCenter, getX() - getWidth()/4 + HPContainerLeft.getWidth(), getY() - getHeight()/2);
         batch.draw(HPContainerCenter, getX() - getWidth()/4 + HPContainerLeft.getWidth()+HPContainerCenter.getWidth(), getY() - getHeight()/2);
         batch.draw(HPContainerRight, getX() - getWidth()/4 + HPContainerLeft.getWidth() + HPContainerCenter.getWidth()*2, getY() - getHeight()/2);
-        batch.draw(HPBar, getX() - getWidth()/4 + 9, getY() - getHeight()/2 + 3, /*PERCENT_HP * (HPContainerCenter.getWidth()+15)*0.07f / 100f*/(15+HPContainerCenter.getWidth()*2+15)*PERCENT_HP/100f, HPBar.getHeight());
-        //batch.draw(curr, getX() - getWidth()/5, getY()-getHeight()/3, PERCENT_HP * Initial.WIDTH*0.07f / 100f, Initial.HEIGHT*0.006f);
+        batch.draw(curr, getX() - getWidth()/4 + 9, getY() - getHeight()/2 + 3, (15+HPContainerCenter.getWidth()*2+15)*PERCENT_HP/100f, curr.getHeight());
+
         pin.draw(batch);
-        //batch.draw(gray,getX() - getWidth(),getY()+getHeight()*3.5f-initial.HEIGHT*0.006f,initial.WIDTH*0.19f ,initial.HEIGHT*0.006f);
-        //batch.draw(purple, getX() - getWidth(), getY() + getHeight()*3.5f-initial.HEIGHT*0.006f, PERCENT_PP * initial.WIDTH*0.19f / 100f, initial.HEIGHT*0.006f);
+
 
     }
 

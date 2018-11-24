@@ -20,7 +20,7 @@ import backgrounds.Background;
 import bullets.Bullets;
 import enemies.Enemies;
 import enemies.Enemy;
-import huds.Initial.MainGameHUD;
+import huds.maingame.MainGameHUD;
 import items.Fruit;
 import items.Items;
 import items.SpeedStar;
@@ -54,7 +54,7 @@ public class MainGame implements Screen {
 
     //HUD
 
-    public huds.Initial.MainGameHUD hud;
+    public huds.maingame.MainGameHUD hud;
     public float itemSection = 6.5f;
     //graphics
 

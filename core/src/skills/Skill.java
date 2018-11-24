@@ -1,7 +1,6 @@
 package skills;
 
 import com.artificialmemories.minerals.Initial;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,7 +24,6 @@ public abstract class Skill extends Sprite {
 
 
     Mineral owner;
-    public Texture skillSlot;
     public float virtualX,virtualY;
     public int i;
     public boolean touched = false;
@@ -42,7 +40,7 @@ public abstract class Skill extends Sprite {
     public Skill(Mineral owner, Texture texture){
         super(texture);
         this.owner = owner;
-        skillSlot = new Texture(Gdx.files.internal("huds/mainGame/skillSlot.png"));
+
         setSize(90,90);
         coolDownTimer = new TimeManager();
 
@@ -50,7 +48,7 @@ public abstract class Skill extends Sprite {
 
         darkSkill = new Sprite(texture);
         darkSkill.setSize(90,90);
-        //darkSkill.setColor(Color.GRAY);
+
     }
     public void update(){
 
@@ -106,7 +104,7 @@ public abstract class Skill extends Sprite {
 
     }
     public void draw(SpriteBatch batch){
-        //batch.draw(skillSlot,Initial.HEIGHT/15+i*Initial.HEIGHT/3.25f,Initial.WIDTH/256,180,180);
+
         super.draw(batch);
 
 
@@ -122,12 +120,12 @@ public abstract class Skill extends Sprite {
             prev = dif;
 
             region = new TextureRegion(darkSkill.getTexture(),0, ((int) (24 * (1 - height))),24,24);
-            //Gdx.app.log("DIF "+dif,"HEIGHT"+height+"");
+
             batch.draw(region,darkSkill.getX(), darkSkill.getY()-darkSkill.getHeight() + fixedHeight + 5 ,darkSkill.getWidth(),darkSkill.getHeight());
         }
 
 
-        //batch.draw(darkSkill,darkSkill.getX(), darkSkill.getY(),  darkSkill.getWidth(), darkSkill.getHeight()*coolDownTimer.getTime()/COOL_DOWN);
+
     }
     public void input(Vector3 vec, int pointer){
         if(used) return;

@@ -20,7 +20,7 @@ public abstract class Item extends Sprite {
     public int fixMovY;
     public float virtualX,virtualY;
     public int i;
-    public Texture itemSlot,cross;
+    public Texture cross;
 
     public Item(Texture texture, String type){
         super(texture);
@@ -28,12 +28,12 @@ public abstract class Item extends Sprite {
         this.type = type;
         rect = new Rectangle();
         fixMovY = 50;
-        itemSlot = new Texture(Gdx.files.internal("huds/mainGame/itemSlot.png"));
+
         cross = new Texture(Gdx.files.internal("huds/mainGame/cross.png"));
 
     }
     public void setPosition(int i){
-        //Gdx.app.log("i position",i+"");
+
         setPosition(Initial.HEIGHT - getWidth()*2 - 10,Initial.WIDTH/2 - ((getWidth()+30)*i));
         Gdx.app.log("POSITION",getX()+","+getY());
         virtualX = getX();
@@ -54,9 +54,8 @@ public abstract class Item extends Sprite {
 
     public void input(Vector3 vec, int pointer){
         if(used) return;
-        Gdx.app.log("TOUCH POS",vec+"");
+
         if(getBoundingRectangle().contains(vec.x,vec.y)){
-            Gdx.app.log("RECT:",getBoundingRectangle()+"");
 
             if(type.equals("auto")){ // Applicable to all pixies
                 effect();
@@ -90,7 +89,7 @@ public abstract class Item extends Sprite {
 
     }
     public void draw(SpriteBatch batch){
-        //batch.draw(itemSlot,getX()-5,getY()-5,60,60);
+
         super.draw(batch);
         if(used){
             batch.draw(cross,getX(),getY(),50,50);

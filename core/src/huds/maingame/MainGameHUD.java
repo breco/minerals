@@ -1,4 +1,4 @@
-package huds.Initial;
+package huds.maingame;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-import minerals.Minerals;
 import items.Items;
+import minerals.Minerals;
 import screens.MainGame;
 import skills.Skills;
 
@@ -19,6 +19,13 @@ public class MainGameHUD {
 
     private Texture black,gray,purple;
     private Texture skillSlots,itemSlots;
+
+    public Texture HPContainerLeft = new Texture(Gdx.files.internal("huds/mainGame/bar left.png"));
+    public Texture HPContainerRight = new Texture(Gdx.files.internal("huds/mainGame/bar right.png"));
+    public Texture HPContainerCenter = new Texture(Gdx.files.internal("huds/mainGame/bar center.png"));
+    public Texture blue = new Texture(Gdx.files.internal("huds/mainGame/pp center blue.png"));
+
+
 
     //private My_Button pauseButton;
     public MainGameHUD(MainGame game){
@@ -53,9 +60,18 @@ public class MainGameHUD {
         batch.draw(black,0,0,Initial.HEIGHT,Initial.WIDTH/game.itemSection);
         batch.draw(skillSlots,45,0,Initial.HEIGHT*7/8f,Initial.WIDTH/game.itemSection);
         batch.draw(itemSlots, Initial.HEIGHT - 130,Initial.WIDTH/2 - ((50+10)*3), 90, 250);
-        //batch.draw(itemSlot,getX()-5,getY()-5,60,60);
-        batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );
-        batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
+
+
+        //batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );
+        //batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
+
+        batch.draw(HPContainerLeft,40, Initial.WIDTH/game.itemSection - HPContainerLeft.getHeight()/2, HPContainerLeft.getWidth()*2,HPContainerLeft.getHeight()*2);
+        batch.draw(HPContainerCenter, 40 + HPContainerLeft.getWidth(), Initial.WIDTH/game.itemSection - HPContainerLeft.getHeight()/2, Initial.HEIGHT - HPContainerLeft.getWidth()*6, HPContainerCenter.getHeight()*2);
+        batch.draw(HPContainerRight, 45 + Initial.HEIGHT - HPContainerLeft.getWidth()*5.5f, Initial.WIDTH/game.itemSection - HPContainerLeft.getHeight()/2, HPContainerLeft.getWidth()*2,HPContainerLeft.getHeight()*2);
+        batch.draw(blue, 40 + 18,  Initial.WIDTH/game.itemSection + 6 - HPContainerLeft.getHeight()/2, (Initial.HEIGHT - HPContainerLeft.getWidth()*2 - 67)*game.PERCENT_PP/100f, blue.getHeight()*2);
+
+
+
 
         skills.draw(batch);
         items.draw(batch);
