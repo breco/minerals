@@ -23,7 +23,7 @@ public abstract class Item extends Sprite {
     public int i;
     public Texture cross;
     public float initialX = Initial.HEIGHT - getWidth()*2 - 10;
-    public Texture green = new Texture(Gdx.files.internal(("colors/green.png")));
+    //public Texture green = new Texture(Gdx.files.internal(("colors/green.png")));
 
     public Item(Texture texture, String type){
         super(texture);
@@ -105,7 +105,7 @@ public abstract class Item extends Sprite {
         if(touched || touched2){
 
 
-            batch.draw(green, getMovingRectangle().getX(),getMovingRectangle().getY(),getMovingRectangle().width,getMovingRectangle().height);
+            //batch.draw(green, getMovingRectangle().getX(),getMovingRectangle().getY(),getMovingRectangle().width,getMovingRectangle().height);
             batch.draw(getTexture(),virtualX-fixMovY*2.5f,virtualY+fixMovY,getWidth(),getHeight());
             //batch.draw(getTexture(),virtualX-fixMovY,virtualY+fixMovY,getWidth(),getHeight());
         }

@@ -22,12 +22,13 @@ import enemies.Enemies;
 import enemies.Enemy;
 import huds.maingame.MainGameHUD;
 import items.Fruit;
+import items.Gemstone;
 import items.Items;
 import items.SpeedStar;
 import minerals.Agni;
+import minerals.Aqualis;
 import minerals.Minerals;
 import minerals.Terro;
-import minerals.Aqualis;
 import skills.Skills;
 import utils.MyGestures;
 import utils.TimeManager;
@@ -105,9 +106,9 @@ public class MainGame implements Screen {
         bullets = new Bullets();
 
         items = new Items();
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
+        items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
         items.add(new SpeedStar(new Texture(Gdx.files.internal("items/star.png"))));
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/tuna.png"))));
+        items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
         items.setPosition();
 
         skills = new Skills(this);
@@ -171,7 +172,6 @@ public class MainGame implements Screen {
 
     public void setInitialPP(){
         CURRENT_PP = minerals.getInitialPP();
-        Gdx.app.log("INITIAL PP",CURRENT_PP+"");
         updatePPbar();
 
     }
@@ -203,7 +203,6 @@ public class MainGame implements Screen {
                 cam.unproject(vec);
 
                 if(vec.y < Initial.WIDTH/itemSection){
-                    Gdx.app.log("ITEM","SECTION");
                     skills.input(vec,0);
                     return;
                 }
