@@ -27,6 +27,12 @@ public class Planets {
             }
             return false;
         }
+
+        public void setUntouched(){
+            for(Planet planet : planets){
+                planet.touched = false;
+            }
+        }
         public void draw(SpriteBatch batch){
             for(Planet planet : planets){
                 planet.draw(batch);

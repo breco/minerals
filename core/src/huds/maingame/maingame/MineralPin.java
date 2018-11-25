@@ -1,4 +1,4 @@
-package huds.maingame;
+package huds.maingame.maingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

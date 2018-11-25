@@ -1,6 +1,5 @@
 package utils;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -28,6 +27,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
     public static boolean touchUp;
     public static Vector3 firstTouch, newDelta,newTouch,delta,diff;
     public static Vector3 firstTouchTest, newDeltaTest, deltaTest, newTouchTest;
+    public static Vector3 touchUpvec;
 
     //second input
     public static boolean touchUp2;
@@ -46,6 +46,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
         delta = new Vector3();
         newDelta = new Vector3();
         diff = new Vector3();
+        touchUpvec = new Vector3();
         //second input
         firstTouch2 = new Vector3();
         newTouch2 = new Vector3();
@@ -214,7 +215,6 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(pointer == 0){
-            Gdx.app.log("TOUCH DOWN","POINTER 1");
             firstTouch.set(screenX, screenY, 0);
             firstTouchTest.set(screenX, screenY, 0);
             if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest);
@@ -222,7 +222,6 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             deltaTest.set(0,0,0);
         }
         else if(pointer == 1){
-            Gdx.app.log("TOUCH DOWN","POINTER 2");
             firstTouch2.set(screenX, screenY, 0);
             firstTouchTest2.set(screenX,screenY,0);
             if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest2);
@@ -237,6 +236,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(pointer == 0){
             touchUp = true;
+            touchUpvec.set(screenX,screenY,0);
         }
         else if(pointer == 1){
             touchUp2 = true;
@@ -264,7 +264,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             diff = delta.cpy().sub(newDelta);
 
             newTouchTest.set(screenX, screenY, 0);
-            MainGame.cam.unproject(newTouchTest);
+            if(MainGame.cam != null) MainGame.cam.unproject(newTouchTest);
             newDeltaTest = newTouchTest.cpy().sub(firstTouchTest);
             diff = deltaTest.cpy().sub(newDeltaTest);
             deltaTest = newDeltaTest;
@@ -279,7 +279,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             diff2 = delta2.cpy().sub(newDelta2);
 
             newTouchTest2.set(screenX, screenY, 0);
-            MainGame.cam.unproject(newTouchTest2);
+            if(MainGame.cam != null)  MainGame.cam.unproject(newTouchTest2);
             newDeltaTest2 = newTouchTest2.cpy().sub(firstTouchTest2);
             diff2 = deltaTest2.cpy().sub(newDeltaTest2);
             deltaTest2 = newDeltaTest2;

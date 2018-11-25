@@ -1,4 +1,4 @@
-package huds.maingame;
+package huds.maingame.maingame;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;

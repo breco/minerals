@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 import bullets.MineralBullet;
-import huds.maingame.MineralPin;
+import huds.maingame.maingame.MineralPin;
 import screens.MainGame;
 import skills.Skill;
 import utils.Animator;

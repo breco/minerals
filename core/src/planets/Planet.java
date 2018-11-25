@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Planet extends Sprite {
     public boolean touched;
-    public String level;
-    public Planet(Texture texture, int x, int y, String level){
+    public String level,name;
+    public Planet(Texture texture, int x, int y, String name,  String level){
         super(texture);
         super.setPosition(x,y);
         touched = false;
         this.level = level;
+        this.name = name;
 
     }
     public void update(){
