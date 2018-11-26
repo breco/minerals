@@ -25,10 +25,10 @@ public class BasicMenu {
     public boolean show = false;
 
 
-    Planet planet;
+    private Planet planet;
     String title ="";
 
-    private WorldScreen screen;
+    public WorldScreen screen;
 
     public BasicMenu(WorldScreen screen){
         this.screen = screen;
@@ -93,7 +93,7 @@ public class BasicMenu {
 
         Texture normal = new Texture(Gdx.files.internal("huds/menu/square button.png"));
         Texture pressed = new Texture(Gdx.files.internal("huds/menu/square button pressed.png"));
-        backbutton = new BasicButton(normal,pressed, Initial.HEIGHT/2 - menuLU.getWidth()/3, menuCD.getY()+ menuCD.getHeight()/3);
+        backbutton = new BasicButton(normal,pressed, Initial.HEIGHT/2 - menuLU.getWidth()/3, menuCD.getY()+ menuCD.getHeight()/4);
         backbutton.setIcon(new Texture(Gdx.files.internal("huds/menu/back arrow.png")));
         backbutton.setSize(menuLU.getWidth(), menuLU.getHeight()*0.8f);
         normal = new Texture(Gdx.files.internal("huds/menu/menu title X.png"));
@@ -153,5 +153,8 @@ public class BasicMenu {
         this.planet = planet;
         title = planet.name;
 
+    }
+    public Planet getPlanet(){
+        return planet;
     }
 }

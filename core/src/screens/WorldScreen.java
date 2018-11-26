@@ -16,6 +16,7 @@ import huds.maingame.menu.BasicMenu;
 import huds.maingame.menu.LevelMenu;
 import planets.Planet;
 import planets.Planets;
+import utils.Counter;
 import utils.MyGestures;
 
 public class WorldScreen implements Screen {
@@ -32,6 +33,7 @@ public class WorldScreen implements Screen {
     public enum InputState{
         WORLD,
         MENU,
+        MINERALS,
     }
     private State state = State.RUN;
     public InputState inputState = InputState.WORLD;
@@ -50,6 +52,8 @@ public class WorldScreen implements Screen {
 
     BasicMenu menu;
     LevelMenu levelmenu;
+    Counter counter;
+
 
     public WorldScreen(Initial game){
         Initial.setInputProcessor();
@@ -65,12 +69,14 @@ public class WorldScreen implements Screen {
         vec = new Vector3();
 
         planets = new Planets();
-        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet1.png")),100,100, "Grass planet","1"));
-        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet2.png")),300,500,"Ice planet", "2"));
-        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet3.png")),200,700,"Rock planet","3"));
+        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet1.png")),100,100, "grass planet","1"));
+        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet2.png")),300,500,"ice planet", "2"));
+        planets.add(new Planet(new Texture(Gdx.files.internal("planets/planet3.png")),200,700,"rock planet","3"));
 
         menu = new BasicMenu(this);
         levelmenu = new LevelMenu(this);
+
+        counter = new Counter();
     }
     public void input(){
         if(MyGestures.isTouchDown()) {
@@ -79,19 +85,21 @@ public class WorldScreen implements Screen {
             switch(inputState){
                 case WORLD:
                     planets.input(vec);
-
                     break;
                 case MENU:
-                    //menu.input(vec);
-                    levelmenu.input(vec);
+                    if(!counter.started()) return;
+                    if(counter.check()){
+                        levelmenu.input(vec);
+                    }
                     break;
-
+                case MINERALS:
+                    break;
 
             }
 
 
         }
-        if(MyGestures.isTouchUp()){
+        else if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
             cam.unproject(vec);
             switch(inputState){
@@ -100,10 +108,16 @@ public class WorldScreen implements Screen {
 
                     break;
                 case MENU:
-                    levelmenu.touchUp(vec);
-                    //menu.touchUp(vec);
-                    break;
+                    if(!counter.started()) return;
+                    if(counter.check()){
+                        levelmenu.touchUp(vec);
+                    }
 
+                    //menu.touchUp(vec);
+
+                    break;
+                case MINERALS:
+                    break;
 
             }
         }
@@ -111,16 +125,38 @@ public class WorldScreen implements Screen {
 
     public void update(){
         planets.update();
-        if(planets.planetTouched()){
-            //game.prefs.putString("load_level",planets.getTouched().level);
-            //game.prefs.flush();
-            //game.setScreen(new MainGame(game));
-            //dispose();
-            //menu.show(planets.getTouched());
-            levelmenu.show(planets.getTouched());
-            planets.setUntouched();
-            inputState = InputState.MENU;
+        counter.update();
+
+        switch(inputState){
+            case WORLD:
+                if(planets.planetTouched()){
+
+
+                    game.prefs.putString("load_planet",planets.getTouched().name);
+                    game.prefs.flush();
+                    levelmenu.show(planets.getTouched());
+                    levelmenu.tryLoadLevel();
+                    planets.setUntouched();
+                    inputState = InputState.MENU;
+                    counter.setLimit(5);
+                }
+                break;
+            case MENU:
+
+                break;
+            case MINERALS:
+                //Gdx.app.log("LOAD LEVEL",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
+                game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
+                game.prefs.flush();
+                game.setScreen (new MainGame(game));
+                dispose();
+                break;
+
         }
+
+
+
+
     }
 
     public void draw(SpriteBatch batch){
@@ -128,7 +164,18 @@ public class WorldScreen implements Screen {
         bg.draw(batch);
         planets.draw(batch);
         //menu.draw(batch);
-        levelmenu.draw(batch);
+        switch(inputState){
+            case WORLD:
+
+
+                break;
+            case MENU:
+                levelmenu.draw(batch);
+                break;
+            case MINERALS:
+                break;
+
+        }
 
     }
 

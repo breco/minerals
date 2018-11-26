@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class LevelButton {
@@ -14,9 +15,17 @@ public class LevelButton {
     public Sprite star1,star2,star3;
     public int stars;
     public Sprite number;
-    public LevelButton(int y, int number, int stars){
+    public Rectangle rect;
+    public String name;
+    public boolean touched = false;
+
+    //TEST
+    public Texture green = new Texture(Gdx.files.internal("colors/green.png"));
+    public LevelButton(int y, String number, int stars){
         this.stars = stars;
+        this.name = number;
         this.number = new Sprite(new Texture(Gdx.files.internal("huds/numbers/"+number+".png")));
+
         slot = new Sprite(new Texture(Gdx.files.internal("huds/menu/level slot.png")));
         star1 = new Sprite(new Texture(Gdx.files.internal("huds/menu/star.png")));
         star2 = new Sprite(star1.getTexture());
@@ -43,11 +52,14 @@ public class LevelButton {
         star1.setSize(slot.getWidth()*0.7f,slot.getHeight()*0.7f);
         star2.setSize(slot.getWidth()*0.7f,slot.getHeight()*0.7f);
         star3.setSize(slot.getWidth()*0.7f,slot.getHeight()*0.7f);
+
+        rect = new Rectangle(slot.getX(),slot.getY(), Initial.WIDTH/2.7f,slot.getHeight());
     }
     public void update(){
 
     }
     public void draw(SpriteBatch batch){
+        //batch.draw(green,rect.x,rect.y,rect.getWidth(),rect.getHeight());
         slot.draw(batch);
         number.draw(batch);
         star1.draw(batch);
@@ -55,6 +67,15 @@ public class LevelButton {
         star3.draw(batch);
     }
     public void input(Vector3 vec){
+        if(rect.contains(vec.x,vec.y)){
+            touched = true;
+        }
+    }
+    public void touchUp(){
+        touched = false;
 
+    }
+    public Rectangle getBoundingRectangle(){
+        return rect;
     }
 }

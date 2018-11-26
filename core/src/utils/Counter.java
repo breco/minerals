@@ -35,5 +35,7 @@ public class Counter {
     public boolean started(){
         return started;
     }
-
+    public int getCount(){
+        return count;
+    }
 }

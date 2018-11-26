@@ -1,0 +1,38 @@
+{
+  "enemies" : [
+    {"clase" : "enemies.TestEnemy", "posx" : 150, "posy" : 2,   "time" : 1},
+    {"clase" : "enemies.TestEnemy", "posx" : 200, "posy" : 2,   "time" : 3},
+    {"clase" : "enemies.TestEnemy", "posx" : 250, "posy" : 2,   "time" : 5},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 7},
+    {"clase" : "enemies.TestEnemy", "posx" : 350, "posy" : 2,   "time" : 9},
+    {"clase" : "enemies.TestEnemy", "posx" : 150, "posy" : 2,   "time" : 11},
+    {"clase" : "enemies.TestEnemy", "posx" : 200, "posy" : 2,   "time" : 13},
+    {"clase" : "enemies.TestEnemy", "posx" : 250, "posy" : 2,   "time" : 15},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 17},
+    {"clase" : "enemies.TestEnemy", "posx" : 350, "posy" : 2,   "time" : 19},
+    {"clase" : "enemies.TestEnemy", "posx" : 150, "posy" : 2,   "time" : 21},
+    {"clase" : "enemies.TestEnemy", "posx" : 200, "posy" : 2,   "time" : 23},
+    {"clase" : "enemies.TestEnemy", "posx" : 250, "posy" : 2,   "time" : 25},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 27},
+    {"clase" : "enemies.TestEnemy", "posx" : 350, "posy" : 2,   "time" : 29},
+    {"clase" : "enemies.TestEnemy", "posx" : 150, "posy" : 2,   "time" : 31},
+    {"clase" : "enemies.TestEnemy", "posx" : 200, "posy" : 2,   "time" : 33},
+    {"clase" : "enemies.TestEnemy", "posx" : 250, "posy" : 2,   "time" : 35},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 37},
+    {"clase" : "enemies.TestEnemy", "posx" : 350, "posy" : 2,   "time" : 39},
+    {"clase" : "enemies.TestEnemy", "posx" : 150, "posy" : 2,   "time" : 41},
+    {"clase" : "enemies.TestEnemy", "posx" : 200, "posy" : 2,   "time" : 43},
+    {"clase" : "enemies.TestEnemy", "posx" : 250, "posy" : 2,   "time" : 45},
+    {"clase" : "enemies.TestEnemy", "posx" : 300, "posy" : 2,   "time" : 47},
+    {"clase" : "enemies.TestEnemy", "posx" : 350, "posy" : 2,   "time" : 49}
+
+  ],
+
+  "items" : [
+    {"name" : "name1"}
+  ],
+
+  "background" : "bg4.png"
+
+}
+

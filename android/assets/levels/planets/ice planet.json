@@ -1,0 +1,17 @@
+{
+  "levels" : [
+    {"name" : "1", "status" : "unlocked", "stars" : 2},
+    {"name" : "2", "status" : "locked", "stars" : 0},
+    {"name" : "3", "status" : "locked", "stars" : 0},
+    {"name" : "4", "status" : "locked", "stars" : 0},
+    {"name" : "5", "status" : "locked", "stars" : 0}
+
+  ],
+
+  "items" : [
+    {"name" : "name1"}
+  ],
+
+  "background" : "bg3.png"
+
+}
