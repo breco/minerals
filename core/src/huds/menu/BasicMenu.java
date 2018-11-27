@@ -1,4 +1,4 @@
-package huds.maingame.menu;
+package huds.menu;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import planets.Planet;
 import screens.WorldScreen;
+
+
 
 
 public class BasicMenu {

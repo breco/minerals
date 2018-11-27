@@ -1,4 +1,4 @@
-package huds.maingame.menu;
+package huds.menu;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import screens.WorldScreen;
 
-public class LevelMenu extends BasicMenu{
+public class LevelMenu extends BasicMenu {
     Array<LevelButton> levels;
     public Sprite delimiter;
     int i;

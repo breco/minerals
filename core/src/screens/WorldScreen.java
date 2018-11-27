@@ -12,12 +12,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import huds.maingame.menu.BasicMenu;
-import huds.maingame.menu.LevelMenu;
+import huds.menu.BasicMenu;
+import huds.menu.LevelMenu;
 import planets.Planet;
 import planets.Planets;
 import utils.Counter;
 import utils.MyGestures;
+
 
 public class WorldScreen implements Screen {
     OrthographicCamera cam;

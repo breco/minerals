@@ -3,7 +3,7 @@ package minerals;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-import huds.maingame.maingame.MineralPin;
+import huds.maingame.MineralPin;
 import skills.LaunchRockWheel;
 import utils.Animator;
 

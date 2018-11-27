@@ -1,4 +1,4 @@
-package huds.maingame.menu;
+package huds.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

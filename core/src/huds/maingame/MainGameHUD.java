@@ -1,4 +1,4 @@
-package huds.maingame.maingame;
+package huds.maingame;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-import huds.maingame.menu.BasicButton;
+import huds.menu.BasicButton;
 import items.Item;
 import items.Items;
 import minerals.Mineral;

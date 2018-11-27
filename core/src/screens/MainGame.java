@@ -20,7 +20,7 @@ import backgrounds.Background;
 import bullets.Bullets;
 import enemies.Enemies;
 import enemies.Enemy;
-import huds.maingame.maingame.MainGameHUD;
+import huds.maingame.MainGameHUD;
 import items.Fruit;
 import items.Gemstone;
 import items.Items;
