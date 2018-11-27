@@ -145,7 +145,6 @@ public class WorldScreen implements Screen {
 
                 break;
             case MINERALS:
-                //Gdx.app.log("LOAD LEVEL",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
                 game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
                 game.prefs.flush();
                 game.setScreen (new MainGame(game));

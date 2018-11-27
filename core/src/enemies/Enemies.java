@@ -1,6 +1,5 @@
 package enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
@@ -48,7 +47,7 @@ public class Enemies {
     }
     public void add(Enemy enemy){
         enemies.add(enemy);
-        Gdx.app.log("ENEMY SIZE",enemies.size+"");
+
     }
 
 }

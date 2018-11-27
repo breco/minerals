@@ -20,7 +20,7 @@ public class LevelButton {
     public boolean touched = false;
 
     //TEST
-    public Texture green = new Texture(Gdx.files.internal("colors/green.png"));
+    //public Texture green = new Texture(Gdx.files.internal("colors/green.png"));
     public LevelButton(int y, String number, int stars){
         this.stars = stars;
         this.name = number;

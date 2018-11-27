@@ -16,6 +16,7 @@ public class BasicButton extends Sprite {
     private Texture icon;
     private BitmapFont font;
     public boolean touched = false;
+    public boolean show = true;
     public BasicButton(Texture normal, Texture pressed, float x, float y){
         super(normal);
         setPosition(x,y);
@@ -35,15 +36,18 @@ public class BasicButton extends Sprite {
 
     }
     public void input(Vector3 vec) {
+
         if (getBoundingRectangle().contains(vec.x, vec.y)) {
+
             touched = true;
             setTexture(pressed);
         }
     }
 
     public void draw(SpriteBatch batch){
+        if(!show) return;
         super.draw(batch);
-        font.draw(batch,text,getX(),getY()+getHeight()*0.6f);
+        font.draw(batch,text,getX()+getWidth()*0.2f,getY()+getHeight()*0.7f);
         if(icon != null) batch.draw(icon, getX()+getWidth()/5,getY()+getHeight()/5, icon.getWidth()*2,icon.getHeight()*2);
     }
     public void setText(String text){
@@ -52,7 +56,11 @@ public class BasicButton extends Sprite {
     public void setIcon(Texture texture){
         this.icon = texture;
     }
+    public void setShow(boolean show){
+        this.show = show;
+    }
     public void touchUp(){
+        if(!touched) return;
         setTexture(normal);
         touched = false;
 

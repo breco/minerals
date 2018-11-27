@@ -91,9 +91,9 @@ public class LevelMenu extends BasicMenu{
                 show = false;
                 screen.inputState = WorldScreen.InputState.MINERALS;
                 level = button.name;
-                Gdx.app.log("SET MINERALS","ASKDASMD");
             }
             button.touchUp();
+
         }
     }
     public String getLevel(){

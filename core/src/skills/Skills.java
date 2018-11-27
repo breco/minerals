@@ -88,5 +88,16 @@ public class Skills {
             }
         }
     }
+
+    public void pause(){
+        for(Skill skill : skills){
+            skill.pause();
+        }
+    }
+    public void unpause(){
+        for(Skill skill : skills){
+            skill.unpause();
+        }
+    }
 }
 

@@ -135,4 +135,11 @@ public abstract class Skill extends Sprite {
             setDisabled();
         }
     }
+
+    public void pause(){
+        coolDownTimer.pause();
+    }
+    public void unpause(){
+        coolDownTimer.unpause();
+    }
 }

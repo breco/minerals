@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
+import huds.maingame.menu.BasicButton;
 import items.Item;
 import items.Items;
 import minerals.Mineral;
 import minerals.Minerals;
 import screens.MainGame;
+import screens.WorldScreen;
 import skills.Skills;
 
 public class MainGameHUD {
@@ -31,7 +33,8 @@ public class MainGameHUD {
     public float itemX = baseItemX;
 
 
-    //private My_Button pauseButton;
+
+    private BasicButton pauseButton, resumeButton, quitButton;
     public MainGameHUD(MainGame game){
         this.game = game;
         this.minerals = game.minerals;
@@ -44,14 +47,27 @@ public class MainGameHUD {
         purple = new Texture(Gdx.files.internal("colors/purple.png"));
         skillSlots = new Texture(Gdx.files.internal(("huds/mainGame/skillSlots.png")));
         itemSlots = new Texture(Gdx.files.internal(("huds/mainGame/itemSlots.png")));
-        int i=0;
-        /*for(Item item : items.getItems()){
-            item.setPosition(Initial.WIDTH/10.5f+i*Initial.WIDTH/3,Initial.HEIGHT/24);
-            i++;
-        }*/
-        //pauseButton = new My_Button(new Texture(Gdx.files.internal("buttons/pause_button.png")));
-        //pauseButton.scale(0.6f);
-        //pauseButton.setPosition(Initial.WIDTH-pauseButton.getWidth()*1.1f,Initial.HEIGHT-pauseButton.getHeight()*1.1f);
+
+
+        pauseButton = new BasicButton(new Texture(Gdx.files.internal("huds/mainGame/menu button.png")),new Texture(Gdx.files.internal("huds/mainGame/menu button pressed.png")), Initial.HEIGHT, Initial.WIDTH);
+        pauseButton.setScale(1.5f);
+        pauseButton.setX(pauseButton.getX()-pauseButton.getWidth()*2);
+        pauseButton.setY(pauseButton.getY()-pauseButton.getHeight());
+
+        resumeButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), 0,0);
+        resumeButton.setScale(1.5f);
+        resumeButton.setSize(resumeButton.getWidth()*3,resumeButton.getHeight());
+        resumeButton.setPosition(Initial.HEIGHT/2- resumeButton.getWidth()/2, Initial.WIDTH/2 - resumeButton.getHeight()/2);
+        resumeButton.setText("resume");
+        resumeButton.setShow(false);
+
+        quitButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), Initial.HEIGHT/2, Initial.WIDTH/2);
+        quitButton.setScale(1.5f);
+        quitButton.setSize(quitButton.getWidth()*3,quitButton.getHeight());
+        quitButton.setPosition(Initial.HEIGHT/2- resumeButton.getWidth()/2, Initial.WIDTH/2 - resumeButton.getHeight()*5/2);
+        quitButton.setText("  quit");
+        quitButton.setShow(false);
+
     }
     public void update(){
         Mineral mineral = minerals.getMostRight();
@@ -94,14 +110,33 @@ public class MainGameHUD {
         skills.draw(batch);
         items.draw(batch);
 
-        //pauseButton.draw(batch);
+        pauseButton.draw(batch);
+        resumeButton.draw(batch);
+        quitButton.draw(batch);
+    }
+    public void touchUp(Vector3 vec){
+        if(pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
+            game.pause();
+            resumeButton.setShow(true);
+            quitButton.setShow(true);
+        }
+        if(resumeButton.getBoundingRectangle().contains(vec.x,vec.y)){
+            game.resume();
+            resumeButton.setShow(false);
+            quitButton.setShow(false);
+        }
+        if(quitButton.getBoundingRectangle().contains(vec.x,vec.y)){
+            game.game.setScreen(new WorldScreen(game.game));
+            game.dispose();
+        }
+        pauseButton.touchUp();
+        resumeButton.touchUp();
+        quitButton.touchUp();
     }
     public void input(Vector3 vec){
-        vec.set(vec.x, Initial.HEIGHT - vec.y, 0);
-        /*if(pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.pause();
-        }
-        */
+        pauseButton.input(vec);
+        resumeButton.input(vec);
+        quitButton.input(vec);
 
     }
 }

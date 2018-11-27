@@ -39,10 +39,20 @@ import utils.TimeManager;
 
 public class MainGame implements Screen {
 
+    //GAME STATES
+    public enum State{
+        PAUSE,
+        RUN,
+        RESUME,
+        STOPPED,
+        WIN,
+        LOSE
+    }
+    private State state = State.RUN;
 
 
     public static OrthographicCamera cam;
-    Initial game;
+    public Initial game;
     Viewport viewport;
     public Vector3 vec;
 
@@ -83,14 +93,11 @@ public class MainGame implements Screen {
         Initial.setInputProcessor();
         this.game = game;
         cam = new OrthographicCamera();
-        cam.position.set(cam.viewportHeight/2,cam.viewportWidth/2, 0);
+
+        cam.position.set(Initial.HEIGHT/2,Initial.WIDTH/2, 0);
         viewport = new FillViewport(Initial.HEIGHT, Initial.WIDTH,cam);
         viewport.apply();
         vec = new Vector3();
-
-        //GRAPHICS
-        bg = new Background(new Texture(Gdx.files.internal("backgrounds/bg3.png")));
-
 
 
         // GAME OBJECTS
@@ -208,10 +215,7 @@ public class MainGame implements Screen {
                 }
                 items.input(vec,0);
                 minerals.input(vec, 0);
-                //HUD INPUT
-                vec.set(MyGestures.firstTouch);
-
-                //hud.input(vec);
+                hud.input(vec);
 
             }
             if(MyGestures.isTouchDown2()){
@@ -224,7 +228,7 @@ public class MainGame implements Screen {
                 items.input(vec,1);
                 minerals.input(vec,1);
                 //HUD INPUT
-                vec.set(MyGestures.firstTouch);
+                hud.input(vec);
             }
         }
 
@@ -238,7 +242,9 @@ public class MainGame implements Screen {
         }
 
         if(MyGestures.isTouchUp()){
-
+            vec.set(MyGestures.touchUpvec);
+            cam.unproject(vec);
+            hud.touchUp(vec);
             minerals.setUntouched(0);
             items.touchUp(0);
             items.setUntouched(0);
@@ -284,23 +290,41 @@ public class MainGame implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // 2)Input handling
-        input();
+        switch(state){
+            case RUN:
+                // 2)Input handling
+                input();
+                // 3)Update system
+                // 3.1)---> Update Cam
+                cam.update();
+                game.batch.setProjectionMatrix(cam.combined);
+                // 3.2)---> Update Game
+                update();
+                break;
+            case PAUSE:
+                pauseInput();
+                hud.update();
+                minerals.pause();
+                skills.pause();
+                break;
+            case RESUME:
+                minerals.unpause();
+                skills.unpause();
+                break;
+            case WIN:
+                //winInput();
+                //pixies.pause();
+                break;
+            case LOSE:
+                //loseInput();
+                //pixies.pause();
+                break;
 
-        // 3)Update system
-        // 3.1)---> Update Cam
-
-        cam.update();
-        game.batch.setProjectionMatrix(cam.combined);
-
-        // 3.2)---> Update Game
-        update();
-
+        }
 
         // 4)Draw
         game.batch.begin();
         draw();
-
         game.batch.end();
 
     }
@@ -313,12 +337,18 @@ public class MainGame implements Screen {
 
     @Override
     public void pause() {
-
+        state = State.PAUSE;
+        time.pause();
+        minerals.pause();
+        skills.pause();
     }
 
     @Override
     public void resume() {
-
+        state = State.RUN;
+        time.unpause();
+        minerals.unpause();
+        skills.unpause();
     }
 
     @Override
@@ -330,6 +360,20 @@ public class MainGame implements Screen {
     public void dispose() {
 
 
+    }
+
+    public void pauseInput(){
+        if(MyGestures.isTouchDown()) {
+            vec.set(MyGestures.firstTouch);
+            cam.unproject(vec);
+            hud.input(vec);
+        }
+        if(MyGestures.isTouchUp()){
+            vec.set(MyGestures.touchUpvec);
+            cam.unproject(vec);
+            hud.touchUp(vec);
+
+        }
     }
 }
 

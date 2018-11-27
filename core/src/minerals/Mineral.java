@@ -289,10 +289,16 @@ public class Mineral extends Sprite {
 
 
     public void pause(){
-        //timer.pause();
-        //pium.stop(piumId);
+        timer.pause();
+
     }
 
+    public void unpause(){
+        Gdx.app.log("UNPAUSING mineral","!!!");
+        timer.unpause();
+
+
+    }
 
     public void updateHPbar(){
         PERCENT_HP = CURRENT_HP*100f/HP;

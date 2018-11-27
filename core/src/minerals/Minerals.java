@@ -161,4 +161,16 @@ public class Minerals{
         }
 
     }
+
+    public void pause(){
+        for (Mineral mineral : minerals) {
+            mineral.pause();
+        }
+    }
+
+    public void unpause(){
+        for (Mineral mineral : minerals) {
+            mineral.unpause();
+        }
+    }
 }
