@@ -11,7 +11,7 @@ import utils.TimeManager;
 public class MirrorShield extends MineralBullet {
     private Mineral owner;
     private TimeManager time;
-    private int finishTime = 10;
+    private int finishTime = 15;
     private Rectangle rect;
     private Bullet bullet;
     public MirrorShield(Mineral owner, Animator animator) {
