@@ -16,10 +16,12 @@ import java.lang.reflect.InvocationTargetException;
 import screens.WorldScreen;
 
 public class LevelMenu extends BasicMenu {
+
     Array<LevelButton> levels;
     public Sprite delimiter;
     int i;
     public String level;
+
     public LevelMenu(WorldScreen screen) {
         super(screen);
         levels = new  Array<LevelButton>();
@@ -45,7 +47,7 @@ public class LevelMenu extends BasicMenu {
         int i = 0;
         while(levels.get(i) != null){
             t = json.fromJson(JsonPlanet.class, levels.get(i).toString());
-            Gdx.app.log("TNAME","_"+t.name+"_");
+            //Gdx.app.log("TNAME","_"+t.name+"_");
             this.levels.add(new LevelButton(i, t.name,t.stars));
             i++;
         }
@@ -80,6 +82,7 @@ public class LevelMenu extends BasicMenu {
         }
     }
     public void input(Vector3 vec){
+        super.input(vec);
         for(LevelButton button : levels){
             button.input(vec);
         }
@@ -87,10 +90,15 @@ public class LevelMenu extends BasicMenu {
     public void touchUp(Vector3 vec){
         super.touchUp(vec);
         for(LevelButton button : levels){
-            if(button.getBoundingRectangle().contains(vec.x,vec.y)){
+            if(button.touched && button.getBoundingRectangle().contains(vec.x,vec.y)){
                 show = false;
                 screen.inputState = WorldScreen.InputState.MINERALS;
                 level = button.name;
+                //screen.counter.reset();
+                //screen.counter.setLimit(5);
+
+                screen.mineralmenu.show(planet);
+
             }
             button.touchUp();
 

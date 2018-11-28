@@ -14,9 +14,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import huds.menu.BasicMenu;
 import huds.menu.LevelMenu;
+import huds.menu.MineralMenu;
 import planets.Planet;
 import planets.Planets;
-import utils.Counter;
 import utils.MyGestures;
 
 
@@ -53,7 +53,8 @@ public class WorldScreen implements Screen {
 
     BasicMenu menu;
     LevelMenu levelmenu;
-    Counter counter;
+    public MineralMenu mineralmenu;
+    //public Counter counter;
 
 
     public WorldScreen(Initial game){
@@ -76,8 +77,9 @@ public class WorldScreen implements Screen {
 
         menu = new BasicMenu(this);
         levelmenu = new LevelMenu(this);
+        mineralmenu = new MineralMenu(this);
 
-        counter = new Counter();
+        //counter = new Counter();
     }
     public void input(){
         if(MyGestures.isTouchDown()) {
@@ -88,12 +90,16 @@ public class WorldScreen implements Screen {
                     planets.input(vec);
                     break;
                 case MENU:
-                    if(!counter.started()) return;
-                    if(counter.check()){
+                    //if(!counter.started()) return;
+                    //if(counter.check()){
                         levelmenu.input(vec);
-                    }
+                    //}
                     break;
                 case MINERALS:
+                    //if(!counter.started()) return;
+                    //if(counter.check()){
+                        mineralmenu.input(vec);
+                    //}
                     break;
 
             }
@@ -109,15 +115,19 @@ public class WorldScreen implements Screen {
 
                     break;
                 case MENU:
-                    if(!counter.started()) return;
-                    if(counter.check()){
+                    //if(!counter.started()) return;
+                    //if(counter.check()){
                         levelmenu.touchUp(vec);
-                    }
+                    //}
 
                     //menu.touchUp(vec);
 
                     break;
                 case MINERALS:
+                    //if(!counter.started()) return;
+                    //if(counter.check()){
+                        mineralmenu.touchUp(vec);
+                    //}
                     break;
 
             }
@@ -126,7 +136,7 @@ public class WorldScreen implements Screen {
 
     public void update(){
         planets.update();
-        counter.update();
+        //counter.update();
 
         switch(inputState){
             case WORLD:
@@ -136,20 +146,21 @@ public class WorldScreen implements Screen {
                     game.prefs.putString("load_planet",planets.getTouched().name);
                     game.prefs.flush();
                     levelmenu.show(planets.getTouched());
+
                     levelmenu.tryLoadLevel();
                     planets.setUntouched();
                     inputState = InputState.MENU;
-                    counter.setLimit(5);
+                    //counter.setLimit(5);
                 }
                 break;
             case MENU:
 
                 break;
             case MINERALS:
-                game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
-                game.prefs.flush();
-                game.setScreen (new MainGame(game));
-                dispose();
+                //game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
+                //game.prefs.flush();
+                //game.setScreen (new MainGame(game));
+                //dispose();
                 break;
 
         }
@@ -163,16 +174,15 @@ public class WorldScreen implements Screen {
 
         bg.draw(batch);
         planets.draw(batch);
-        //menu.draw(batch);
         switch(inputState){
             case WORLD:
-
 
                 break;
             case MENU:
                 levelmenu.draw(batch);
                 break;
             case MINERALS:
+                mineralmenu.draw(batch);
                 break;
 
         }

@@ -27,7 +27,7 @@ public class BasicMenu {
     public boolean show = false;
 
 
-    private Planet planet;
+    public Planet planet;
     String title ="";
 
     public WorldScreen screen;
@@ -140,10 +140,18 @@ public class BasicMenu {
     }
 
     public void touchUp(Vector3 vec){
-        if(backbutton.contains(vec) || closebutton.contains(vec)){
+        Gdx.app.log("BACK",backbutton.touched+"ASDASDA");
+        if(backbutton.touched && backbutton.contains(vec) ){
+            show = false;
+            screen.inputState = WorldScreen.InputState.WORLD;
+
+        }
+
+        if(closebutton.touched && closebutton.contains(vec)){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
         }
+
 
         backbutton.touchUp();
         closebutton.touchUp();
@@ -159,4 +167,6 @@ public class BasicMenu {
     public Planet getPlanet(){
         return planet;
     }
+
+
 }
