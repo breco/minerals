@@ -94,10 +94,10 @@ public class LevelMenu extends BasicMenu {
                 show = false;
                 screen.inputState = WorldScreen.InputState.MINERALS;
                 level = button.name;
-                //screen.counter.reset();
-                //screen.counter.setLimit(5);
 
                 screen.mineralmenu.show(planet);
+                screen.mineralmenu.addTitle("  "+level);
+                Gdx.app.log("screen.mineralmenu.show","planet");
 
             }
             button.touchUp();

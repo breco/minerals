@@ -47,7 +47,7 @@ public class BasicButton extends Sprite {
     public void draw(SpriteBatch batch){
         if(!show) return;
         super.draw(batch);
-        font.draw(batch,text,getX()+getWidth()*0.2f,getY()+getHeight()*0.7f);
+        font.draw(batch,text,getX()+getWidth()*0.2f,getY()+getHeight()*0.6f);
         if(icon != null) batch.draw(icon, getX()+getWidth()/5,getY()+getHeight()/5, icon.getWidth()*2,icon.getHeight()*2);
     }
     public void setText(String text){
@@ -67,5 +67,11 @@ public class BasicButton extends Sprite {
     }
     public boolean contains(Vector3 vec){
         return getBoundingRectangle().contains(vec.x,vec.y);
+    }
+
+    public void forceTexture(Texture texture){
+        normal = texture;
+        pressed = texture;
+        setTexture(normal);
     }
 }

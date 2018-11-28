@@ -35,6 +35,7 @@ public class WorldScreen implements Screen {
         WORLD,
         MENU,
         MINERALS,
+        GO,
     }
     private State state = State.RUN;
     public InputState inputState = InputState.WORLD;
@@ -52,10 +53,8 @@ public class WorldScreen implements Screen {
     //TEST
 
     BasicMenu menu;
-    LevelMenu levelmenu;
+    public LevelMenu levelmenu;
     public MineralMenu mineralmenu;
-    //public Counter counter;
-
 
     public WorldScreen(Initial game){
         Initial.setInputProcessor();
@@ -79,7 +78,6 @@ public class WorldScreen implements Screen {
         levelmenu = new LevelMenu(this);
         mineralmenu = new MineralMenu(this);
 
-        //counter = new Counter();
     }
     public void input(){
         if(MyGestures.isTouchDown()) {
@@ -90,16 +88,10 @@ public class WorldScreen implements Screen {
                     planets.input(vec);
                     break;
                 case MENU:
-                    //if(!counter.started()) return;
-                    //if(counter.check()){
-                        levelmenu.input(vec);
-                    //}
+                    levelmenu.input(vec);
                     break;
                 case MINERALS:
-                    //if(!counter.started()) return;
-                    //if(counter.check()){
-                        mineralmenu.input(vec);
-                    //}
+                    mineralmenu.input(vec);
                     break;
 
             }
@@ -115,19 +107,12 @@ public class WorldScreen implements Screen {
 
                     break;
                 case MENU:
-                    //if(!counter.started()) return;
-                    //if(counter.check()){
-                        levelmenu.touchUp(vec);
-                    //}
+                    levelmenu.touchUp(vec);
 
-                    //menu.touchUp(vec);
 
                     break;
                 case MINERALS:
-                    //if(!counter.started()) return;
-                    //if(counter.check()){
-                        mineralmenu.touchUp(vec);
-                    //}
+                    mineralmenu.touchUp(vec);
                     break;
 
             }
@@ -136,7 +121,6 @@ public class WorldScreen implements Screen {
 
     public void update(){
         planets.update();
-        //counter.update();
 
         switch(inputState){
             case WORLD:
@@ -150,19 +134,21 @@ public class WorldScreen implements Screen {
                     levelmenu.tryLoadLevel();
                     planets.setUntouched();
                     inputState = InputState.MENU;
-                    //counter.setLimit(5);
+
                 }
                 break;
             case MENU:
 
                 break;
             case MINERALS:
-                //game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
-                //game.prefs.flush();
-                //game.setScreen (new MainGame(game));
-                //dispose();
-                break;
 
+                break;
+            case GO:
+                game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
+                game.prefs.flush();
+                game.setScreen (new MainGame(game));
+                dispose();
+                break;
         }
 
 

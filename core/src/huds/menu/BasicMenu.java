@@ -140,7 +140,7 @@ public class BasicMenu {
     }
 
     public void touchUp(Vector3 vec){
-        Gdx.app.log("BACK",backbutton.touched+"ASDASDA");
+
         if(backbutton.touched && backbutton.contains(vec) ){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
@@ -168,5 +168,8 @@ public class BasicMenu {
         return planet;
     }
 
+    public void addTitle(String titulo){
+        title = title + titulo;
 
+    }
 }
