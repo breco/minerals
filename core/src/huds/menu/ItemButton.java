@@ -82,47 +82,15 @@ public class ItemButton {
 
     public void fixEffect(){
         if(effect.length() <=25) return;
-        /*String temp = "";
-        String words[] = effect.split(" ");
-        char c;
-        int count = 0;
-        for(String word : words){
-            count += word.length();
 
-
-            if(count >= 25){
-                temp += "\n";
-                temp += word;
-                temp += " ";
-                count = 1 + word.length();
-            }
-            else{
-                temp += word;
-                temp += " ";
-                count++;
-            }
-
-
-        }*/
-
-        /*String finale = "";
-        for(String line : temp.split("\n")){
-            String[] palabras = line.split(" ");
-            Gdx.app.log("ASDASDAS",Words.fullJustify(palabras,25)+"");
-            finale += Words.fullJustify(palabras,25);
-            finale += "\n";
-        }
-        effect = finale;
-        Gdx.app.log("TEZT",temp);*/
         String[] words = effect.split(" ");
         List<String> fixed = Words.fullJustify(words,25);
-        Gdx.app.log("FIXED",fixed+"");
         String temp = "";
         for(String linea : fixed){
             temp += linea;
             temp += "\n";
         }
         effect = temp;
-        Gdx.app.log("EEFECT",temp);
+
     }
 }

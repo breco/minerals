@@ -115,17 +115,17 @@ public class MainGameHUD {
         quitButton.draw(batch);
     }
     public void touchUp(Vector3 vec){
-        if(pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
+        if(pauseButton.touched && pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
             game.pause();
             resumeButton.setShow(true);
             quitButton.setShow(true);
         }
-        if(resumeButton.getBoundingRectangle().contains(vec.x,vec.y)){
+        if(resumeButton.touched && resumeButton.getBoundingRectangle().contains(vec.x,vec.y)){
             game.resume();
             resumeButton.setShow(false);
             quitButton.setShow(false);
         }
-        if(quitButton.getBoundingRectangle().contains(vec.x,vec.y)){
+        if(quitButton.touched && quitButton.getBoundingRectangle().contains(vec.x,vec.y)){
             game.game.setScreen(new WorldScreen(game.game));
             game.dispose();
         }
@@ -133,10 +133,18 @@ public class MainGameHUD {
         resumeButton.touchUp();
         quitButton.touchUp();
     }
-    public void input(Vector3 vec){
-        pauseButton.input(vec);
-        resumeButton.input(vec);
-        quitButton.input(vec);
+    public void input(MainGame.State state, Vector3 vec){
+        switch(state){
+            case RUN:
+                pauseButton.input(vec);
+                break;
+            case PAUSE:
+                resumeButton.input(vec);
+                quitButton.input(vec);
+                break;
+        }
+
+
 
     }
 }

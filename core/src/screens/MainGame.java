@@ -215,7 +215,7 @@ public class MainGame implements Screen {
                 }
                 items.input(vec,0);
                 minerals.input(vec, 0);
-                hud.input(vec);
+                hud.input(state, vec);
 
             }
             if(MyGestures.isTouchDown2()){
@@ -228,7 +228,7 @@ public class MainGame implements Screen {
                 items.input(vec,1);
                 minerals.input(vec,1);
                 //HUD INPUT
-                hud.input(vec);
+                hud.input(state, vec);
             }
         }
 
@@ -366,7 +366,7 @@ public class MainGame implements Screen {
         if(MyGestures.isTouchDown()) {
             vec.set(MyGestures.firstTouch);
             cam.unproject(vec);
-            hud.input(vec);
+            hud.input(state, vec);
         }
         if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);

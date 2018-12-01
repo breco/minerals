@@ -11,8 +11,6 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import java.lang.reflect.InvocationTargetException;
-
 import screens.WorldScreen;
 
 public class LevelMenu extends BasicMenu {
@@ -36,7 +34,7 @@ public class LevelMenu extends BasicMenu {
         public int stars;
     }
 
-    public void loadPlanet()throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void loadPlanet() {
 
         JsonReader reader = new JsonReader();
         Json json = new Json();
@@ -47,7 +45,6 @@ public class LevelMenu extends BasicMenu {
         int i = 0;
         while(levels.get(i) != null){
             t = json.fromJson(JsonPlanet.class, levels.get(i).toString());
-            //Gdx.app.log("TNAME","_"+t.name+"_");
             this.levels.add(new LevelButton(i, t.name,t.stars));
             i++;
         }
@@ -56,19 +53,7 @@ public class LevelMenu extends BasicMenu {
     }
 
     public void tryLoadLevel(){
-        try {
-            loadPlanet();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        loadPlanet();
     }
 
     public void draw(SpriteBatch batch){

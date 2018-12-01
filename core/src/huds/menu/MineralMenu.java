@@ -1,11 +1,15 @@
 package huds.menu;
 
+import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 import screens.WorldScreen;
 
@@ -54,6 +58,33 @@ public class MineralMenu extends BasicMenu {
         go.setText(" Go");
 
     }
+
+
+
+    public void loadMinerals() {
+
+        class JsonMineral {
+            public String name, status;
+            public int stars;
+        }
+
+        JsonReader reader = new JsonReader();
+        Json json = new Json();
+        JsonValue base = reader.parse(Gdx.files.internal("levels/planets/"+ Initial.prefs.getString("load_planet")+".json"));
+
+        JsonValue levels = base.get("levels");
+        JsonMineral t;
+        int i = 0;
+        while(levels.get(i) != null){
+            t = json.fromJson(JsonMineral.class, levels.get(i).toString());
+            //this.levels.add(new LevelButton(i, t.name,t.stars));
+            i++;
+        }
+
+
+    }
+
+
     public void draw(SpriteBatch batch){
         if(!show) return;
         super.draw(batch);
