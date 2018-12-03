@@ -21,7 +21,7 @@ public class MainGameHUD {
     Skills skills;
     MainGame game;
 
-    private Texture black,gray,purple;
+    private Texture black;
     private Texture skillSlots,itemSlots;
 
     public Texture HPContainerLeft = new Texture(Gdx.files.internal("huds/mainGame/bar left.png"));
@@ -35,6 +35,7 @@ public class MainGameHUD {
 
 
     private BasicButton pauseButton, resumeButton, quitButton;
+    private BasicButton winButton, loseButton;
     public MainGameHUD(MainGame game){
         this.game = game;
         this.minerals = game.minerals;
@@ -43,16 +44,14 @@ public class MainGameHUD {
 
 
         black = new Texture(Gdx.files.internal("huds/mainGame/black.png")); // Cambiar direccion de archivo black.png a carpeta colors
-        gray = new Texture(Gdx.files.internal("colors/gray.png"));
-        purple = new Texture(Gdx.files.internal("colors/purple.png"));
         skillSlots = new Texture(Gdx.files.internal(("huds/mainGame/skillSlots.png")));
         itemSlots = new Texture(Gdx.files.internal(("huds/mainGame/itemSlots.png")));
 
 
         pauseButton = new BasicButton(new Texture(Gdx.files.internal("huds/mainGame/menu button.png")),new Texture(Gdx.files.internal("huds/mainGame/menu button pressed.png")), Initial.HEIGHT, Initial.WIDTH);
-        pauseButton.setScale(1.5f);
-        pauseButton.setX(pauseButton.getX()-pauseButton.getWidth()*2);
-        pauseButton.setY(pauseButton.getY()-pauseButton.getHeight());
+        pauseButton.setX(pauseButton.getX() - pauseButton.getWidth()*2.8f);
+        pauseButton.setY(pauseButton.getY() - pauseButton.getHeight()*2);
+        pauseButton.setSize(pauseButton.getWidth()*2,pauseButton.getHeight()*2);
 
         resumeButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), 0,0);
         resumeButton.setScale(1.5f);
@@ -68,6 +67,19 @@ public class MainGameHUD {
         quitButton.setText("  quit");
         quitButton.setShow(false);
 
+        winButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), 0,0);
+        winButton.setScale(1.5f);
+        winButton.setSize(resumeButton.getWidth(),resumeButton.getHeight());
+        winButton.setPosition(Initial.HEIGHT/2- resumeButton.getWidth()/2, Initial.WIDTH/2 - resumeButton.getHeight()/2);
+        winButton.setText("Victory");
+        winButton.setShow(false);
+
+        loseButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), 0,0);
+        loseButton.setScale(1.5f);
+        loseButton.setSize(resumeButton.getWidth(),resumeButton.getHeight());
+        loseButton.setPosition(Initial.HEIGHT/2- resumeButton.getWidth()/2, Initial.WIDTH/2 - resumeButton.getHeight()/2);
+        loseButton.setText("Failure");
+        loseButton.setShow(false);
     }
     public void update(){
         Mineral mineral = minerals.getMostRight();
@@ -85,6 +97,13 @@ public class MainGameHUD {
             item.setX(itemX + 20);
         }
 
+        if(game.enemies.enemies.size == game.enemies.deadEnemies.size + game.enemies.escapedEnemies.size){
+            winButton.setShow(true);
+        }
+        if(game.minerals.getMinerals().size == 0){
+            loseButton.setShow(true);
+        }
+
     }
     public void draw(SpriteBatch batch){
 
@@ -95,9 +114,6 @@ public class MainGameHUD {
         batch.draw(skillSlots,45,0,Initial.HEIGHT*7/8f,Initial.WIDTH/game.itemSection);
         batch.draw(itemSlots, itemX,Initial.WIDTH/2 - ((50+10)*3), 90, 250);
 
-
-        //batch.draw(gray, 0, Initial.WIDTH/game.itemSection - 5, Initial.HEIGHT, 15 );
-        //batch.draw(purple, 0, Initial.WIDTH/game.itemSection - 5, game.PERCENT_PP * Initial.HEIGHT/100f, 15 );
 
         batch.draw(HPContainerLeft,40, Initial.WIDTH/game.itemSection - HPContainerLeft.getHeight()/2, HPContainerLeft.getWidth()*2,HPContainerLeft.getHeight()*2);
         batch.draw(HPContainerCenter, 40 + HPContainerLeft.getWidth(), Initial.WIDTH/game.itemSection - HPContainerLeft.getHeight()/2, Initial.HEIGHT - HPContainerLeft.getWidth()*6, HPContainerCenter.getHeight()*2);
@@ -113,6 +129,9 @@ public class MainGameHUD {
         pauseButton.draw(batch);
         resumeButton.draw(batch);
         quitButton.draw(batch);
+
+        winButton.draw(batch);
+        loseButton.draw(batch);
     }
     public void touchUp(Vector3 vec){
         if(pauseButton.touched && pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
@@ -129,9 +148,19 @@ public class MainGameHUD {
             game.game.setScreen(new WorldScreen(game.game));
             game.dispose();
         }
+        if(winButton.touched && winButton.getBoundingRectangle().contains(vec.x,vec.y)){
+            game.game.setScreen(new WorldScreen(game.game));
+            game.dispose();
+        }
+        if(loseButton.touched && loseButton.getBoundingRectangle().contains(vec.x,vec.y)){
+            game.game.setScreen(new WorldScreen(game.game));
+            game.dispose();
+        }
         pauseButton.touchUp();
         resumeButton.touchUp();
         quitButton.touchUp();
+        winButton.touchUp();
+        loseButton.touchUp();
     }
     public void input(MainGame.State state, Vector3 vec){
         switch(state){
@@ -141,6 +170,13 @@ public class MainGameHUD {
             case PAUSE:
                 resumeButton.input(vec);
                 quitButton.input(vec);
+                break;
+            case WIN:
+                winButton.input(vec);
+
+                break;
+            case LOSE:
+                loseButton.input(vec);
                 break;
         }
 

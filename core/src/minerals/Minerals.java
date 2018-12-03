@@ -5,11 +5,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class Minerals{
-    private Array<Mineral> minerals;
+    private Array<Mineral> minerals, dead;
     private Mineral temp;
     private float x, y, dist;
     public Minerals() {
         minerals = new Array<Mineral>();
+        dead = new Array<Mineral>();
         x = 0;
         y = 0;
         dist = 100000;
@@ -162,6 +163,14 @@ public class Minerals{
 
     }
 
+
+    public void remove(Mineral mineral){
+        dead.add(mineral);
+        minerals.removeValue(mineral,false);
+    }
+
+
+
     public void pause(){
         for (Mineral mineral : minerals) {
             mineral.pause();
@@ -173,4 +182,6 @@ public class Minerals{
             mineral.unpause();
         }
     }
+
+
 }

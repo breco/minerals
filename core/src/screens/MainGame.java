@@ -244,6 +244,7 @@ public class MainGame implements Screen {
         if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
             cam.unproject(vec);
+            Gdx.app.log("TOUCH UP!","jsjajsas");
             hud.touchUp(vec);
             minerals.setUntouched(0);
             items.touchUp(0);
@@ -258,6 +259,7 @@ public class MainGame implements Screen {
     }
 
     public void update(){
+        gameConditions();
         bg.update();
         hud.update();
         minerals.update();
@@ -273,7 +275,14 @@ public class MainGame implements Screen {
         bullets.draw(game.batch);
         minerals.draw(game.batch);
         hud.draw(game.batch);
-
+        switch(state){
+            case WIN:
+                Gdx.app.log("WIN","YES!!!");
+                break;
+            case LOSE:
+                Gdx.app.log("LOSE","SAD :C");
+                break;
+        }
     }
 
 
@@ -302,7 +311,7 @@ public class MainGame implements Screen {
                 update();
                 break;
             case PAUSE:
-                pauseInput();
+                hudInput();
                 hud.update();
                 minerals.pause();
                 skills.pause();
@@ -312,12 +321,10 @@ public class MainGame implements Screen {
                 skills.unpause();
                 break;
             case WIN:
-                //winInput();
-                //pixies.pause();
+                hudInput();
                 break;
             case LOSE:
-                //loseInput();
-                //pixies.pause();
+                hudInput();
                 break;
 
         }
@@ -362,7 +369,7 @@ public class MainGame implements Screen {
 
     }
 
-    public void pauseInput(){
+    public void hudInput(){
         if(MyGestures.isTouchDown()) {
             vec.set(MyGestures.firstTouch);
             cam.unproject(vec);
@@ -374,6 +381,20 @@ public class MainGame implements Screen {
             hud.touchUp(vec);
 
         }
+    }
+
+
+
+    public void gameConditions(){
+        if(enemies.enemies.size == enemies.deadEnemies.size + enemies.escapedEnemies.size){
+            state = State.WIN;
+        }
+        if(minerals.getMinerals().size == 0){
+            state = State.LOSE;
+        }
+    }
+    public State getState(){
+        return state;
     }
 }
 
