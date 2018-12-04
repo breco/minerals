@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.lang.reflect.Constructor;
@@ -22,9 +22,7 @@ import enemies.Enemies;
 import enemies.Enemy;
 import huds.maingame.MainGameHUD;
 import items.Fruit;
-import items.Gemstone;
 import items.Items;
-import items.Mirror;
 import minerals.Agni;
 import minerals.Aqualis;
 import minerals.Minerals;
@@ -90,13 +88,17 @@ public class MainGame implements Screen {
 
 
     public MainGame(Initial game){
+
         Initial.setInputProcessor();
         this.game = game;
         cam = new OrthographicCamera();
 
         cam.position.set(Initial.HEIGHT/2,Initial.WIDTH/2, 0);
-        viewport = new FillViewport(Initial.HEIGHT, Initial.WIDTH,cam);
+        cam.update();
+        viewport = new FitViewport(Initial.HEIGHT, Initial.WIDTH,cam);
+
         viewport.apply();
+
         vec = new Vector3();
 
 
@@ -114,8 +116,8 @@ public class MainGame implements Screen {
 
         items = new Items();
         items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
-        items.add(new Mirror(new Texture(Gdx.files.internal("items/mirror.png"))));
-        items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
+        items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
+        items.add(new Fruit(new Texture(Gdx.files.internal("items/tuna.png"))));
         items.setPosition();
 
         skills = new Skills(this);
@@ -201,14 +203,13 @@ public class MainGame implements Screen {
     public void input(){
         if(MyGestures.isLongPress()){
             vec.set(MyGestures.firstTouch);
-            cam.unproject(vec);
+            viewport.unproject(vec);
             //minerals.long_input(vec);
         }
         else{
             if(MyGestures.isTouchDown()){
                 vec.set(MyGestures.firstTouch);
-                cam.unproject(vec);
-
+                viewport.unproject(vec);
                 if(vec.y < Initial.WIDTH/itemSection){
                     skills.input(vec,0);
                     return;
@@ -220,7 +221,7 @@ public class MainGame implements Screen {
             }
             if(MyGestures.isTouchDown2()){
                 vec.set(MyGestures.firstTouch2);
-                cam.unproject(vec);
+                viewport.unproject(vec);
                 if(vec.y < Initial.WIDTH/itemSection){
                     skills.input(vec,1);
                     return;
@@ -243,9 +244,8 @@ public class MainGame implements Screen {
 
         if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
-            cam.unproject(vec);
-            Gdx.app.log("TOUCH UP!","jsjajsas");
-            hud.touchUp(vec);
+            viewport.unproject(vec);
+            hud.touchUp(state,vec);
             minerals.setUntouched(0);
             items.touchUp(0);
             items.setUntouched(0);
@@ -275,14 +275,7 @@ public class MainGame implements Screen {
         bullets.draw(game.batch);
         minerals.draw(game.batch);
         hud.draw(game.batch);
-        switch(state){
-            case WIN:
-                Gdx.app.log("WIN","YES!!!");
-                break;
-            case LOSE:
-                Gdx.app.log("LOSE","SAD :C");
-                break;
-        }
+
     }
 
 
@@ -299,14 +292,16 @@ public class MainGame implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        // 3)Update system
+        // 3.1)---> Update Cam
+        cam.update();
+        game.batch.setProjectionMatrix(cam.combined);
         switch(state){
             case RUN:
                 // 2)Input handling
                 input();
-                // 3)Update system
-                // 3.1)---> Update Cam
-                cam.update();
-                game.batch.setProjectionMatrix(cam.combined);
+
                 // 3.2)---> Update Game
                 update();
                 break;
@@ -338,7 +333,7 @@ public class MainGame implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height,true);
+        viewport.update(width, height);//,true);
 
     }
 
@@ -372,13 +367,13 @@ public class MainGame implements Screen {
     public void hudInput(){
         if(MyGestures.isTouchDown()) {
             vec.set(MyGestures.firstTouch);
-            cam.unproject(vec);
+            viewport.unproject(vec);
             hud.input(state, vec);
         }
         if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
-            cam.unproject(vec);
-            hud.touchUp(vec);
+            viewport.unproject(vec);
+            hud.touchUp(state,vec);
 
         }
     }

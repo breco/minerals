@@ -29,7 +29,7 @@ public class MainGameHUD {
     public Texture HPContainerCenter = new Texture(Gdx.files.internal("huds/mainGame/bar center.png"));
     public Texture blue = new Texture(Gdx.files.internal("huds/mainGame/pp center blue.png"));
 
-    public int baseItemX = Initial.HEIGHT - 130;
+    public int baseItemX = Initial.HEIGHT - 90;
     public float itemX = baseItemX;
 
 
@@ -48,10 +48,10 @@ public class MainGameHUD {
         itemSlots = new Texture(Gdx.files.internal(("huds/mainGame/itemSlots.png")));
 
 
-        pauseButton = new BasicButton(new Texture(Gdx.files.internal("huds/mainGame/menu button.png")),new Texture(Gdx.files.internal("huds/mainGame/menu button pressed.png")), Initial.HEIGHT, Initial.WIDTH);
-        pauseButton.setX(pauseButton.getX() - pauseButton.getWidth()*2.8f);
-        pauseButton.setY(pauseButton.getY() - pauseButton.getHeight()*2);
-        pauseButton.setSize(pauseButton.getWidth()*2,pauseButton.getHeight()*2);
+        pauseButton = new BasicButton(new Texture(Gdx.files.internal("huds/mainGame/menu button.png")),new Texture(Gdx.files.internal("huds/mainGame/menu button pressed.png")), 0,0);
+
+        //pauseButton.setBounds(Initial.HEIGHT - pauseButton.getWidth()*5,Initial.WIDTH - pauseButton.getHeight()*10, 88,88);
+        pauseButton.setBounds(Initial.HEIGHT - 88,Initial.WIDTH - 88, 88,88);
 
         resumeButton = new BasicButton(new Texture(Gdx.files.internal("huds/menu/square button.png")),new Texture(Gdx.files.internal("huds/menu/square button pressed.png")), 0,0);
         resumeButton.setScale(1.5f);
@@ -133,29 +133,42 @@ public class MainGameHUD {
         winButton.draw(batch);
         loseButton.draw(batch);
     }
-    public void touchUp(Vector3 vec){
-        if(pauseButton.touched && pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.pause();
-            resumeButton.setShow(true);
-            quitButton.setShow(true);
+    public void touchUp(MainGame.State state,Vector3 vec){
+        switch(state){
+            case RUN:
+                if(pauseButton.touched && pauseButton.getBoundingRectangle().contains(vec.x,vec.y)){
+                    game.pause();
+                    resumeButton.setShow(true);
+                    quitButton.setShow(true);
+                }
+                break;
+            case PAUSE:
+                if(resumeButton.touched && resumeButton.getBoundingRectangle().contains(vec.x,vec.y)){
+                    game.resume();
+                    resumeButton.setShow(false);
+                    quitButton.setShow(false);
+                }
+                if(quitButton.touched && quitButton.getBoundingRectangle().contains(vec.x,vec.y)){
+                    game.game.setScreen(new WorldScreen(game.game));
+                    game.dispose();
+                }
+                break;
+            case WIN:
+                if(winButton.touched && winButton.getBoundingRectangle().contains(vec.x,vec.y)){
+                    game.game.setScreen(new WorldScreen(game.game));
+                    game.dispose();
+                }
+
+                break;
+            case LOSE:
+                if(loseButton.touched && loseButton.getBoundingRectangle().contains(vec.x,vec.y)){
+                    game.game.setScreen(new WorldScreen(game.game));
+                    game.dispose();
+                }
+                break;
         }
-        if(resumeButton.touched && resumeButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.resume();
-            resumeButton.setShow(false);
-            quitButton.setShow(false);
-        }
-        if(quitButton.touched && quitButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.game.setScreen(new WorldScreen(game.game));
-            game.dispose();
-        }
-        if(winButton.touched && winButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.game.setScreen(new WorldScreen(game.game));
-            game.dispose();
-        }
-        if(loseButton.touched && loseButton.getBoundingRectangle().contains(vec.x,vec.y)){
-            game.game.setScreen(new WorldScreen(game.game));
-            game.dispose();
-        }
+
+
         pauseButton.touchUp();
         resumeButton.touchUp();
         quitButton.touchUp();
@@ -165,6 +178,7 @@ public class MainGameHUD {
     public void input(MainGame.State state, Vector3 vec){
         switch(state){
             case RUN:
+
                 pauseButton.input(vec);
                 break;
             case PAUSE:

@@ -66,6 +66,7 @@ public class BasicButton extends Sprite {
 
     }
     public boolean contains(Vector3 vec){
+
         return getBoundingRectangle().contains(vec.x,vec.y);
     }
 

@@ -21,6 +21,7 @@ public class Initial extends Game {
 	public static BitmapFont font;
 	public static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 	public static FreeTypeFontGenerator generator;
+
 	@Override
 	public void create () {
 
@@ -36,8 +37,12 @@ public class Initial extends Game {
 		//WIDTH = Gdx.graphics.getWidth();
 		//HEIGHT = Gdx.graphics.getHeight();
 
+
+
+
 		WIDTH = 1280;
     	HEIGHT = 720;
+
 
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("myfont.ttf"));
 		parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

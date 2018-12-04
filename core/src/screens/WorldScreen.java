@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import huds.menu.BasicMenu;
@@ -62,7 +62,7 @@ public class WorldScreen implements Screen {
         cam = new OrthographicCamera();
         cam = new OrthographicCamera(cam.viewportWidth/2, cam.viewportHeight/2);
 
-        viewport = new FillViewport(virtualHeight,virtualWidth,cam);
+        viewport = new FitViewport(virtualHeight,virtualWidth,cam);
         bg = new Sprite(new Texture(Gdx.files.internal("space.png")));
         bg.setPosition(0,0);
         bg.setSize(virtualHeight,virtualWidth);
@@ -82,7 +82,7 @@ public class WorldScreen implements Screen {
     public void input(){
         if(MyGestures.isTouchDown()) {
             vec.set(MyGestures.firstTouch);
-            cam.unproject(vec);
+            viewport.unproject(vec);
             switch(inputState){
                 case WORLD:
                     planets.input(vec);
@@ -100,7 +100,7 @@ public class WorldScreen implements Screen {
         }
         else if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
-            cam.unproject(vec);
+            viewport.unproject(vec);
             switch(inputState){
                 case WORLD:
 
@@ -190,7 +190,7 @@ public class WorldScreen implements Screen {
         //Gdx.app.log("FPS",""+Gdx.graphics.getFramesPerSecond());
 
         // 1)Clear the screen
-        Gdx.gl.glClearColor(255, 255, 255, 0);
+        Gdx.gl.glClearColor(0,0,0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         switch(state){
             case RUN:
