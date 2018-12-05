@@ -1,195 +1,162 @@
 package huds.menu;
 
-import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 
 import screens.WorldScreen;
+import utils.MyGestures;
 
 public class SelectionMenu extends BasicMenu {
 
 
-    Array<MineralButton> minerals;
-    Array<ItemButton> items;
-    public Sprite delimiter;
-    BasicButton mineral;
-    BasicButton item;
-    BasicButton go;
+    //Array<MineralButton> minerals;
+    Array<ItemSelectButton> items;
+
+    //BasicButton mineral;
+    //BasicButton item;
+    BasicButton ok;
     Texture normal,pressed;
-    boolean showmineral = true;
+    Sprite slots;
+    Sprite slotSelected;
+    Sprite selected;
+    String selectedname;
+    Sprite touched;
+    String touchedName;
+    boolean moving = false;
 
     public SelectionMenu(WorldScreen screen) {
         super(screen);
 
-        minerals = new Array<MineralButton>();
-        minerals.add(new MineralButton("terro",0, 15, 2, 2, 1, "rock wheel"));
-        minerals.add(new MineralButton("aqualis",1, 12,2,4,1, "bubble shield"));
-        minerals.add(new MineralButton("pyro",2,10,3,2,1, "fire balls"));
+        slots = new Sprite(new Texture(Gdx.files.internal("huds/menu/selection slots.png")));
+        slots.setPosition(menuLU.getX(),menuLC.getY()+menuLU.getHeight()*2);
+        slots.setSize(menuLU.getWidth()+menuCD.getWidth()+menuRU.getWidth(),menuLU.getHeight()*5);
+        items = new Array<ItemSelectButton>();
+        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/mirror.png")),"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds.",0,0));
+        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/grapes.png")),"fruit","Heals 10 damage from 1 of your minerals.",1,0));
+        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/gemstone.png")),"gemstone","Adds 15 PP to the PP bar when used.",2,0));
+        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/star.png")),"speed star","Temporarily increases attack speed from 1 of your minerals.",0,1));
 
-        items = new Array<ItemButton>();
-        items.add(new ItemButton(0,"grapes","Heals 10 damage from 1 of your minerals."));
-        items.add(new ItemButton(1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
-        items.add(new ItemButton(2,"gemstone","Adds 15 PP to the PP bar when used."));
 
-        delimiter = new Sprite(new Texture(Gdx.files.internal("huds/menu/delimiter.png")));
-        delimiter.setSize(delimiter.getWidth()*5,delimiter.getHeight()*2);
+        for(ItemSelectButton item : items){
+            item.setParent(this);
+        }
+
+        slotSelected = new Sprite(new Texture(Gdx.files.internal("huds/menu/level slot.png")));
+        slotSelected.setSize(slotSelected.getWidth() * 3, slotSelected.getHeight() * 3);
+        slotSelected.setPosition(menuCD.getX()+menuLD.getWidth()*0.6f,menuCD.getY()+menuCD.getHeight()*1.1f);
+
+        touched = new Sprite(new Texture(Gdx.files.internal("items/grapes.png")));
+
 
         normal = new Texture(Gdx.files.internal("huds/menu/square button.png"));
         pressed = new Texture(Gdx.files.internal("huds/menu/square button pressed.png"));
-        mineral = new BasicButton(pressed,pressed, menuLU.getX() + 10, menuLU.getY() - 15);
-        mineral.setText("Minerals");
-        mineral.setSize(menuLU.getWidth()*2.4f, menuLU.getHeight());
-        mineral.forceTexture(pressed);
 
-        item = new BasicButton(normal,pressed, mineral.getX() + mineral.getWidth(), mineral.getY());
-        item.setText("  Items");
-        item.setSize(menuLU.getWidth()*2.4f, menuLU.getHeight());
-        item.forceTexture(normal);
 
         backbutton.setPosition(menuLU.getX() + backbutton.getWidth(),backbutton.getY());
 
-        go = new BasicButton(normal,pressed,backbutton.getX()+backbutton.getWidth()*2,backbutton.getY());
-        go.setSize(backbutton.getWidth(),backbutton.getHeight());
-        go.setText(" Go");
+        ok = new BasicButton(normal,pressed,backbutton.getX()+backbutton.getWidth()*2,backbutton.getY());
+        ok.setSize(backbutton.getWidth(),backbutton.getHeight());
+        ok.setText(" Ok");
 
     }
 
-
-
-    public void loadMinerals() {
-
-        class JsonMineral {
-            public String name, status;
-            public int stars;
-        }
-
-        JsonReader reader = new JsonReader();
-        Json json = new Json();
-        JsonValue base = reader.parse(Gdx.files.internal("levels/planets/"+ Initial.prefs.getString("load_planet")+".json"));
-
-        JsonValue levels = base.get("levels");
-        JsonMineral t;
-        int i = 0;
-        while(levels.get(i) != null){
-            t = json.fromJson(JsonMineral.class, levels.get(i).toString());
-            //this.levels.add(new LevelButton(i, t.name,t.stars));
-            i++;
-        }
-
-
-    }
 
 
     public void draw(SpriteBatch batch){
         if(!show) return;
         super.draw(batch);
-        if(showmineral){
-            for(MineralButton mineral : minerals){
-                mineral.draw(batch);
-                batch.draw(delimiter.getTexture(),menuLU.getX() + 25,mineral.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
-
-            }
+        slots.draw(batch);
+        slotSelected.draw(batch);
+        selected.draw(batch);
+        for(ItemSelectButton item : items){
+            item.draw(batch);
         }
-        else{
-            for(ItemButton item : items){
-                item.draw(batch);
-                batch.draw(delimiter.getTexture(),menuLU.getX() + 25,item.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
-            }
-        }
-        mineral.draw(batch);
-        item.draw(batch);
-        go.draw(batch);
+        ok.draw(batch);
 
+        if(moving){
+            batch.draw(touched.getTexture(),touched.getX(),touched.getY()+100,touched.getWidth(), touched.getHeight());
+            //touched.draw(batch);
+        }
+
+    }
+
+    public void update(){
+        move();
+    }
+
+    public void move(){
+
+        if(moving){
+            touched.setX(touched.getX() - MyGestures.diff.x);
+            touched.setY(touched.getY() - MyGestures.diff.y);
+
+        }
     }
     public void input(Vector3 vec){
         super.input(vec);
-        if(showmineral){
-            for(MineralButton button : minerals){
-                button.input(vec);
-            }
-        }
-        else{
-            for(ItemButton button : items){
-                button.input(vec);
+        for(ItemSelectButton item : items){
+            item.input(vec);
+            if(item.isTouched()){
+                moving = true;
+                touched.setTexture(item.item.getTexture());
+                touched.setSize(item.item.getWidth(),item.item.getHeight());
+                touched.setPosition(item.item.getX(),item.item.getY());
+                Gdx.app.log("INITIAL POSITION",touched.getX()+","+touched.getY());
+                touchedName = item.name;
             }
         }
 
-        mineral.input(vec);
-        item.input(vec);
-        go.input(vec);
+        ok.input(vec);
     }
     public void touchUp(Vector3 vec){
-
+        if(moving){
+            moving = false;
+            touched.setY(touched.getY()+100);
+            if(touched.getBoundingRectangle().overlaps(selected.getBoundingRectangle())){
+                selected.setTexture(touched.getTexture());
+                selectedname = touchedName;
+            }
+        }
         if(closebutton.touched && closebutton.contains(vec)){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
-            reset();
+            screen.mineralmenu.reset();
         }
 
         if(backbutton.touched && backbutton.contains(vec) ){
             show = false;
-            screen.inputState = WorldScreen.InputState.MENU;
-            screen.levelmenu.show(planet);
+            screen.inputState = WorldScreen.InputState.MINERALS;
+            screen.mineralmenu.show(planet);
+
 
         }
 
-        if(go.touched && go.contains(vec)){
-            screen.inputState = WorldScreen.InputState.GO;
-        }
-
-        if(showmineral && item.touched && item.contains(vec)){
-            showmineral = false;
-            item.forceTexture(pressed);
-            mineral.forceTexture(normal);
-            Gdx.app.log("Changing to item","o0o");
-        }
-        if(!showmineral && mineral.touched && mineral.contains(vec)){
-            showmineral = true;
-            item.forceTexture(normal);
-            mineral.forceTexture(pressed);
-            Gdx.app.log("changint to mineral","o.ó");
+        if(ok.touched && ok.contains(vec)){
+            screen.inputState = WorldScreen.InputState.MINERALS;
+            show = false;
+            screen.mineralmenu.show(planet);
         }
 
 
-        if(showmineral){
-            for(MineralButton button : minerals){
-                if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                    //
-                }
-                button.touchUp();
-
-            }
-
-        }
-        else{
-            for(ItemButton button : items){
-                if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                    //
-                }
-                button.touchUp();
-
-            }
+        for(ItemSelectButton item : items){
+            item.touchUp(vec);
         }
 
-
-        mineral.touchUp();
-        item.touchUp();
         backbutton.touchUp();
         closebutton.touchUp();
-        go.touchUp();
+        ok.touchUp();
+
     }
 
-    public void reset(){
-        showmineral = true;
-        item.forceTexture(normal);
-        mineral.forceTexture(pressed);
+    public void setSelectedItem(String name, Sprite item){
+        selected = new Sprite(item.getTexture());
+        selected.setSize(96,96);
+        selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
+        selectedname = name;
     }
 
 }

@@ -22,7 +22,9 @@ import enemies.Enemies;
 import enemies.Enemy;
 import huds.maingame.MainGameHUD;
 import items.Fruit;
+import items.Gemstone;
 import items.Items;
+import items.Mirror;
 import minerals.Agni;
 import minerals.Aqualis;
 import minerals.Minerals;
@@ -42,7 +44,6 @@ public class MainGame implements Screen {
         PAUSE,
         RUN,
         RESUME,
-        STOPPED,
         WIN,
         LOSE
     }
@@ -116,8 +117,8 @@ public class MainGame implements Screen {
 
         items = new Items();
         items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/orangefruit.png"))));
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/tuna.png"))));
+        items.add(new Mirror(new Texture(Gdx.files.internal("items/mirror.png"))));
+        items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
         items.setPosition();
 
         skills = new Skills(this);

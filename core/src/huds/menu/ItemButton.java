@@ -32,6 +32,7 @@ public class ItemButton {
         name = itemname;
         this.effect = effect;
         fixEffect();
+
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = Initial.parameter;
         parameter.size = 13;
 
@@ -40,7 +41,7 @@ public class ItemButton {
 
 
         slot = new Sprite(new Texture(Gdx.files.internal("huds/menu/level slot.png")));
-        int[] size2 = {32,32};
+
         //mineralAnimator = new Animator(new Texture(Gdx.files.internal("items/"+itemname+".png")),1,1,1,0.7f,size2);
         item = new Sprite(new Texture(Gdx.files.internal("items/"+itemname+".png")));
 

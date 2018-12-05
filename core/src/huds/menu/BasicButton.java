@@ -75,4 +75,8 @@ public class BasicButton extends Sprite {
         pressed = texture;
         setTexture(normal);
     }
+    public boolean isTouched(){
+        return touched;
+    }
 }
+

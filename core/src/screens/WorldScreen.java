@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import huds.menu.BasicMenu;
 import huds.menu.LevelMenu;
 import huds.menu.MineralMenu;
+import huds.menu.SelectionMenu;
 import planets.Planet;
 import planets.Planets;
 import utils.MyGestures;
@@ -35,6 +36,7 @@ public class WorldScreen implements Screen {
         WORLD,
         MENU,
         MINERALS,
+        SELECTION,
         GO,
     }
     private State state = State.RUN;
@@ -45,7 +47,7 @@ public class WorldScreen implements Screen {
     public Planets planets;
 
 
-    Viewport viewport;
+    public static Viewport viewport;
     int virtualWidth = 1280;
     int virtualHeight = 720;
 
@@ -55,6 +57,7 @@ public class WorldScreen implements Screen {
     BasicMenu menu;
     public LevelMenu levelmenu;
     public MineralMenu mineralmenu;
+    public SelectionMenu selectionmenu;
 
     public WorldScreen(Initial game){
         Initial.setInputProcessor();
@@ -77,6 +80,7 @@ public class WorldScreen implements Screen {
         menu = new BasicMenu(this);
         levelmenu = new LevelMenu(this);
         mineralmenu = new MineralMenu(this);
+        selectionmenu = new SelectionMenu(this);
 
     }
     public void input(){
@@ -92,30 +96,39 @@ public class WorldScreen implements Screen {
                     break;
                 case MINERALS:
                     mineralmenu.input(vec);
+
+                    break;
+                case SELECTION:
+                    selectionmenu.input(vec);
+
                     break;
 
             }
 
 
         }
-        else if(MyGestures.isTouchUp()){
+        if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
             viewport.unproject(vec);
             switch(inputState){
                 case WORLD:
-
-
                     break;
                 case MENU:
                     levelmenu.touchUp(vec);
-
-
                     break;
                 case MINERALS:
                     mineralmenu.touchUp(vec);
                     break;
+                case SELECTION:
+                    selectionmenu.touchUp(vec);
+                    break;
 
             }
+        }
+
+        if(!MyGestures.isTouchDragged()){
+
+            MyGestures.resetDiff(0);
         }
     }
 
@@ -142,6 +155,9 @@ public class WorldScreen implements Screen {
                 break;
             case MINERALS:
 
+                break;
+            case SELECTION:
+                selectionmenu.update();
                 break;
             case GO:
                 game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
@@ -170,7 +186,9 @@ public class WorldScreen implements Screen {
             case MINERALS:
                 mineralmenu.draw(batch);
                 break;
-
+            case SELECTION:
+                selectionmenu.draw(batch);
+                break;
         }
 
     }

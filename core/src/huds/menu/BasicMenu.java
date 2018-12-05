@@ -111,7 +111,7 @@ public class BasicMenu {
         menutitleR.draw(batch);
         closebutton.draw(batch);
 
-        batch.draw(planet.getTexture(), menutitleL.getX()+menutitleL.getWidth()/3, menutitleL.getY()+ menutitleL.getHeight()*0.2f, menutitleL.getWidth()*0.6f,menutitleL.getHeight()*0.6f);
+        if(planet != null) batch.draw(planet.getTexture(), menutitleL.getX()+menutitleL.getWidth()/3, menutitleL.getY()+ menutitleL.getHeight()*0.2f, menutitleL.getWidth()*0.6f,menutitleL.getHeight()*0.6f);
         font.draw(batch, title,menutitleL.getX()+menutitleL.getWidth(), menutitleL.getY()+ menutitleL.getHeight()*0.6f);
 
         menuLU.draw(batch);
@@ -164,12 +164,24 @@ public class BasicMenu {
         title = planet.name;
 
     }
+
+    public void show(String title){
+        show = true;
+        this.title = title;
+    }
+
+
     public Planet getPlanet(){
         return planet;
     }
 
     public void addTitle(String titulo){
+        Gdx.app.log("add title","uwu");
         title = title + titulo;
 
+    }
+    public void setTitle(String titulo){
+        Gdx.app.log("set title","awa");
+        title = titulo;
     }
 }

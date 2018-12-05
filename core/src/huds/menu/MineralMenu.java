@@ -32,9 +32,7 @@ public class MineralMenu extends BasicMenu {
         minerals.add(new MineralButton("pyro",2,10,3,2,1, "fire balls"));
 
         items = new Array<ItemButton>();
-        items.add(new ItemButton(0,"grapes","Heals 10 damage from 1 of your minerals."));
-        items.add(new ItemButton(1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
-        items.add(new ItemButton(2,"gemstone","Adds 15 PP to the PP bar when used."));
+        loadItems();
 
         delimiter = new Sprite(new Texture(Gdx.files.internal("huds/menu/delimiter.png")));
         delimiter.setSize(delimiter.getWidth()*5,delimiter.getHeight()*2);
@@ -57,6 +55,14 @@ public class MineralMenu extends BasicMenu {
         go.setSize(backbutton.getWidth(),backbutton.getHeight());
         go.setText(" Go");
 
+    }
+
+
+    public void loadItems(){
+        Initial.prefs.getString("item-1");
+        items.add(new ItemButton(0,"grapes","Heals 10 damage from 1 of your minerals."));
+        items.add(new ItemButton(1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
+        items.add(new ItemButton(2,"gemstone","Adds 15 PP to the PP bar when used."));
     }
 
 
@@ -146,13 +152,13 @@ public class MineralMenu extends BasicMenu {
             showmineral = false;
             item.forceTexture(pressed);
             mineral.forceTexture(normal);
-            Gdx.app.log("Changing to item","o0o");
+
         }
         if(!showmineral && mineral.touched && mineral.contains(vec)){
             showmineral = true;
             item.forceTexture(normal);
             mineral.forceTexture(pressed);
-            Gdx.app.log("changint to mineral","o.ó");
+
         }
 
 
@@ -169,7 +175,11 @@ public class MineralMenu extends BasicMenu {
         else{
             for(ItemButton button : items){
                 if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                    //
+                    show = false;
+                    screen.inputState = WorldScreen.InputState.SELECTION;
+                    screen.selectionmenu.show(planet);
+                    screen.selectionmenu.show("Select item");
+                    screen.selectionmenu.setSelectedItem(button.name, button.item);
                 }
                 button.touchUp();
 

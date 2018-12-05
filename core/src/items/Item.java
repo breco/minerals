@@ -105,9 +105,9 @@ public abstract class Item extends Sprite {
         if(touched || touched2){
 
 
-            //batch.draw(green, getMovingRectangle().getX(),getMovingRectangle().getY(),getMovingRectangle().width,getMovingRectangle().height);
-            batch.draw(getTexture(),virtualX-fixMovY*2.5f,virtualY+fixMovY,getWidth(),getHeight());
-            //batch.draw(getTexture(),virtualX-fixMovY,virtualY+fixMovY,getWidth(),getHeight());
+
+            batch.draw(getTexture(),virtualX-fixMovY*2,virtualY+fixMovY,getWidth(),getHeight());
+
         }
 
     }
@@ -117,7 +117,7 @@ public abstract class Item extends Sprite {
 
     }
     public Rectangle getMovingRectangle(){
-        rect.setPosition(virtualX-fixMovY*2.5f,virtualY+fixMovY);
+        rect.setPosition(virtualX-fixMovY*2,virtualY+fixMovY);
         rect.setSize(getWidth(),getHeight());
         return rect;
     }

@@ -32,7 +32,10 @@ public class Initial extends Game {
 		mux.addProcessor(ges.gd);
 		Gdx.input.setInputProcessor(mux);
 		prefs = Gdx.app.getPreferences("My Preferences");
-
+		prefs.putString("item-1","");
+		prefs.putString("item-2","");
+		prefs.putString("item-3","");
+		prefs.flush();
 		batch = new SpriteBatch();
 		//WIDTH = Gdx.graphics.getWidth();
 		//HEIGHT = Gdx.graphics.getHeight();
