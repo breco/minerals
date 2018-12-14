@@ -163,6 +163,7 @@ public class WorldScreen implements Screen {
                 game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
                 game.prefs.flush();
                 game.setScreen (new MainGame(game));
+
                 dispose();
                 break;
         }
@@ -259,6 +260,6 @@ public class WorldScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        viewport = null;
     }
 }

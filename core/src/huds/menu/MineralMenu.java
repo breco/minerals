@@ -28,7 +28,7 @@ public class MineralMenu extends BasicMenu {
 
         minerals = new Array<MineralButton>();
         minerals.add(new MineralButton("terro",0, 15, 2, 2, 1, "rock wheel"));
-        minerals.add(new MineralButton("aqualis",1, 12,2,4,1, "bubble shield"));
+        minerals.add(new MineralButton("redmi",1, 12,2,4,1, "fireworks"));
         minerals.add(new MineralButton("pyro",2,10,3,2,1, "fire balls"));
 
         items = new Array<ItemButton>();

@@ -5,6 +5,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import screens.MainGame;
 import screens.WorldScreen;
 
 public class MyGestures implements GestureDetector.GestureListener, InputProcessor {
@@ -218,15 +219,15 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
             firstTouch.set(screenX, screenY, 0);
             firstTouchTest.set(screenX, screenY, 0);
             if(WorldScreen.viewport != null) WorldScreen.viewport.unproject(firstTouchTest);
-            //if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest);
+
+            if(MainGame.viewport != null) MainGame.viewport.unproject(firstTouchTest);
             delta.set(0, 0, 0);
             deltaTest.set(0,0,0);
         }
         else if(pointer == 1){
             firstTouch2.set(screenX, screenY, 0);
             firstTouchTest2.set(screenX,screenY,0);
-
-            //if(MainGame.cam != null) MainGame.cam.unproject(firstTouchTest2);
+            if(MainGame.viewport != null) MainGame.viewport.unproject(firstTouchTest2);
             delta2.set(0, 0, 0);
             deltaTest2.set(0,0,0);
         }
@@ -267,7 +268,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
 
             newTouchTest.set(screenX, screenY, 0);
             if(WorldScreen.viewport != null) WorldScreen.viewport.unproject(newTouchTest);
-            //if(MainGame.cam != null) MainGame.cam.unproject(newTouchTest);
+            if(MainGame.viewport != null) MainGame.viewport.unproject(newTouchTest);
             newDeltaTest = newTouchTest.cpy().sub(firstTouchTest);
             diff = deltaTest.cpy().sub(newDeltaTest);
             deltaTest = newDeltaTest;
@@ -283,7 +284,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
 
             newTouchTest2.set(screenX, screenY, 0);
             if(WorldScreen.viewport != null) WorldScreen.viewport.unproject(newTouchTest2);
-            //if(MainGame.cam != null)  MainGame.cam.unproject(newTouchTest2);
+            if(MainGame.viewport != null)  MainGame.viewport.unproject(newTouchTest2);
             newDeltaTest2 = newTouchTest2.cpy().sub(firstTouchTest2);
             diff2 = deltaTest2.cpy().sub(newDeltaTest2);
             deltaTest2 = newDeltaTest2;

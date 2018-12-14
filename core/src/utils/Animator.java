@@ -13,6 +13,7 @@ public class Animator {
     Animation animation;
     float elapsedTime;
     public int width, height;
+    float rotation = 1000;
     public Animator(Texture texture,int rows, int columns, int frames,float speed,int[]... size){
 
         int x,y;
@@ -46,10 +47,19 @@ public class Animator {
     public void draw(Sprite sprite, SpriteBatch batch){
         elapsedTime += Gdx.graphics.getDeltaTime();
         sprite.setRegion((TextureRegion) animation.getKeyFrame(elapsedTime,true));
-        //batch.draw(getTextureRegion(),sprite.getX(),sprite.getY(),0,0,width,height,1f,1f,0);
+        if(rotation != 1000){
+            sprite.setOriginCenter();
+            sprite.setRotation(rotation);
+        }
         sprite.draw(batch);
     }
     public TextureRegion getTextureRegion(){
         return (TextureRegion) animation.getKeyFrame(elapsedTime,true);
+    }
+
+    public void setRotation(float angle){
+        this.rotation = angle;
+        //this.rotation = (float) (angle*Math.PI/180f);
+
     }
 }

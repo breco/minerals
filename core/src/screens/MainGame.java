@@ -26,8 +26,8 @@ import items.Gemstone;
 import items.Items;
 import items.Mirror;
 import minerals.Agni;
-import minerals.Aqualis;
 import minerals.Minerals;
+import minerals.Redmi;
 import minerals.Terro;
 import skills.Skills;
 import utils.MyGestures;
@@ -52,7 +52,7 @@ public class MainGame implements Screen {
 
     public static OrthographicCamera cam;
     public Initial game;
-    Viewport viewport;
+    public static Viewport viewport;
     public Vector3 vec;
 
 
@@ -106,7 +106,7 @@ public class MainGame implements Screen {
         // GAME OBJECTS
         minerals = new Minerals();
 
-        minerals.add( new Aqualis(Initial.HEIGHT/4-32,400,30,2,30, 1));
+        minerals.add( new Redmi(Initial.HEIGHT/4-32,400,30,2,30, 1));
         minerals.add( new Terro(Initial.HEIGHT/2-32,400,30,2,30, 1));
         minerals.add( new Agni(Initial.HEIGHT*3/4-32,400,30,2,30, 1));
 
@@ -361,7 +361,7 @@ public class MainGame implements Screen {
 
     @Override
     public void dispose() {
-
+        viewport = null;
 
     }
 

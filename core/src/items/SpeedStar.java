@@ -29,6 +29,7 @@ public class SpeedStar extends Item {
 
             if(getMovingRectangle().overlaps(mineral.getBoundingRectangle())){
                 mineral.changeSPD(amount);
+                
                 affected = mineral;
                 used = true;
                 time.start();

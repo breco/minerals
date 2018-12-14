@@ -5,6 +5,7 @@ public class TimeManager {
     private long totalPauseTime;
     private long pauseInit;
     private float chronometer;
+    private boolean started = false;
     public TimeManager(){
         pauseInit = 0;
         totalPauseTime = 0;
@@ -13,6 +14,7 @@ public class TimeManager {
     public void start(){
         //
         startTime = System.nanoTime();
+        started = true;
     }
     public float getTime(){
         //
@@ -29,6 +31,7 @@ public class TimeManager {
         startTime = 0;
         pauseInit = 0;
         totalPauseTime = 0;
+        started = false;
     }
     public void setChronometer(float seconds){
         this.chronometer = seconds;
@@ -36,5 +39,8 @@ public class TimeManager {
     public boolean ring(){
         if(getTime()>= chronometer) return true;
         return false;
+    }
+    public boolean started(){
+        return started;
     }
 }
