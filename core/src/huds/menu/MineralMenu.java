@@ -60,9 +60,9 @@ public class MineralMenu extends BasicMenu {
 
     public void loadItems(){
         Initial.prefs.getString("item-1");
-        items.add(new ItemButton(0,"grapes","Heals 10 damage from 1 of your minerals."));
-        items.add(new ItemButton(1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
-        items.add(new ItemButton(2,"gemstone","Adds 15 PP to the PP bar when used."));
+        items.add(new ItemButton("1", 0,"grapes","Heals 10 damage from 1 of your minerals."));
+        items.add(new ItemButton("2", 1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
+        items.add(new ItemButton("3", 2,"gemstone","Adds 15 PP to the PP bar when used."));
     }
 
 
@@ -179,7 +179,7 @@ public class MineralMenu extends BasicMenu {
                     screen.inputState = WorldScreen.InputState.SELECTION;
                     screen.selectionmenu.show(planet);
                     screen.selectionmenu.show("Select item");
-                    screen.selectionmenu.setSelectedItem(button.name, button.item);
+                    screen.selectionmenu.setSelectedItem(button);
                 }
                 button.touchUp();
 
@@ -198,6 +198,15 @@ public class MineralMenu extends BasicMenu {
         showmineral = true;
         item.forceTexture(normal);
         mineral.forceTexture(pressed);
+    }
+
+    public String getSelectedItems(){
+        String selecteditems = "";
+        for(ItemButton item : items){
+            selecteditems += item.getValue() + ",";
+
+        }
+        return selecteditems;
     }
 
 }

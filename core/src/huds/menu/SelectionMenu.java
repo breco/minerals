@@ -1,6 +1,7 @@
 package huds.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,11 +24,15 @@ public class SelectionMenu extends BasicMenu {
     Sprite slots;
     Sprite slotSelected;
     Sprite selected;
+    String selectedvalue;
     String selectedname;
+    String selectedEffect;
     Sprite touched;
+    String touchedValue;
     String touchedName;
+    String touchedEffect;
     boolean moving = false;
-
+    ItemButton button;
     public SelectionMenu(WorldScreen screen) {
         super(screen);
 
@@ -35,13 +40,25 @@ public class SelectionMenu extends BasicMenu {
         slots.setPosition(menuLU.getX(),menuLC.getY()+menuLU.getHeight()*2);
         slots.setSize(menuLU.getWidth()+menuCD.getWidth()+menuRU.getWidth(),menuLU.getHeight()*5);
         items = new Array<ItemSelectButton>();
-        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/mirror.png")),"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds.",0,0));
-        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/grapes.png")),"fruit","Heals 10 damage from 1 of your minerals.",1,0));
-        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/gemstone.png")),"gemstone","Adds 15 PP to the PP bar when used.",2,0));
-        items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/star.png")),"speed star","Temporarily increases attack speed from 1 of your minerals.",0,1));
 
 
-        for(ItemSelectButton item : items){
+        //CREATE READING CLASS
+        FileHandle file = Gdx.files.internal("data/items.txt");
+        String[] items = file.readString().split("\n");
+        String[] itemdata;
+        int x = 0, y = 0;
+        for(String item : items){
+            itemdata = item.split("/");
+            this.items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/"+itemdata[2]+".png")),itemdata[0],itemdata[2],itemdata[3],x, y));
+            x++;
+            if(x >= 3){
+                x = 0;
+                y++;
+            }
+        }
+
+
+        for(ItemSelectButton item : this.items){
             item.setParent(this);
         }
 
@@ -79,7 +96,7 @@ public class SelectionMenu extends BasicMenu {
 
         if(moving){
             batch.draw(touched.getTexture(),touched.getX(),touched.getY()+100,touched.getWidth(), touched.getHeight());
-            //touched.draw(batch);
+
         }
 
     }
@@ -105,8 +122,10 @@ public class SelectionMenu extends BasicMenu {
                 touched.setTexture(item.item.getTexture());
                 touched.setSize(item.item.getWidth(),item.item.getHeight());
                 touched.setPosition(item.item.getX(),item.item.getY());
-                Gdx.app.log("INITIAL POSITION",touched.getX()+","+touched.getY());
+                touchedValue = item.value;
                 touchedName = item.name;
+                touchedEffect = item.originalDescription;
+
             }
         }
 
@@ -118,7 +137,9 @@ public class SelectionMenu extends BasicMenu {
             touched.setY(touched.getY()+100);
             if(touched.getBoundingRectangle().overlaps(selected.getBoundingRectangle())){
                 selected.setTexture(touched.getTexture());
+                selectedvalue = touchedValue;
                 selectedname = touchedName;
+                selectedEffect = touchedEffect;
             }
         }
         if(closebutton.touched && closebutton.contains(vec)){
@@ -139,6 +160,9 @@ public class SelectionMenu extends BasicMenu {
             screen.inputState = WorldScreen.InputState.MINERALS;
             show = false;
             screen.mineralmenu.show(planet);
+            Gdx.app.log("SELECTEDNAME",selectedname+"");
+            Gdx.app.log("SELECTEDEFFECT",""+selectedEffect);
+            button.updateItem(selectedvalue,selectedname,selectedEffect);
         }
 
 
@@ -152,11 +176,16 @@ public class SelectionMenu extends BasicMenu {
 
     }
 
-    public void setSelectedItem(String name, Sprite item){
-        selected = new Sprite(item.getTexture());
+    public void setSelectedItem(ItemButton button){
+        this.button = button;
+        selected = new Sprite(button.item.getTexture());
         selected.setSize(96,96);
         selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
-        selectedname = name;
+        selectedname = button.name;
+        selectedvalue = button.value;
     }
+
+
+
 
 }

@@ -1,0 +1,4 @@
+1/items.Fruit/grapes/Heals 10 damage from 1 of your minerals.
+2/items.Mirror/mirror/Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds.
+3/items.Gemstone/gemstone/Adds 15 PP to the PP bar when used.
+4/items.SpeedStar/speed star/Temporarily increases attack speed from 1 of your minerals.

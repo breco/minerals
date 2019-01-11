@@ -25,11 +25,12 @@ public class ItemButton {
 
 
 
-    public String name, effect;
+    public String value, name, effect;
     private BitmapFont font;
 
-    public ItemButton(int y, String itemname,  String effect){
+    public ItemButton(String value, int y, String itemname,  String effect){
         name = itemname;
+        this.value = value;
         this.effect = effect;
         fixEffect();
 
@@ -93,5 +94,16 @@ public class ItemButton {
         }
         effect = temp;
 
+    }
+
+    public void updateItem(String value, String name, String effect){
+        item.setTexture(new Texture(Gdx.files.internal("items/"+name+".png")));
+        this.value = value;
+        this.effect = effect;
+        this.name = name;
+        fixEffect();
+    }
+    public String getValue(){
+        return value;
     }
 }

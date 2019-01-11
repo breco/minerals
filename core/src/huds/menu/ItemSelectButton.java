@@ -18,15 +18,18 @@ public class ItemSelectButton {
 
 
     String name, description;
+    String value;
     Sprite item;
     Sprite box;
     BasicMenu menu;
     public boolean showDescription = false;
     BitmapFont font;
     boolean touched = false;
-    public ItemSelectButton(Texture texture, String name, String text, float x, float y){
+    String originalDescription;
+    public ItemSelectButton(Texture texture, String value, String name, String text, float x, float y){
+        this.value = value;
         this.name = name;
-
+        originalDescription = text;
         List<String> fixed = Words.fullJustify(text.split(" "),35);
         String temp = "";
         for(String linea : fixed){
@@ -80,6 +83,10 @@ public class ItemSelectButton {
     }
     public boolean isTouched(){
         return touched;
+    }
+
+    public String getValue(){
+        return value;
     }
 
 }

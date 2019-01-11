@@ -21,10 +21,8 @@ import bullets.Bullets;
 import enemies.Enemies;
 import enemies.Enemy;
 import huds.maingame.MainGameHUD;
-import items.Fruit;
-import items.Gemstone;
+import items.ItemLoader;
 import items.Items;
-import items.Mirror;
 import minerals.Agni;
 import minerals.Minerals;
 import minerals.Redmi;
@@ -116,9 +114,14 @@ public class MainGame implements Screen {
         bullets = new Bullets();
 
         items = new Items();
-        items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
-        items.add(new Mirror(new Texture(Gdx.files.internal("items/mirror.png"))));
-        items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
+        String[] selecteditems = game.prefs.getString("selected_items").split(",");
+        for(String item : selecteditems){
+            items.add(ItemLoader.getItem(item));
+
+        }
+        //items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
+        //items.add(new Mirror(new Texture(Gdx.files.internal("items/mirror.png"))));
+        //items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
         items.setPosition();
 
         skills = new Skills(this);
@@ -169,7 +172,6 @@ public class MainGame implements Screen {
         while(enemigos.get(i) != null){
             t = json.fromJson(JsonEnemy.class, enemigos.get(i).toString());
             Class<?> clazz = Class.forName(t.clase);
-            //Gdx.app.log("t.clase",t.clase);
             Constructor<?> ctor = clazz.getConstructor(int.class,int.class,int.class);
             enemies.add((Enemy) ctor.newInstance(t.posx,Initial.WIDTH,t.time));
             i++;
