@@ -2,6 +2,7 @@ package huds.menu;
 
 import com.artificialmemories.minerals.Initial;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,15 +40,17 @@ public class MineralMenu extends BasicMenu {
 
         normal = new Texture(Gdx.files.internal("huds/menu/square button.png"));
         pressed = new Texture(Gdx.files.internal("huds/menu/square button pressed.png"));
-        mineral = new BasicButton(pressed,pressed, menuLU.getX() + 10, menuLU.getY() - 15);
-        mineral.setText("Minerals");
-        mineral.setSize(menuLU.getWidth()*2.4f, menuLU.getHeight());
+        mineral = new BasicButton(pressed,pressed, menuLU.getX() + 50, menuLU.getY() - 15);
+        mineral.setText("    Minerals");
+        //mineral.setSize(menuLU.getWidth()*2.4f, menuLU.getHeight());
+        mineral.setSize(menuLU.getWidth()*4, menuLU.getHeight()*3/4);
         mineral.forceTexture(pressed);
-
-        item = new BasicButton(normal,pressed, mineral.getX() + mineral.getWidth(), mineral.getY());
-        item.setText("  Items");
-        item.setSize(menuLU.getWidth()*2.4f, menuLU.getHeight());
-        item.forceTexture(normal);
+        mineral.setColor(Color.GOLD);
+        item = new BasicButton(pressed,pressed, mineral.getX() , menuLC.getY() + menuLC.getHeight()/2 - 60);
+        item.setText("       Items");
+        item.setSize(menuLU.getWidth()*4, menuLU.getHeight()*3/4);
+        item.forceTexture(pressed);
+        item.setColor(Color.GOLD);
 
         backbutton.setPosition(menuLU.getX() + backbutton.getWidth(),backbutton.getY());
 
@@ -55,11 +58,17 @@ public class MineralMenu extends BasicMenu {
         go.setSize(backbutton.getWidth(),backbutton.getHeight());
         go.setText(" Go");
 
+
+        for(ItemButton item : this.items){
+            item.setParent(this);
+        }
+
+
     }
 
 
     public void loadItems(){
-        Initial.prefs.getString("item-1");
+
         items.add(new ItemButton("1", 0,"grapes","Heals 10 damage from 1 of your minerals."));
         items.add(new ItemButton("2", 1,"mirror","Protects 1 of your minerals reflecting bullets to your enemies during 15 seconds."));
         items.add(new ItemButton("3", 2,"gemstone","Adds 15 PP to the PP bar when used."));
@@ -94,19 +103,15 @@ public class MineralMenu extends BasicMenu {
     public void draw(SpriteBatch batch){
         if(!show) return;
         super.draw(batch);
-        if(showmineral){
             for(MineralButton mineral : minerals){
                 mineral.draw(batch);
-                batch.draw(delimiter.getTexture(),menuLU.getX() + 25,mineral.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
+                //batch.draw(delimiter.getTexture(),menuLU.getX() + 25,mineral.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
 
             }
-        }
-        else{
             for(ItemButton item : items){
                 item.draw(batch);
-                batch.draw(delimiter.getTexture(),menuLU.getX() + 25,item.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
+                //batch.draw(delimiter.getTexture(),menuLU.getX() + 25,item.slot.getY()- 30, delimiter.getWidth()*2.9f,delimiter.getHeight());
             }
-        }
         mineral.draw(batch);
         item.draw(batch);
         go.draw(batch);
@@ -114,19 +119,14 @@ public class MineralMenu extends BasicMenu {
     }
     public void input(Vector3 vec){
         super.input(vec);
-        if(showmineral){
             for(MineralButton button : minerals){
                 button.input(vec);
             }
-        }
-        else{
+
             for(ItemButton button : items){
                 button.input(vec);
             }
-        }
 
-        mineral.input(vec);
-        item.input(vec);
         go.input(vec);
     }
     public void touchUp(Vector3 vec){
@@ -148,7 +148,7 @@ public class MineralMenu extends BasicMenu {
             screen.inputState = WorldScreen.InputState.GO;
         }
 
-        if(showmineral && item.touched && item.contains(vec)){
+        /*if(showmineral && item.touched && item.contains(vec)){
             showmineral = false;
             item.forceTexture(pressed);
             mineral.forceTexture(normal);
@@ -159,33 +159,31 @@ public class MineralMenu extends BasicMenu {
             item.forceTexture(normal);
             mineral.forceTexture(pressed);
 
-        }
+        }*/
 
 
-        if(showmineral){
-            for(MineralButton button : minerals){
-                if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                    //
-                }
-                button.touchUp();
 
+        for(MineralButton button : minerals){
+            if(button.getBoundingRectangle().contains(vec.x,vec.y)){
+                //
             }
+            button.touchUp();
 
         }
-        else{
-            for(ItemButton button : items){
-                if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                    show = false;
-                    screen.inputState = WorldScreen.InputState.SELECTION;
-                    screen.selectionmenu.show(planet);
-                    screen.selectionmenu.show("Select item");
-                    screen.selectionmenu.setSelectedItem(button);
-                }
-                button.touchUp();
 
+
+
+        for(ItemButton button : items){
+            if(button.getBoundingRectangle().contains(vec.x,vec.y)){
+                show = false;
+                screen.inputState = WorldScreen.InputState.SELECTION;
+                screen.selectionmenu.show(planet);
+                screen.selectionmenu.show("Select item");
+                screen.selectionmenu.setSelectedItem(button);
             }
-        }
+            button.touchUp();
 
+        }
 
         mineral.touchUp();
         item.touchUp();

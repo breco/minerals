@@ -95,7 +95,7 @@ public class SelectionMenu extends BasicMenu {
         ok.draw(batch);
 
         if(moving){
-            batch.draw(touched.getTexture(),touched.getX(),touched.getY()+100,touched.getWidth(), touched.getHeight());
+            batch.draw(touched.getTexture(),touched.getX(),touched.getY()+50,touched.getWidth(), touched.getHeight());
 
         }
 
@@ -183,6 +183,7 @@ public class SelectionMenu extends BasicMenu {
         selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
         selectedname = button.name;
         selectedvalue = button.value;
+        selectedEffect = button.effect;
     }
 
 

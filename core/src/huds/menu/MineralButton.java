@@ -46,7 +46,8 @@ public class MineralButton {
         mineral = new Sprite();
 
         slot.setSize(slot.getWidth()*2,slot.getHeight()*2);
-        slot.setPosition(Initial.HEIGHT/5, Initial.WIDTH*0.6f - (slot.getHeight()+ 50)*y);
+        //slot.setPosition(Initial.HEIGHT/5, Initial.WIDTH*0.6f - (slot.getHeight()+ 50)*y);
+        slot.setPosition(Initial.HEIGHT/4.75f + (slot.getHeight()+ 35) * y, Initial.WIDTH*0.59f);
         mineral.setPosition(slot.getX()+slot.getWidth()*0.25f,slot.getY()+slot.getHeight()*0.25f);
         mineral.setSize(64,64);
         rect = new Rectangle(slot.getX(),slot.getY(), Initial.WIDTH/2.7f,slot.getHeight());
@@ -60,12 +61,12 @@ public class MineralButton {
 
         slot.draw(batch);
         mineralAnimator.draw(mineral,batch);
-        font.draw(batch, name,slot.getX() + slot.getWidth()*1.2f, slot.getY()+ slot.getHeight()*0.8f);
-        font.draw(batch,"LVL   "+ LVL,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.8f);
-        font.draw(batch, "HP   "+ HP,slot.getX() + slot.getWidth()*1.2f, slot.getY() + slot.getHeight()*0.5f);
-        font.draw(batch,"AP   "+ AP,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.5f);
-        font.draw(batch,"PP   "+ PP,slot.getX() + slot.getWidth()*1.2f,slot.getY()+ slot.getHeight()*0.2f);
-        font.draw(batch,ABILITY,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.2f);
+        font.draw(batch, name,slot.getX() + slot.getHeight()*0.25f , slot.getY() - slot.getHeight() * 0.2f);
+        //font.draw(batch,"LVL   "+ LVL,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.8f);
+        //font.draw(batch, "HP   "+ HP,slot.getX() + slot.getWidth()*1.2f, slot.getY() + slot.getHeight()*0.5f);
+        //font.draw(batch,"AP   "+ AP,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.5f);
+        //font.draw(batch,"PP   "+ PP,slot.getX() + slot.getWidth()*1.2f,slot.getY()+ slot.getHeight()*0.2f);
+        //font.draw(batch,ABILITY,slot.getX() + slot.getWidth()*2.4f,slot.getY()+ slot.getHeight()*0.2f);
 
     }
     public void input(Vector3 vec){
