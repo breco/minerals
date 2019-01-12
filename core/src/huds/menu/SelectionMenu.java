@@ -78,9 +78,10 @@ public class SelectionMenu extends BasicMenu {
         pressed = new Texture(Gdx.files.internal("huds/menu/square button pressed.png"));
 
 
-        backbutton.setPosition(menuLU.getX() + backbutton.getWidth(),backbutton.getY());
+        //backbutton.setPosition(menuLU.getX() + backbutton.getWidth(),backbutton.getY());
+        backbutton.setPosition(1000,backbutton.getY());
 
-        ok = new BasicButton(normal,pressed,backbutton.getX()+backbutton.getWidth()*2,backbutton.getY());
+        ok = new BasicButton(normal,pressed,menuLD.getX()+backbutton.getWidth()*2,backbutton.getY());
         ok.setSize(backbutton.getWidth(),backbutton.getHeight());
         ok.setText(" Ok");
 
