@@ -23,12 +23,15 @@ public class ItemSelectButton {
     Sprite box;
     BasicMenu menu;
     public boolean showDescription = false;
-    BitmapFont font;
+    BitmapFont font, selectedfont;
     boolean touched = false;
     String originalDescription;
-    public ItemSelectButton(Texture texture, String value, String name, String text, float x, float y){
+    int amount;
+    boolean selected = false;
+    public ItemSelectButton(Texture texture, String value, String name, String text, int amount, float x, float y){
         this.value = value;
         this.name = name;
+        this.amount = amount;
         originalDescription = text;
         List<String> fixed = Words.fullJustify(text.split(" "),35);
         String temp = "";
@@ -49,12 +52,15 @@ public class ItemSelectButton {
         parameter.size = 13;
         font = Initial.generator.generateFont(parameter);
         font.setColor(Color.WHITE);
+        selectedfont = Initial.generator.generateFont(parameter);
+        selectedfont.setColor(Color.BLUE);
     }
 
     public void setParent(BasicMenu menu){
         this.menu = menu;
         box.setPosition(menu.menutitleL.getX(),menu.menutitleL.getY());
         box.setSize(menu.menuLU.getWidth()+menu.menuCU.getWidth()+menu.menuRU.getWidth(), menu.menuLU.getHeight()*2.3f);
+
     }
 
     public void update(){
@@ -68,7 +74,15 @@ public class ItemSelectButton {
             box.draw(batch);
             font.draw(batch,name,box.getX()+75,box.getY()+box.getHeight()*3/4);
             font.draw(batch,description,box.getX()+50,box.getY()+box.getHeight()/2);
+
         }
+        if(selected){
+            selectedfont.draw(batch,"" + amount, item.getX() - 15,item.getY() + item.getHeight() + 15);
+        }
+        else{
+            font.draw(batch,"" + amount, item.getX() - 15,item.getY() + item.getHeight() + 15);
+        }
+
     }
 
     public void input(Vector3 vec){
@@ -89,4 +103,13 @@ public class ItemSelectButton {
         return value;
     }
 
+    public void setSelected(){
+        selected = true;
+
+    }
+    public void setUnselected()
+    {
+        selected = false;
+
+    }
 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import huds.menu.BasicMenu;
 import huds.menu.LevelMenu;
-import huds.menu.MineralMenu;
+import huds.menu.PreviewMenu;
 import huds.menu.SelectionMenu;
 import planets.Planet;
 import planets.Planets;
@@ -56,7 +56,7 @@ public class WorldScreen implements Screen {
 
     BasicMenu menu;
     public LevelMenu levelmenu;
-    public MineralMenu mineralmenu;
+    public PreviewMenu previewmenu;
     public SelectionMenu selectionmenu;
 
     public WorldScreen(Initial game){
@@ -79,7 +79,7 @@ public class WorldScreen implements Screen {
 
         menu = new BasicMenu(this);
         levelmenu = new LevelMenu(this);
-        mineralmenu = new MineralMenu(this);
+        previewmenu = new PreviewMenu(this);
         selectionmenu = new SelectionMenu(this);
 
     }
@@ -95,7 +95,7 @@ public class WorldScreen implements Screen {
                     levelmenu.input(vec);
                     break;
                 case MINERALS:
-                    mineralmenu.input(vec);
+                    previewmenu.input(vec);
 
                     break;
                 case SELECTION:
@@ -117,7 +117,7 @@ public class WorldScreen implements Screen {
                     levelmenu.touchUp(vec);
                     break;
                 case MINERALS:
-                    mineralmenu.touchUp(vec);
+                    previewmenu.touchUp(vec);
                     break;
                 case SELECTION:
                     selectionmenu.touchUp(vec);
@@ -161,8 +161,8 @@ public class WorldScreen implements Screen {
                 break;
             case GO:
                 game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
-                game.prefs.putString("selected_items",mineralmenu.getSelectedItems());
-                //Gdx.app.log("selected_items",mineralmenu.getSelectedItems()+"?");
+                game.prefs.putString("selected_items", previewmenu.getSelectedItems());
+                //Gdx.app.log("selected_items",previewmenu.getSelectedItems()+"?");
                 game.prefs.flush();
                 game.setScreen (new MainGame(game));
 
@@ -187,7 +187,7 @@ public class WorldScreen implements Screen {
                 levelmenu.draw(batch);
                 break;
             case MINERALS:
-                mineralmenu.draw(batch);
+                previewmenu.draw(batch);
                 break;
             case SELECTION:
                 selectionmenu.draw(batch);

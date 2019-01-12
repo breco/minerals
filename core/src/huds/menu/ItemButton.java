@@ -64,6 +64,7 @@ public class ItemButton {
         this.menu = menu;
         box.setPosition(menu.menutitleL.getX(),menu.menutitleL.getY());
         box.setSize(menu.menuLU.getWidth()+menu.menuCU.getWidth()+menu.menuRU.getWidth(), menu.menuLU.getHeight()*2.3f);
+
     }
 
     public void update(){

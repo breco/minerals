@@ -43,6 +43,19 @@ public class ItemLoader {
         return null;
     }
 
+    public static String[] getItemData(String id){
+        FileHandle file = Gdx.files.internal("data/items.txt");
+        String[] items = file.readString().split("\n");
+        String[] itemdata;
+        for(String item : items) {
+            itemdata = item.split("/");
+            if (!itemdata[0].equals(id)) continue;
+            return itemdata;
+
+        }
+        return null;
+    }
+
 }
 
 

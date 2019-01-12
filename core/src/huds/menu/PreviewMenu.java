@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.JsonValue;
 
 import screens.WorldScreen;
 
-public class MineralMenu extends BasicMenu {
+public class PreviewMenu extends BasicMenu {
 
     Array<MineralButton> minerals;
     Array<ItemButton> items;
@@ -24,7 +24,7 @@ public class MineralMenu extends BasicMenu {
     BasicButton go;
     Texture normal,pressed;
     boolean showmineral = true;
-    public MineralMenu(WorldScreen screen) {
+    public PreviewMenu(WorldScreen screen) {
         super(screen);
 
         minerals = new Array<MineralButton>();

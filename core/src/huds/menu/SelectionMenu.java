@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import items.ItemLoader;
 import screens.WorldScreen;
 import utils.MyGestures;
 
@@ -31,6 +32,7 @@ public class SelectionMenu extends BasicMenu {
     String touchedValue;
     String touchedName;
     String touchedEffect;
+    ItemSelectButton touchedItem, selectedItem;
     boolean moving = false;
     ItemButton button;
     public SelectionMenu(WorldScreen screen) {
@@ -43,13 +45,16 @@ public class SelectionMenu extends BasicMenu {
 
 
         //CREATE READING CLASS
-        FileHandle file = Gdx.files.internal("data/items.txt");
+        FileHandle file = Gdx.files.internal("data/owneditems.txt");
         String[] items = file.readString().split("\n");
+        String[] owneditemdata;
         String[] itemdata;
         int x = 0, y = 0;
         for(String item : items){
-            itemdata = item.split("/");
-            this.items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/"+itemdata[2]+".png")),itemdata[0],itemdata[2],itemdata[3],x, y));
+            owneditemdata = item.split("/");
+
+            itemdata = ItemLoader.getItemData(owneditemdata[0]);
+            this.items.add(new ItemSelectButton(new Texture(Gdx.files.internal("items/"+itemdata[2]+".png")),itemdata[0],itemdata[2],itemdata[3], Integer.parseInt(owneditemdata[1]),x,y));
             x++;
             if(x >= 3){
                 x = 0;
@@ -78,6 +83,16 @@ public class SelectionMenu extends BasicMenu {
         ok = new BasicButton(normal,pressed,backbutton.getX()+backbutton.getWidth()*2,backbutton.getY());
         ok.setSize(backbutton.getWidth(),backbutton.getHeight());
         ok.setText(" Ok");
+
+        String selecteditems = screen.previewmenu.getSelectedItems();
+        for (String itemId : selecteditems.split(",")){
+            for(ItemSelectButton item : this.items){
+                if (item.getValue().equals(itemId)){
+                    item.setSelected();
+                    item.amount--;
+                }
+            }
+        }
 
     }
 
@@ -125,6 +140,7 @@ public class SelectionMenu extends BasicMenu {
                 touchedValue = item.value;
                 touchedName = item.name;
                 touchedEffect = item.originalDescription;
+                touchedItem = item;
 
             }
         }
@@ -140,18 +156,25 @@ public class SelectionMenu extends BasicMenu {
                 selectedvalue = touchedValue;
                 selectedname = touchedName;
                 selectedEffect = touchedEffect;
+                touchedItem.setSelected();
+                touchedItem.amount--;
+                selectedItem.amount++;
+                selectedItem.setUnselected();
+                selectedItem = touchedItem;
+                touchedItem = null;
+
             }
         }
         if(closebutton.touched && closebutton.contains(vec)){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
-            screen.mineralmenu.reset();
+            screen.previewmenu.reset();
         }
 
         if(backbutton.touched && backbutton.contains(vec) ){
             show = false;
             screen.inputState = WorldScreen.InputState.MINERALS;
-            screen.mineralmenu.show(planet);
+            screen.previewmenu.show(planet);
 
 
         }
@@ -159,10 +182,10 @@ public class SelectionMenu extends BasicMenu {
         if(ok.touched && ok.contains(vec)){
             screen.inputState = WorldScreen.InputState.MINERALS;
             show = false;
-            screen.mineralmenu.show(planet);
-            Gdx.app.log("SELECTEDNAME",selectedname+"");
-            Gdx.app.log("SELECTEDEFFECT",""+selectedEffect);
+            screen.previewmenu.show(planet);
+
             button.updateItem(selectedvalue,selectedname,selectedEffect);
+
         }
 
 
@@ -182,8 +205,15 @@ public class SelectionMenu extends BasicMenu {
         selected.setSize(96,96);
         selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
         selectedname = button.name;
-        selectedvalue = button.value;
+        selectedvalue = button.getValue();
         selectedEffect = button.effect;
+        for(ItemSelectButton item : items){
+            if(item.value.equals(button.getValue())){
+                item.setSelected();
+                selectedItem = item;
+                break;
+            }
+        }
     }
 
 
