@@ -134,7 +134,7 @@ public class PreviewMenu extends BasicMenu {
         if(closebutton.touched && closebutton.contains(vec)){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
-            reset();
+
         }
 
         if(backbutton.touched && backbutton.contains(vec) ){
@@ -191,12 +191,7 @@ public class PreviewMenu extends BasicMenu {
         closebutton.touchUp();
         go.touchUp();
     }
-
-    public void reset(){
-        showmineral = true;
-        item.forceTexture(normal);
-        mineral.forceTexture(pressed);
-    }
+    
 
     public String getSelectedItems(){
         String selecteditems = "";
