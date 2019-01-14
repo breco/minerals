@@ -77,7 +77,7 @@ public class LevelMenu extends BasicMenu {
         for(LevelButton button : levels){
             if(button.touched && button.getBoundingRectangle().contains(vec.x,vec.y)){
                 show = false;
-                screen.inputState = WorldScreen.InputState.MINERALS;
+                screen.inputState = WorldScreen.InputState.PREVIEW;
                 level = button.name;
 
                 screen.previewmenu.show(planet);

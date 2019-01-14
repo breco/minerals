@@ -30,7 +30,7 @@ public class PreviewMenu extends BasicMenu {
         minerals = new Array<MineralButton>();
         minerals.add(new MineralButton("terro",0, 15, 2, 2, 1, "rock wheel"));
         minerals.add(new MineralButton("redmi",1, 12,2,4,1, "fireworks"));
-        minerals.add(new MineralButton("pyro",2,10,3,2,1, "fire balls"));
+        minerals.add(new MineralButton("agni",2,10,3,2,1, "fire balls"));
 
         items = new Array<ItemButton>();
         loadItems();
@@ -119,15 +119,26 @@ public class PreviewMenu extends BasicMenu {
     }
     public void input(Vector3 vec){
         super.input(vec);
-            for(MineralButton button : minerals){
-                button.input(vec);
-            }
+        for(MineralButton button : minerals){
+            button.input(vec);
+        }
 
-            for(ItemButton button : items){
-                button.input(vec);
-            }
+
+        for(ItemButton button : items){
+            button.input(vec);
+        }
 
         go.input(vec);
+    }
+
+    public void longInput(Vector3 vec){
+        for(MineralButton button : minerals){
+            //previousItemButton.input(vec);
+        }
+
+        for(ItemButton button : items){
+            button.longInput(vec);
+        }
     }
     public void touchUp(Vector3 vec){
 
@@ -165,7 +176,12 @@ public class PreviewMenu extends BasicMenu {
 
         for(MineralButton button : minerals){
             if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                //
+                show = false;
+                screen.inputState = WorldScreen.InputState.SELECTION;
+                screen.selectionmenu.show(planet);
+                screen.selectionmenu.show("Select mineral");
+                screen.selectionmenu.setType("minerals");
+                screen.selectionmenu.setSelectedMineral(button);
             }
             button.touchUp();
 
@@ -175,11 +191,15 @@ public class PreviewMenu extends BasicMenu {
 
         for(ItemButton button : items){
             if(button.getBoundingRectangle().contains(vec.x,vec.y)){
-                show = false;
-                screen.inputState = WorldScreen.InputState.SELECTION;
-                screen.selectionmenu.show(planet);
-                screen.selectionmenu.show("Select item");
-                screen.selectionmenu.setSelectedItem(button);
+                if(!button.showDescription){
+                    show = false;
+                    screen.inputState = WorldScreen.InputState.SELECTION;
+                    screen.selectionmenu.show(planet);
+                    screen.selectionmenu.show("Select item");
+                    screen.selectionmenu.setType("items");
+                    screen.selectionmenu.setSelectedItem(button);
+                }
+
             }
             button.touchUp();
 
@@ -191,7 +211,7 @@ public class PreviewMenu extends BasicMenu {
         closebutton.touchUp();
         go.touchUp();
     }
-    
+
 
     public String getSelectedItems(){
         String selecteditems = "";

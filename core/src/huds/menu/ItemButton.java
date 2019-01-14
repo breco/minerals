@@ -89,9 +89,13 @@ public class ItemButton {
     }
     public void input(Vector3 vec){
         if(rect.contains(vec.x,vec.y)){
-            showDescription = true;
-
             touched = true;
+        }
+    }
+
+    public void longInput(Vector3 vec){
+        if(rect.contains(vec.x,vec.y)){
+            showDescription = true;
         }
     }
 

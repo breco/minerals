@@ -35,7 +35,7 @@ public class WorldScreen implements Screen {
     public enum InputState{
         WORLD,
         MENU,
-        MINERALS,
+        PREVIEW,
         SELECTION,
         GO,
     }
@@ -94,7 +94,7 @@ public class WorldScreen implements Screen {
                 case MENU:
                     levelmenu.input(vec);
                     break;
-                case MINERALS:
+                case PREVIEW:
                     previewmenu.input(vec);
 
                     break;
@@ -107,7 +107,15 @@ public class WorldScreen implements Screen {
 
 
         }
-        if(MyGestures.isTouchUp()){
+        else if(MyGestures.isLongPress()){
+            vec.set(MyGestures.touchLong);
+            switch (inputState){
+                case PREVIEW:
+                    previewmenu.longInput(vec);
+                    break;
+            }
+        }
+        else if(MyGestures.isTouchUp()){
             vec.set(MyGestures.touchUpvec);
             viewport.unproject(vec);
             switch(inputState){
@@ -116,7 +124,7 @@ public class WorldScreen implements Screen {
                 case MENU:
                     levelmenu.touchUp(vec);
                     break;
-                case MINERALS:
+                case PREVIEW:
                     previewmenu.touchUp(vec);
                     break;
                 case SELECTION:
@@ -125,6 +133,8 @@ public class WorldScreen implements Screen {
 
             }
         }
+
+
 
         if(!MyGestures.isTouchDragged()){
 
@@ -153,7 +163,7 @@ public class WorldScreen implements Screen {
             case MENU:
 
                 break;
-            case MINERALS:
+            case PREVIEW:
 
                 break;
             case SELECTION:
@@ -186,7 +196,7 @@ public class WorldScreen implements Screen {
             case MENU:
                 levelmenu.draw(batch);
                 break;
-            case MINERALS:
+            case PREVIEW:
                 previewmenu.draw(batch);
                 break;
             case SELECTION:

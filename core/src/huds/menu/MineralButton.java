@@ -26,6 +26,9 @@ public class MineralButton {
     public String name, ABILITY;
     private BitmapFont font;
 
+    String value = "";
+
+
     public MineralButton(String mineralname, int y, int HP, int AP, int PP, int LVL, String ABILITY){
         name = mineralname;
         this.HP = HP;
@@ -82,5 +85,19 @@ public class MineralButton {
     public Rectangle getBoundingRectangle(){
         //
         return rect;
+    }
+    public String getValue(){
+        return "0";
+    }
+
+    public void updateMineral(String value, String name, String effect) {
+        int[] size2 = {32,32};
+        mineralAnimator = new Animator(new Texture(Gdx.files.internal("minerals/"+name+" front.png")),1,2,2,0.7f,size2);
+
+
+        this.value = value;
+        this.ABILITY = effect;
+        this.name = name;
+
     }
 }

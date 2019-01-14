@@ -10,16 +10,17 @@ import com.badlogic.gdx.utils.Array;
 
 import items.ItemLoader;
 import screens.WorldScreen;
+import utils.Animator;
 import utils.MyGestures;
 
 public class SelectionMenu extends BasicMenu {
 
+    String type;
 
-    //Array<MineralButton> minerals;
     Array<ItemSelectButton> items;
+    Array<MineralSelectButton> minerals;
 
-    //BasicButton mineral;
-    //BasicButton item;
+
     BasicButton ok;
     Texture normal,pressed;
     Sprite slots;
@@ -33,23 +34,28 @@ public class SelectionMenu extends BasicMenu {
     String touchedName;
     String touchedEffect;
     ItemSelectButton touchedItem, selectedItem;
+    MineralSelectButton touchedMineral, selectedMineral;
+    Animator touchedAnimator, selectedAnimator;
     boolean moving = false;
-    ItemButton button;
+    ItemButton previousItemButton;
+    MineralButton previousMineralButton;
     public SelectionMenu(WorldScreen screen) {
         super(screen);
 
         slots = new Sprite(new Texture(Gdx.files.internal("huds/menu/selection slots.png")));
         slots.setPosition(menuLU.getX(),menuLC.getY()+menuLU.getHeight()*2);
         slots.setSize(menuLU.getWidth()+menuCD.getWidth()+menuRU.getWidth(),menuLU.getHeight()*5);
+
+
         items = new Array<ItemSelectButton>();
-
-
         //CREATE READING CLASS
         FileHandle file = Gdx.files.internal("data/owneditems.txt");
         String[] items = file.readString().split("\n");
         String[] owneditemdata;
         String[] itemdata;
         int x = 0, y = 0;
+
+        //ITEMS
         for(String item : items){
             owneditemdata = item.split("/");
 
@@ -66,6 +72,28 @@ public class SelectionMenu extends BasicMenu {
         for(ItemSelectButton item : this.items){
             item.setParent(this);
         }
+
+        String selecteditems = screen.previewmenu.getSelectedItems();
+        for (String itemId : selecteditems.split(",")){
+            for(ItemSelectButton item : this.items){
+                if (item.getValue().equals(itemId)){
+                    item.setSelected();
+                    item.amount--;
+                }
+            }
+        }
+
+        //MINERALS
+
+        minerals = new Array<MineralSelectButton>();
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/agni front.png")),"0","agni", "blablabla",0,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/aqualis front.png")),"1","aqualis", "blablabla",1,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/redmi front.png")),"2","redmi", "blablabla",2,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/terro front.png")),"3","terro", "blablabla",0,1));
+        for(MineralSelectButton mineral : minerals){
+            mineral.setParent(this);
+        }
+
 
         slotSelected = new Sprite(new Texture(Gdx.files.internal("huds/menu/level slot.png")));
         slotSelected.setSize(slotSelected.getWidth() * 3, slotSelected.getHeight() * 3);
@@ -85,33 +113,48 @@ public class SelectionMenu extends BasicMenu {
         ok.setSize(backbutton.getWidth(),backbutton.getHeight());
         ok.setText(" Ok");
 
-        String selecteditems = screen.previewmenu.getSelectedItems();
-        for (String itemId : selecteditems.split(",")){
-            for(ItemSelectButton item : this.items){
-                if (item.getValue().equals(itemId)){
-                    item.setSelected();
-                    item.amount--;
-                }
-            }
-        }
+
 
     }
 
-
+    public void setType(String type){
+        this.type = type;
+    }
 
     public void draw(SpriteBatch batch){
         if(!show) return;
         super.draw(batch);
         slots.draw(batch);
         slotSelected.draw(batch);
-        selected.draw(batch);
-        for(ItemSelectButton item : items){
-            item.draw(batch);
+
+
+
+
+        if(type.equals("items")){
+            selected.draw(batch);
+            for(ItemSelectButton item : items){
+                item.draw(batch);
+            }
         }
+        else if(type.equals("minerals")){
+            selectedAnimator.draw(selected,batch);
+            for(MineralSelectButton mineral : minerals){
+                mineral.draw(batch);
+            }
+        }
+
         ok.draw(batch);
 
         if(moving){
-            batch.draw(touched.getTexture(),touched.getX(),touched.getY()+50,touched.getWidth(), touched.getHeight());
+            if(type.equals("items")){
+                batch.draw(touched.getTexture(),touched.getX(),touched.getY()+50,touched.getWidth(), touched.getHeight());
+            }
+            if(type.equals("minerals")){
+                touched.setY(touched.getY()+50);
+                touchedAnimator.draw(touched,batch);
+                touched.setY(touched.getY()-50);
+            }
+
 
         }
 
@@ -131,18 +174,39 @@ public class SelectionMenu extends BasicMenu {
     }
     public void input(Vector3 vec){
         super.input(vec);
-        for(ItemSelectButton item : items){
-            item.input(vec);
-            if(item.isTouched()){
-                moving = true;
-                touched.setTexture(item.item.getTexture());
-                touched.setSize(item.item.getWidth(),item.item.getHeight());
-                touched.setPosition(item.item.getX(),item.item.getY());
-                touchedValue = item.value;
-                touchedName = item.name;
-                touchedEffect = item.originalDescription;
-                touchedItem = item;
+        if(type.equals("items")){
+            for(ItemSelectButton item : items){
+                item.input(vec);
+                if(item.isTouched()){
+                    moving = true;
+                    touched.setTexture(item.item.getTexture());
+                    touched.setSize(item.item.getWidth(),item.item.getHeight());
+                    touched.setPosition(item.item.getX(),item.item.getY());
+                    touchedValue = item.value;
+                    touchedName = item.name;
+                    touchedEffect = item.originalDescription;
+                    touchedItem = item;
 
+                }
+            }
+        }
+
+        else if(type.equals("minerals")){
+            for(MineralSelectButton mineral : minerals){
+                mineral.input(vec);
+                if(mineral.isTouched()){
+                    moving = true;
+                    touched.setTexture(mineral.item.getTexture());
+                    touched.setSize(mineral.item.getWidth(),mineral.item.getHeight());
+                    touched.setPosition(mineral.item.getX(),mineral.item.getY());
+                    touchedValue = mineral.value;
+                    touchedName = mineral.name;
+                    touchedEffect = mineral.originalDescription;
+                    touchedMineral = mineral;
+                    int[] size = {32,32};
+                    touchedAnimator = new Animator(touched.getTexture(), 1,2,2,0.7f,size);
+
+                }
             }
         }
 
@@ -157,42 +221,70 @@ public class SelectionMenu extends BasicMenu {
                 selectedvalue = touchedValue;
                 selectedname = touchedName;
                 selectedEffect = touchedEffect;
-                touchedItem.setSelected();
-                touchedItem.amount--;
-                selectedItem.amount++;
-                selectedItem.setUnselected();
-                selectedItem = touchedItem;
-                touchedItem = null;
+
+
+                if(type.equals("items")){
+                    touchedItem.setSelected();
+                    touchedItem.amount--;
+                    selectedItem.amount++;
+                    selectedItem.setUnselected();
+                    selectedItem = touchedItem;
+                    touchedItem = null;
+                }
+                if(type.equals("minerals")){
+                    touchedMineral.setSelected();
+                    selectedMineral.setUnselected();
+                    selectedMineral = touchedMineral;
+                    selectedAnimator = touchedAnimator;
+                    touchedMineral = null;
+                }
+
 
             }
         }
         if(closebutton.touched && closebutton.contains(vec)){
             show = false;
             screen.inputState = WorldScreen.InputState.WORLD;
-            screen.previewmenu.reset();
+
         }
 
         if(backbutton.touched && backbutton.contains(vec) ){
             show = false;
-            screen.inputState = WorldScreen.InputState.MINERALS;
+            screen.inputState = WorldScreen.InputState.PREVIEW;
             screen.previewmenu.show(planet);
 
 
         }
 
         if(ok.touched && ok.contains(vec)){
-            screen.inputState = WorldScreen.InputState.MINERALS;
+            screen.inputState = WorldScreen.InputState.PREVIEW;
             show = false;
             screen.previewmenu.show(planet);
 
-            button.updateItem(selectedvalue,selectedname,selectedEffect);
+            if(type.equals("items")){
+                previousItemButton.updateItem(selectedvalue,selectedname,selectedEffect);
+            }
+            if(type.equals("minerals")){
+                previousMineralButton.updateMineral(selectedvalue,selectedname,selectedEffect);
+
+            }
+
 
         }
 
 
-        for(ItemSelectButton item : items){
-            item.touchUp(vec);
+        if(type.equals("items")){
+            for(ItemSelectButton item : items){
+                item.touchUp(vec);
+            }
         }
+        if(type.equals("minerals")){
+            for(MineralSelectButton mineral : minerals){
+                mineral.touchUp(vec);
+            }
+        }
+
+
 
         backbutton.touchUp();
         closebutton.touchUp();
@@ -201,7 +293,7 @@ public class SelectionMenu extends BasicMenu {
     }
 
     public void setSelectedItem(ItemButton button){
-        this.button = button;
+        this.previousItemButton = button;
         selected = new Sprite(button.item.getTexture());
         selected.setSize(96,96);
         selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
@@ -212,6 +304,25 @@ public class SelectionMenu extends BasicMenu {
             if(item.value.equals(button.getValue())){
                 item.setSelected();
                 selectedItem = item;
+                break;
+            }
+        }
+    }
+
+    public void setSelectedMineral(MineralButton button){
+        this.previousMineralButton = button;
+        selected = new Sprite(button.mineral.getTexture());
+        selected.setSize(96,96);
+        selected.setPosition(slotSelected.getX()+slotSelected.getWidth()*0.25f,slotSelected.getY()+slotSelected.getHeight()*0.25f);
+        selectedname = button.name;
+        selectedvalue = button.getValue();
+        selectedEffect = button.ABILITY;
+        int[] size = {32,32};
+        selectedAnimator = new Animator(selected.getTexture(), 1,2,2,0.7f,size);
+        for(MineralSelectButton mineral : minerals){
+            if(mineral.value.equals(button.getValue())){
+                mineral.setSelected();
+                selectedMineral = mineral;
                 break;
             }
         }

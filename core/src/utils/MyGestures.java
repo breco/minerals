@@ -20,6 +20,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
     public static boolean zoom = false, zoomOut = false, zoomMoving = false;
     public static float zoomInit, zoomFin;
     public static float longPX, longPY;
+    public static Vector3 touchLong;
     public static boolean longPress;
     public static boolean touchDown = false;
     public static boolean touchDragged = false;
@@ -41,6 +42,9 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
     public GestureDetector gd;
     public MyGestures(){
         gd = new GestureDetector(this);
+
+        touchLong = new Vector3();
+
         touchPos = new Vector3();
         firstTouch = new Vector3();
         newTouch = new Vector3();
@@ -54,7 +58,7 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
         delta2 = new Vector3();
         newDelta2 = new Vector3();
         diff2 = new Vector3();
-        gd.setLongPressSeconds(0.8f);
+        gd.setLongPressSeconds(0.2f);
 
         firstTouchTest = new Vector3();
         newDeltaTest = new Vector3();
@@ -142,6 +146,9 @@ public class MyGestures implements GestureDetector.GestureListener, InputProcess
         longPress = true;
         longPX = x;
         longPY = y;
+        touchLong.set(x,y,0);
+        if(WorldScreen.viewport != null) WorldScreen.viewport.unproject(touchLong);
+
         return true;
     }
 
