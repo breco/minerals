@@ -172,10 +172,9 @@ public class WorldScreen implements Screen {
             case GO:
                 game.prefs.putString("load_level",levelmenu.getPlanet().level+"-"+levelmenu.getLevel());
                 game.prefs.putString("selected_items", previewmenu.getSelectedItems());
-                //Gdx.app.log("selected_items",previewmenu.getSelectedItems()+"?");
+                game.prefs.putString("selected_minerals",previewmenu.getSelectedMinerals());
                 game.prefs.flush();
                 game.setScreen (new MainGame(game));
-
                 dispose();
                 break;
         }

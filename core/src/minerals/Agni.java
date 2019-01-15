@@ -9,7 +9,7 @@ import utils.Animator;
 
 public class Agni extends Mineral{
 
-    public Agni(int x, int y, int HP, int ATK, int SPD, int PP) {
+    public Agni(float x, float y, int HP, int ATK, int SPD, int PP) {
         super(x, y, HP, ATK, SPD, PP);
         bulletTexture = new Texture(Gdx.files.internal("bullets/fire bullet.png"));
         int[] size2 = {40,40};

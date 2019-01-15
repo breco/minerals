@@ -9,7 +9,7 @@ import utils.Animator;
 
 public class Redmi extends Mineral {
 
-    public Redmi(int x, int y, int HP, int ATK, int SPD, int PP) {
+    public Redmi(float x, float y, int HP, int ATK, int SPD, int PP) {
         super(x, y, HP, ATK, SPD, PP);
         bulletTexture = new Texture(Gdx.files.internal("bullets/crystal bullet.png"));
         animator = new Animator(new Texture(Gdx.files.internal("minerals/redmi.png")),2,2,4,0.2f);

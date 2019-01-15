@@ -86,10 +86,10 @@ public class SelectionMenu extends BasicMenu {
         //MINERALS
 
         minerals = new Array<MineralSelectButton>();
-        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/agni front.png")),"0","agni", "blablabla",0,0));
-        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/aqualis front.png")),"1","aqualis", "blablabla",1,0));
-        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/redmi front.png")),"2","redmi", "blablabla",2,0));
-        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/terro front.png")),"3","terro", "blablabla",0,1));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/agni front.png")),"1","agni", "blablabla",0,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/aqualis front.png")),"2","aqualis", "blablabla",1,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/redmi front.png")),"3","redmi", "blablabla",2,0));
+        minerals.add(new MineralSelectButton(new Texture(Gdx.files.internal("minerals/terro front.png")),"4","terro", "blablabla",0,1));
         for(MineralSelectButton mineral : minerals){
             mineral.setParent(this);
         }
@@ -321,11 +321,13 @@ public class SelectionMenu extends BasicMenu {
         selectedAnimator = new Animator(selected.getTexture(), 1,2,2,0.7f,size);
         for(MineralSelectButton mineral : minerals){
             if(mineral.value.equals(button.getValue())){
+                Gdx.app.log("FOUND!","ªª");
                 mineral.setSelected();
                 selectedMineral = mineral;
                 break;
             }
         }
+        Gdx.app.log("YA FOUNDEDADO","uwu");
     }
 
 

@@ -29,7 +29,8 @@ public class MineralButton {
     String value = "";
 
 
-    public MineralButton(String mineralname, int y, int HP, int AP, int PP, int LVL, String ABILITY){
+    public MineralButton(String value, String mineralname, int y, int HP, int AP, int PP, int LVL, String ABILITY){
+        this.value = value;
         name = mineralname;
         this.HP = HP;
         this.AP = AP;
@@ -87,7 +88,7 @@ public class MineralButton {
         return rect;
     }
     public String getValue(){
-        return "0";
+        return value;
     }
 
     public void updateMineral(String value, String name, String effect) {

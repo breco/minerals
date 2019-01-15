@@ -28,9 +28,9 @@ public class PreviewMenu extends BasicMenu {
         super(screen);
 
         minerals = new Array<MineralButton>();
-        minerals.add(new MineralButton("terro",0, 15, 2, 2, 1, "rock wheel"));
-        minerals.add(new MineralButton("redmi",1, 12,2,4,1, "fireworks"));
-        minerals.add(new MineralButton("agni",2,10,3,2,1, "fire balls"));
+        minerals.add(new MineralButton("4","terro",0, 15, 2, 2, 1, "rock wheel"));
+        minerals.add(new MineralButton("3","redmi",1, 12,2,4,1, "fireworks"));
+        minerals.add(new MineralButton("1", "agni",2,10,3,2,1, "fire balls"));
 
         items = new Array<ItemButton>();
         loadItems();
@@ -159,20 +159,6 @@ public class PreviewMenu extends BasicMenu {
             screen.inputState = WorldScreen.InputState.GO;
         }
 
-        /*if(showmineral && item.touched && item.contains(vec)){
-            showmineral = false;
-            item.forceTexture(pressed);
-            mineral.forceTexture(normal);
-
-        }
-        if(!showmineral && mineral.touched && mineral.contains(vec)){
-            showmineral = true;
-            item.forceTexture(normal);
-            mineral.forceTexture(pressed);
-
-        }*/
-
-
 
         for(MineralButton button : minerals){
             if(button.getBoundingRectangle().contains(vec.x,vec.y)){
@@ -220,6 +206,14 @@ public class PreviewMenu extends BasicMenu {
 
         }
         return selecteditems;
+    }
+
+    public String getSelectedMinerals(){
+        String selectedMinerals = "";
+        for(MineralButton mineral : minerals){
+            selectedMinerals += mineral.getValue() + ",";
+        }
+        return selectedMinerals;
     }
 
 }

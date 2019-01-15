@@ -9,7 +9,7 @@ import utils.Animator;
 
 public class Terro extends Mineral {
 
-    public Terro(int x, int y, int HP, int ATK, int SPD, int PP) {
+    public Terro(float x, float y, int HP, int ATK, int SPD, int PP) {
         super(x, y, HP, ATK, SPD, PP);
         bulletTexture = new Texture(Gdx.files.internal("bullets/crystal bullet.png"));
         animator = new Animator(new Texture(Gdx.files.internal("minerals/terro.png")),1,4,4,0.2f);

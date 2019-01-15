@@ -23,10 +23,8 @@ import enemies.Enemy;
 import huds.maingame.MainGameHUD;
 import items.ItemLoader;
 import items.Items;
-import minerals.Agni;
+import minerals.MineralLoader;
 import minerals.Minerals;
-import minerals.Redmi;
-import minerals.Terro;
 import skills.Skills;
 import utils.MyGestures;
 import utils.TimeManager;
@@ -104,9 +102,9 @@ public class MainGame implements Screen {
         // GAME OBJECTS
         minerals = new Minerals();
 
-        minerals.add( new Redmi(Initial.HEIGHT/4-32,400,30,2,30, 1));
-        minerals.add( new Terro(Initial.HEIGHT/2-32,400,30,2,30, 1));
-        minerals.add( new Agni(Initial.HEIGHT*3/4-32,400,30,2,30, 1));
+        //minerals.add( new Redmi(Initial.HEIGHT/4-32,400,30,2,30, 1));
+        //minerals.add( new Terro(Initial.HEIGHT/2-32,400,30,2,30, 1));
+        //minerals.add( new Agni(Initial.HEIGHT*3/4-32,400,30,2,30, 1));
 
         enemies = new Enemies();
 
@@ -119,6 +117,15 @@ public class MainGame implements Screen {
             items.add(ItemLoader.getItem(item));
 
         }
+
+        String[] selectedMinerals = game.prefs.getString("selected_minerals").split(",");
+        for(String mineral : selectedMinerals){
+            minerals.add(MineralLoader.getMineral(mineral));
+        }
+
+        minerals.getMinerals().get(0).setPosition(Initial.HEIGHT/4-32,400);
+        minerals.getMinerals().get(1).setPosition(Initial.HEIGHT/2-32,400);
+        minerals.getMinerals().get(2).setPosition(Initial.HEIGHT*3/4-32,400);
         //items.add(new Fruit(new Texture(Gdx.files.internal("items/grapes.png"))));
         //items.add(new Mirror(new Texture(Gdx.files.internal("items/mirror.png"))));
         //items.add(new Gemstone(new Texture(Gdx.files.internal("items/gemstone.png"))));
