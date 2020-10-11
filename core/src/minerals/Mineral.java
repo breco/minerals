@@ -330,6 +330,10 @@ public class Mineral extends Sprite {
         if(ATK_TOTAL < 0) ATK_TOTAL = 0;
     }
 
+    public void setPosition(float x, float y){
+        super.setPosition(x,y);
+        touchRect = new Rectangle(getX() - getWidth()/2,getY()-getHeight()*5/2,getWidth()*2,getHeight()*4);
+    }
 
     //GETTERS
 
